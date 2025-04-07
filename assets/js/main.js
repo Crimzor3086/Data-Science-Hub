@@ -192,3 +192,151 @@ function handleFormSubmit(event) {
     }
   });
   
+  // Search functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('search-form');
+    const searchQuery = document.getElementById('search-query');
+    const resultsGrid = document.querySelector('.results-grid');
+    const resultsCount = document.querySelector('.results-count');
+    const noResults = document.querySelector('.no-results');
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = searchQuery.value.trim();
+            const filters = Array.from(document.querySelectorAll('input[name="filter"]:checked'))
+                .map(checkbox => checkbox.value);
+
+            if (query) {
+                performSearch(query, filters);
+            }
+        });
+    }
+
+    function performSearch(query, filters) {
+        // In a real application, this would make an API call
+        // For now, we'll simulate a search with some sample results
+        const sampleResults = [
+            {
+                title: 'Introduction to Machine Learning',
+                description: 'Learn the fundamentals of machine learning and its applications.',
+                type: 'course',
+                link: 'pages/courses.html'
+            },
+            {
+                title: 'Data Preprocessing Best Practices',
+                description: 'Essential techniques for cleaning and preparing your data.',
+                type: 'article',
+                link: 'pages/blog.html'
+            },
+            {
+                title: 'Python for Data Science',
+                description: 'Comprehensive guide to using Python for data analysis.',
+                type: 'resource',
+                link: 'pages/resources.html'
+            }
+        ];
+
+        // Filter results based on selected filters
+        let filteredResults = sampleResults;
+        if (filters.length > 0) {
+            filteredResults = sampleResults.filter(result => 
+                filters.includes(result.type)
+            );
+        }
+
+        // Display results
+        displayResults(filteredResults, query);
+    }
+
+    function displayResults(results, query) {
+        resultsGrid.innerHTML = '';
+        noResults.style.display = 'none';
+
+        if (results.length === 0) {
+            noResults.style.display = 'block';
+            resultsCount.textContent = 'Showing 0 results';
+            return;
+        }
+
+        resultsCount.textContent = `Showing ${results.length} results for "${query}"`;
+
+        results.forEach(result => {
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.innerHTML = `
+                <h3>${result.title}</h3>
+                <p>${result.description}</p>
+                <div class="result-meta">Type: ${result.type}</div>
+                <a href="${result.link}" class="result-link">View Details</a>
+            `;
+            resultsGrid.appendChild(card);
+        });
+    }
+  });
+  
+  // Contact Form Validation
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset error messages
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(error => error.style.display = 'none');
+            
+            // Validate form fields
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const subject = document.getElementById('subject');
+            const message = document.getElementById('message');
+            
+            let isValid = true;
+            
+            // Name validation
+            if (name.value.length < 2) {
+                document.getElementById('name-error').textContent = 'Name must be at least 2 characters long';
+                document.getElementById('name-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Email validation
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email.value)) {
+                document.getElementById('email-error').textContent = 'Please enter a valid email address';
+                document.getElementById('email-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Subject validation
+            if (subject.value.length < 5) {
+                document.getElementById('subject-error').textContent = 'Subject must be at least 5 characters long';
+                document.getElementById('subject-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Message validation
+            if (message.value.length < 10) {
+                document.getElementById('message-error').textContent = 'Message must be at least 10 characters long';
+                document.getElementById('message-error').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // In a real application, you would send the form data to a server here
+                console.log('Form submitted successfully:', {
+                    name: name.value,
+                    email: email.value,
+                    subject: subject.value,
+                    message: message.value
+                });
+                
+                // Show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                contactForm.reset();
+            }
+        });
+    }
+  });
+  
