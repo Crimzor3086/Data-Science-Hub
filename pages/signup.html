@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create your Data Science Hub account to access courses, services, and community features. Join our data science community today.">
   <title>Sign Up - Data Science Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
 </head>
 <body>
   <header>
-    <img src="../assets/images/logo.svg" alt="Data Science Hub Logo" class="logo">
+    <img src="../assets/images/logo.svg" alt="Data Science Hub Logo - A stylized DS icon" class="logo">
     <h1>Sign Up</h1>
-    <nav>
+    <nav aria-label="Main navigation">
       <ul>
         <li><a href="../index.html">Home</a></li>
-        <li><a href="team.html">Team</a></li>
-        <li><a href="services.html">Services</a></li>
         <li><a href="courses.html">Courses</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="blog.html">Blog</a></li>
+        <li><a href="team.html">Team</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="../search.html">Search</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="login.html">Login</a></li>
         <li><a href="signup.html" class="active">Sign Up</a></li>
@@ -31,16 +31,18 @@
   </header>
 
   <main class="auth-container">
-    <div class="auth-card">
+    <div class="auth-card" role="main">
       <h2>Create Your Account</h2>
-      <form id="signup-form" action="#" method="POST" class="auth-form">
+      <form id="signup-form" action="#" method="POST" class="auth-form" novalidate>
         <div class="form-group">
           <label for="name">Full Name</label>
           <input type="text" id="name" name="name" required 
                  placeholder="Enter your full name"
                  pattern="[A-Za-z\s]{2,50}"
-                 title="Please enter a valid name (2-50 characters, letters only)">
-          <div class="error-message" id="name-error"></div>
+                 title="Please enter a valid name (2-50 characters, letters only)"
+                 aria-required="true"
+                 aria-describedby="name-error">
+          <div class="error-message" id="name-error" role="alert"></div>
         </div>
 
         <div class="form-group">
@@ -48,8 +50,10 @@
           <input type="email" id="email" name="email" required 
                  placeholder="Enter your email"
                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                 title="Please enter a valid email address">
-          <div class="error-message" id="email-error"></div>
+                 title="Please enter a valid email address"
+                 aria-required="true"
+                 aria-describedby="email-error">
+          <div class="error-message" id="email-error" role="alert"></div>
         </div>
 
         <div class="form-group">
@@ -57,8 +61,10 @@
           <input type="password" id="password" name="password" required 
                  placeholder="Create a password"
                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                 title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters">
-          <div class="password-requirements">
+                 title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters"
+                 aria-required="true"
+                 aria-describedby="password-error password-requirements">
+          <div class="password-requirements" id="password-requirements" role="region" aria-label="Password requirements">
             <p>Password must contain:</p>
             <ul>
               <li>At least 8 characters</li>
@@ -67,29 +73,33 @@
               <li>One number</li>
             </ul>
           </div>
-          <div class="error-message" id="password-error"></div>
+          <div class="error-message" id="password-error" role="alert"></div>
         </div>
 
         <div class="form-group">
           <label for="confirm-password">Confirm Password</label>
           <input type="password" id="confirm-password" name="confirm-password" required 
-                 placeholder="Confirm your password">
-          <div class="error-message" id="confirm-password-error"></div>
+                 placeholder="Confirm your password"
+                 aria-required="true"
+                 aria-describedby="confirm-password-error">
+          <div class="error-message" id="confirm-password-error" role="alert"></div>
         </div>
 
         <div class="form-group">
           <label class="checkbox-label">
-            <input type="checkbox" name="terms" id="terms" required>
-            I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> and <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+            <input type="checkbox" name="terms" id="terms" required
+                   aria-required="true"
+                   aria-describedby="terms-error">
+            I agree to the <a href="terms.html" aria-label="Read our Terms of Service">Terms of Service</a> and <a href="privacy.html" aria-label="Read our Privacy Policy">Privacy Policy</a>
           </label>
-          <div class="error-message" id="terms-error"></div>
+          <div class="error-message" id="terms-error" role="alert"></div>
         </div>
 
-        <button type="submit" class="btn-primary">Create Account</button>
+        <button type="submit" class="btn-primary" aria-label="Create your account">Create Account</button>
       </form>
 
       <div class="auth-links">
-        <p>Already have an account? <a href="login.html">Log in here</a></p>
+        <p>Already have an account? <a href="login.html" aria-label="Log in to your existing account">Log in here</a></p>
       </div>
     </div>
   </main>
@@ -153,20 +163,17 @@
         console.log('Form Submitted:', formData);
         
         // Here you would typically send the data to your server
-        alert('Account created successfully!');
-        window.location.href = 'login.html';
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.setAttribute('role', 'status');
+        successDiv.textContent = 'Account created successfully! Redirecting to login page...';
+        document.querySelector('.auth-card').prepend(successDiv);
+        
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 2000);
       }
     });
-
-    function showTerms() {
-      alert('Terms of Service will be displayed here');
-      // You can replace this with a modal or redirect to terms.html when it's created
-    }
-
-    function showPrivacy() {
-      alert('Privacy Policy will be displayed here');
-      // You can replace this with a modal or redirect to privacy.html when it's created
-    }
   </script>
 </body>
 </html>

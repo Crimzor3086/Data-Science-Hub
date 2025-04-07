@@ -4,11 +4,34 @@ from auth.email_service import EmailService
 import os
 from datetime import datetime, timedelta
 from auth.oauth_handler import OAuthHandler
+from functools import wraps
+import jwt
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 db = Database()
 email_service = EmailService()
+
+# Admin authentication middleware
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({'error': 'Token is missing'}), 401
+        
+        try:
+            token = token.split(' ')[1]  # Remove 'Bearer ' prefix
+            payload = jwt.decode(token, app.secret_key, algorithms=['HS256'])
+            if payload.get('role') != 'admin':
+                return jsonify({'error': 'Admin access required'}), 403
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token has expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -259,6 +282,149 @@ def resend_verification():
         return jsonify({'message': 'Verification email sent successfully'}), 200
     else:
         return jsonify({'error': 'Failed to send verification email'}), 500
+
+# Admin login endpoint
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+    
+    if not username or not password:
+        return jsonify({'error': 'Username and password are required'}), 400
+    
+    # Verify admin credentials (you should use proper password hashing)
+    if username == 'admin' and password == 'admin123':  # Change these credentials
+        token = jwt.encode({
+            'username': username,
+            'role': 'admin',
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+        }, app.secret_key)
+        
+        return jsonify({'token': token}), 200
+    
+    return jsonify({'error': 'Invalid credentials'}), 401
+
+# User management endpoints
+@app.route('/api/admin/users', methods=['GET'])
+@admin_required
+def get_users():
+    try:
+        users = db.get_all_users()
+        return jsonify(users), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/users/<int:user_id>', methods=['DELETE'])
+@admin_required
+def delete_user(user_id):
+    try:
+        db.delete_user(user_id)
+        return jsonify({'message': 'User deleted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Course management endpoints
+@app.route('/api/admin/courses', methods=['GET'])
+@admin_required
+def get_courses():
+    try:
+        courses = db.get_all_courses()
+        return jsonify(courses), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/courses/<int:course_id>', methods=['DELETE'])
+@admin_required
+def delete_course(course_id):
+    try:
+        db.delete_course(course_id)
+        return jsonify({'message': 'Course deleted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Blog management endpoints
+@app.route('/api/admin/blog', methods=['GET'])
+@admin_required
+def get_blog_posts():
+    try:
+        posts = db.get_all_blog_posts()
+        return jsonify(posts), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/blog/<int:post_id>', methods=['DELETE'])
+@admin_required
+def delete_blog_post(post_id):
+    try:
+        db.delete_blog_post(post_id)
+        return jsonify({'message': 'Blog post deleted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Service management endpoints
+@app.route('/api/admin/services', methods=['GET'])
+@admin_required
+def get_services():
+    try:
+        services = db.get_all_services()
+        return jsonify(services), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/services/<int:service_id>', methods=['DELETE'])
+@admin_required
+def delete_service(service_id):
+    try:
+        db.delete_service(service_id)
+        return jsonify({'message': 'Service deleted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Search endpoints
+@app.route('/api/admin/search/users', methods=['GET'])
+@admin_required
+def search_users():
+    query = request.args.get('q', '')
+    filter = request.args.get('filter', 'all')
+    try:
+        users = db.search_users(query, filter)
+        return jsonify(users), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/search/courses', methods=['GET'])
+@admin_required
+def search_courses():
+    query = request.args.get('q', '')
+    filter = request.args.get('filter', 'all')
+    try:
+        courses = db.search_courses(query, filter)
+        return jsonify(courses), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/search/blog', methods=['GET'])
+@admin_required
+def search_blog_posts():
+    query = request.args.get('q', '')
+    filter = request.args.get('filter', 'all')
+    try:
+        posts = db.search_blog_posts(query, filter)
+        return jsonify(posts), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/search/services', methods=['GET'])
+@admin_required
+def search_services():
+    query = request.args.get('q', '')
+    filter = request.args.get('filter', 'all')
+    try:
+        services = db.search_services(query, filter)
+        return jsonify(services), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True) 

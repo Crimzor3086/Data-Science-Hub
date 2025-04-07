@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stay updated with the latest insights, tutorials, and best practices in data science, machine learning, and artificial intelligence.">
   <title>Blog - Data Science Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
 </head>
 <body>
   <header>
-    <img src="../assets/images/logo.svg" alt="Data Science Hub Logo" class="logo">
+    <img src="../assets/images/logo.svg" alt="Data Science Hub Logo - A stylized DS icon" class="logo">
     <h1>Blog</h1>
-    <nav>
+    <nav aria-label="Main navigation">
       <ul>
         <li><a href="../index.html">Home</a></li>
-        <li><a href="team.html">Team</a></li>
-        <li><a href="services.html">Services</a></li>
         <li><a href="courses.html">Courses</a></li>
+        <li><a href="services.html">Services</a></li>
         <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="team.html">Team</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="../search.html">Search</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="login.html">Login</a></li>
         <li><a href="signup.html">Sign Up</a></li>
@@ -36,32 +36,35 @@
       <p>Stay updated with the latest trends, tutorials, and best practices in data science, machine learning, and artificial intelligence.</p>
     </section>
 
-    <section class="blog-grid">
-      <div class="blog-card">
+    <section class="blog-grid" aria-label="Blog posts">
+      <article class="blog-card">
         <h3>Machine Learning Algorithms</h3>
+        <p class="meta">By Dr. Sarah Johnson | March 15, 2024</p>
         <p>Explore various machine learning algorithms and their applications in real-world scenarios.</p>
-        <a href="#" class="read-more">Read More</a>
-      </div>
+        <a href="#" class="read-more" aria-label="Read more about Machine Learning Algorithms">Read More</a>
+      </article>
 
-      <div class="blog-card">
+      <article class="blog-card">
         <h3>Deep Learning Fundamentals</h3>
+        <p class="meta">By Prof. Michael Chen | March 10, 2024</p>
         <p>Learn about neural networks, backpropagation, and deep learning architectures.</p>
-        <a href="#" class="read-more">Read More</a>
-      </div>
+        <a href="#" class="read-more" aria-label="Read more about Deep Learning Fundamentals">Read More</a>
+      </article>
 
-      <div class="blog-card">
+      <article class="blog-card">
         <h3>Data Preprocessing Techniques</h3>
+        <p class="meta">By Dr. Emily Rodriguez | March 5, 2024</p>
         <p>Master the art of cleaning and preparing data for analysis and modeling.</p>
-        <a href="#" class="read-more">Read More</a>
-      </div>
+        <a href="#" class="read-more" aria-label="Read more about Data Preprocessing Techniques">Read More</a>
+      </article>
     </section>
 
-    <section class="cta">
+    <section class="cta" aria-label="Newsletter subscription">
       <h2>Subscribe to Our Newsletter</h2>
       <p>Get the latest updates and insights delivered directly to your inbox.</p>
       <div class="cta-buttons">
-        <a href="signup.html" class="cta-btn primary">Subscribe Now</a>
-        <a href="contact.html" class="cta-btn secondary">Contact Us</a>
+        <a href="signup.html" class="cta-btn primary" aria-label="Subscribe to newsletter">Subscribe Now</a>
+        <a href="contact.html" class="cta-btn secondary" aria-label="Contact us">Contact Us</a>
       </div>
     </section>
   </main>
