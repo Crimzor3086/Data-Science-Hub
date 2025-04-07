@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Error - Data Science Hub</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Verification Error</h2>
+            <p class="error-message">{{ message }}</p>
+            <div class="form-group">
+                <a href="/pages/login.html" class="btn btn-primary">Go to Login</a>
+            </div>
+            {% if not "blocked" in message.lower() %}
+            <div class="form-group">
+                <form action="/resend-verification" method="POST">
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-secondary">Resend Verification Email</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html> 

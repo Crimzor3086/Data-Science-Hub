@@ -179,4 +179,172 @@ class Database:
         ''', (password_hash + ':' + salt, user_id))
         
         conn.commit()
+        conn.close()
+
+    def create_verification_token(self, user_id):
+        """Create a new email verification token."""
+        token = secrets.token_urlsafe(32)
+        expires_at = datetime.now() + timedelta(hours=24)
+        
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            INSERT INTO email_verification (user_id, verification_token, expires_at)
+            VALUES (?, ?, ?)
+        ''', (user_id, token, expires_at))
+        conn.commit()
+        conn.close()
+        return token
+
+    def verify_email(self, token):
+        """Verify email using the token."""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT user_id, expires_at
+            FROM email_verification
+            WHERE verification_token = ? AND is_verified = 0
+        ''', (token,))
+        result = cursor.fetchone()
+        
+        if not result:
+            return False
+            
+        user_id, expires_at = result
+        if datetime.now() > datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S'):
+            return False
+            
+        # Mark as verified
+        cursor.execute('''
+            UPDATE email_verification
+            SET is_verified = 1
+            WHERE verification_token = ?
+        ''', (token,))
+        
+        # Update user's email verification status
+        cursor.execute('''
+            UPDATE users
+            SET is_verified = 1
+            WHERE id = ?
+        ''', (user_id,))
+        
+        conn.commit()
+        conn.close()
+        return True
+
+    def is_email_verified(self, user_id):
+        """Check if a user's email is verified."""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT is_verified
+            FROM users
+            WHERE id = ?
+        ''', (user_id,))
+        result = cursor.fetchone()
+        conn.close()
+        return result[0] if result else False
+
+    def check_rate_limit(self, ip_address, action_type, max_attempts=5, window_minutes=60, block_hours=24):
+        """Check if an action is rate limited."""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        # Check for existing block
+        cursor.execute('''
+            SELECT is_blocked, block_expires_at
+            FROM rate_limits
+            WHERE ip_address = ? AND action_type = ? AND is_blocked = 1
+        ''', (ip_address, action_type))
+        result = cursor.fetchone()
+        
+        if result:
+            is_blocked, expires_at = result
+            if datetime.now() < datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S'):
+                conn.close()
+                return False, f"Too many attempts. Please try again after {expires_at}"
+            else:
+                # Unblock if expired
+                cursor.execute('''
+                    UPDATE rate_limits
+                    SET is_blocked = 0, block_expires_at = NULL
+                    WHERE ip_address = ? AND action_type = ?
+                ''', (ip_address, action_type))
+        
+        # Check attempt count
+        cursor.execute('''
+            SELECT attempt_count, last_attempt
+            FROM rate_limits
+            WHERE ip_address = ? AND action_type = ?
+        ''', (ip_address, action_type))
+        result = cursor.fetchone()
+        
+        if result:
+            count, last_attempt = result
+            time_diff = datetime.now() - datetime.strptime(last_attempt, '%Y-%m-%d %H:%M:%S')
+            
+            if time_diff.total_seconds() < window_minutes * 60:
+                if count >= max_attempts:
+                    # Block the IP
+                    block_expires = datetime.now() + timedelta(hours=block_hours)
+                    cursor.execute('''
+                        UPDATE rate_limits
+                        SET is_blocked = 1, block_expires_at = ?
+                        WHERE ip_address = ? AND action_type = ?
+                    ''', (block_expires, ip_address, action_type))
+                    conn.commit()
+                    conn.close()
+                    return False, f"Too many attempts. IP blocked for {block_hours} hours."
+                
+                # Increment attempt count
+                cursor.execute('''
+                    UPDATE rate_limits
+                    SET attempt_count = attempt_count + 1,
+                        last_attempt = CURRENT_TIMESTAMP
+                    WHERE ip_address = ? AND action_type = ?
+                ''', (ip_address, action_type))
+            else:
+                # Reset attempt count if window expired
+                cursor.execute('''
+                    UPDATE rate_limits
+                    SET attempt_count = 1,
+                        last_attempt = CURRENT_TIMESTAMP
+                    WHERE ip_address = ? AND action_type = ?
+                ''', (ip_address, action_type))
+        else:
+            # Create new rate limit entry
+            cursor.execute('''
+                INSERT INTO rate_limits (ip_address, action_type)
+                VALUES (?, ?)
+            ''', (ip_address, action_type))
+        
+        conn.commit()
+        conn.close()
+        return True, None
+
+    def clear_rate_limits(self, ip_address=None, action_type=None):
+        """Clear rate limits for an IP or action type."""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        if ip_address and action_type:
+            cursor.execute('''
+                DELETE FROM rate_limits
+                WHERE ip_address = ? AND action_type = ?
+            ''', (ip_address, action_type))
+        elif ip_address:
+            cursor.execute('''
+                DELETE FROM rate_limits
+                WHERE ip_address = ?
+            ''', (ip_address,))
+        elif action_type:
+            cursor.execute('''
+                DELETE FROM rate_limits
+                WHERE action_type = ?
+            ''', (action_type,))
+        
+        conn.commit()
         conn.close() 

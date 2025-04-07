@@ -1,5 +1,6 @@
-from flask import Flask, request, jsonify, make_response, redirect, session, url_for
+from flask import Flask, request, jsonify, make_response, redirect, session, url_for, render_template
 from database.db import Database
+from auth.email_service import EmailService
 import os
 from datetime import datetime, timedelta
 from auth.oauth_handler import OAuthHandler
@@ -7,6 +8,7 @@ from auth.oauth_handler import OAuthHandler
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 db = Database()
+email_service = EmailService()
 
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -15,16 +17,29 @@ def signup():
     if not all(k in data for k in ('name', 'email', 'password')):
         return jsonify({'error': 'Missing required fields'}), 400
     
-    success = db.create_user(
+    # Check if email already exists
+    if db.get_user_by_email(data['email']):
+        return jsonify({'error': 'Email already registered'}), 400
+    
+    # Create user
+    user_id = db.create_user(
         name=data['name'],
         email=data['email'],
         password=data['password']
     )
+    if not user_id:
+        return jsonify({'error': 'Failed to create user'}), 500
     
-    if success:
-        return jsonify({'message': 'User created successfully'}), 201
+    # Create verification token and send email
+    verification_token = db.create_verification_token(user_id)
+    if email_service.send_verification_email(data['email'], verification_token):
+        return jsonify({
+            'message': 'Account created successfully. Please check your email to verify your account.'
+        }), 201
     else:
-        return jsonify({'error': 'Email already exists'}), 400
+        return jsonify({
+            'message': 'Account created, but verification email could not be sent. Please contact support.'
+        }), 201
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -185,6 +200,65 @@ def logout():
         db.invalidate_session(session['session_token'])
     session.clear()
     return redirect(url_for('login'))
+
+@app.route('/verify-email')
+def verify_email():
+    token = request.args.get('token')
+    if not token:
+        return render_template('verification_error.html', 
+                             message='No verification token provided')
+    
+    # Check rate limit for verification attempts
+    allowed, message = db.check_rate_limit(
+        ip_address=request.remote_addr,
+        action_type='verify_email',
+        max_attempts=5,  # 5 attempts per hour
+        window_minutes=60,
+        block_hours=24
+    )
+    if not allowed:
+        return render_template('verification_error.html', 
+                             message=message)
+        
+    if db.verify_email(token):
+        # Clear rate limits on successful verification
+        db.clear_rate_limits(ip_address=request.remote_addr, 
+                           action_type='verify_email')
+        return render_template('verification_success.html')
+    else:
+        return render_template('verification_error.html', 
+                             message='Invalid or expired verification token')
+
+@app.route('/resend-verification', methods=['POST'])
+def resend_verification():
+    email = request.form.get('email')
+    if not email:
+        return jsonify({'error': 'Email is required'}), 400
+        
+    # Check rate limit
+    allowed, message = db.check_rate_limit(
+        ip_address=request.remote_addr,
+        action_type='resend_verification',
+        max_attempts=3,  # 3 attempts per hour
+        window_minutes=60,
+        block_hours=24
+    )
+    if not allowed:
+        return jsonify({'error': message}), 429
+        
+    user = db.get_user_by_email(email)
+    if not user:
+        return jsonify({'error': 'Email not found'}), 404
+        
+    if db.is_email_verified(user['id']):
+        return jsonify({'error': 'Email already verified'}), 400
+        
+    # Create new verification token
+    verification_token = db.create_verification_token(user['id'])
+    if email_service.send_verification_email(email, verification_token):
+        return jsonify({'message': 'Verification email sent successfully'}), 200
+    else:
+        return jsonify({'error': 'Failed to send verification email'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True) 
