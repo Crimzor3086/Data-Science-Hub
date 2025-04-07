@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Data Science Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="../favicon.ico">
+</head>
+<body>
+  <header>
+    <img src="../assets/images/logo.svg" alt="Data Science Hub Logo" class="logo">
+    <h1>Sign Up</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="../search.html">Search</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html" class="active">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2>Create Your Account</h2>
+      <form id="signup-form" action="#" method="POST" class="auth-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required 
+                 placeholder="Enter your full name"
+                 pattern="[A-Za-z\s]{2,50}"
+                 title="Please enter a valid name (2-50 characters, letters only)">
+          <div class="error-message" id="name-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required 
+                 placeholder="Enter your email"
+                 pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                 title="Please enter a valid email address">
+          <div class="error-message" id="email-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required 
+                 placeholder="Create a password"
+                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                 title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters">
+          <div class="password-requirements">
+            <p>Password must contain:</p>
+            <ul>
+              <li>At least 8 characters</li>
+              <li>One uppercase letter</li>
+              <li>One lowercase letter</li>
+              <li>One number</li>
+            </ul>
+          </div>
+          <div class="error-message" id="password-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" required 
+                 placeholder="Confirm your password">
+          <div class="error-message" id="confirm-password-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" name="terms" id="terms" required>
+            I agree to the <a href="#" onclick="showTerms()">Terms of Service</a> and <a href="#" onclick="showPrivacy()">Privacy Policy</a>
+          </label>
+          <div class="error-message" id="terms-error"></div>
+        </div>
+
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+
+      <div class="auth-links">
+        <p>Already have an account? <a href="login.html">Log in here</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Data Science Hub. All rights reserved.</p>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Reset error messages
+      document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+      
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const terms = document.getElementById('terms').checked;
+      
+      // Validate form
+      let isValid = true;
+      
+      if (!name.match(/^[A-Za-z\s]{2,50}$/)) {
+        document.getElementById('name-error').textContent = 'Please enter a valid name (2-50 characters, letters only)';
+        isValid = false;
+      }
+      
+      if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+        document.getElementById('email-error').textContent = 'Please enter a valid email address';
+        isValid = false;
+      }
+      
+      if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)) {
+        document.getElementById('password-error').textContent = 'Password must meet all requirements';
+        isValid = false;
+      }
+      
+      if (password !== confirmPassword) {
+        document.getElementById('confirm-password-error').textContent = 'Passwords do not match';
+        isValid = false;
+      }
+      
+      if (!terms) {
+        document.getElementById('terms-error').textContent = 'You must agree to the terms and conditions';
+        isValid = false;
+      }
+      
+      if (isValid) {
+        // Create form data object
+        const formData = {
+          name: name,
+          email: email,
+          password: password
+        };
+        
+        // Log form data (for debugging)
+        console.log('Form Submitted:', formData);
+        
+        // Here you would typically send the data to your server
+        alert('Account created successfully!');
+        window.location.href = 'login.html';
+      }
+    });
+
+    function showTerms() {
+      alert('Terms of Service will be displayed here');
+      // You can replace this with a modal or redirect to terms.html when it's created
+    }
+
+    function showPrivacy() {
+      alert('Privacy Policy will be displayed here');
+      // You can replace this with a modal or redirect to privacy.html when it's created
+    }
+  </script>
+</body>
+</html>
