@@ -347,4 +347,130 @@ class Database:
             ''', (action_type,))
         
         conn.commit()
-        conn.close() 
+        conn.close()
+
+    def create_or_update_user(self, email, name=None, password=None, provider=None, provider_id=None):
+        """Create a new user or update existing user with OAuth provider"""
+        try:
+            # Check if user exists with email
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            cursor.execute('SELECT id FROM users WHERE email = ?', (email,))
+            user = cursor.fetchone()
+
+            if user:
+                # Update existing user
+                cursor.execute('''
+                    UPDATE users 
+                    SET name = COALESCE(?, name),
+                        provider = COALESCE(?, provider),
+                        provider_id = COALESCE(?, provider_id),
+                        last_login = CURRENT_TIMESTAMP
+                    WHERE id = ?
+                ''', (name, provider, provider_id, user[0]))
+                user_id = user[0]
+            else:
+                # Create new user
+                cursor.execute('''
+                    INSERT INTO users (email, name, password, provider, provider_id)
+                    VALUES (?, ?, ?, ?, ?)
+                ''', (email, name, password, provider, provider_id))
+                user_id = cursor.lastrowid
+
+            conn.commit()
+            return self.get_user_by_id(user_id)
+        except sqlite3.IntegrityError as e:
+            conn.rollback()
+            raise ValueError("User with this email already exists")
+
+    def get_user_by_id(self, user_id):
+        """Get user by ID"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT id, email, name, provider, provider_id, role, status, created_at, last_login
+            FROM users
+            WHERE id = ?
+        ''', (user_id,))
+        user = cursor.fetchone()
+        if user:
+            return {
+                'id': user[0],
+                'email': user[1],
+                'name': user[2],
+                'provider': user[3],
+                'provider_id': user[4],
+                'role': user[5],
+                'status': user[6],
+                'created_at': user[7],
+                'last_login': user[8]
+            }
+        return None
+
+    def get_user_by_email(self, email):
+        """Get user by email"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT id, email, name, provider, provider_id, role, status, created_at, last_login
+            FROM users
+            WHERE email = ?
+        ''', (email,))
+        user = cursor.fetchone()
+        if user:
+            return {
+                'id': user[0],
+                'email': user[1],
+                'name': user[2],
+                'provider': user[3],
+                'provider_id': user[4],
+                'role': user[5],
+                'status': user[6],
+                'created_at': user[7],
+                'last_login': user[8]
+            }
+        return None
+
+    def create_session(self, user_id):
+        """Create a new session for a user"""
+        token = secrets.token_hex(32)
+        expires_at = datetime.now() + timedelta(days=7)
+        
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            INSERT INTO sessions (user_id, session_token, expires_at)
+            VALUES (?, ?, ?)
+        ''', (user_id, token, expires_at))
+        
+        conn.commit()
+        conn.close()
+        return token
+
+    def validate_session(self, token):
+        """Validate a session token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT user_id, expires_at
+            FROM sessions
+            WHERE session_token = ? AND expires_at > CURRENT_TIMESTAMP
+        ''', (token,))
+        session = cursor.fetchone()
+        if session:
+            return session[0]  # Return user_id
+        return None
+
+    def invalidate_session(self, token):
+        """Invalidate a session token"""
+        conn = self.get_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute('DELETE FROM sessions WHERE session_token = ?', (token,))
+        conn.commit()
+        conn.close()
+
+    def __del__(self):
+        self.conn.close()

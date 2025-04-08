@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 db = Database()
 email_service = EmailService()
+oauth_handler = OAuthHandler()
 
 # Admin authentication middleware
 def admin_required(f):
@@ -148,7 +149,7 @@ def reset_password():
 
 @app.route('/auth/google')
 def google_auth():
-    auth_url = OAuthHandler.get_google_auth_url()
+    auth_url = oauth_handler.get_google_auth_url()
     return redirect(auth_url)
 
 @app.route('/auth/google/callback')
@@ -156,31 +157,11 @@ def google_callback():
     code = request.args.get('code')
     if not code:
         return redirect(url_for('login', error='No code provided'))
-
-    try:
-        access_token = OAuthHandler.get_google_token(code)
-        user_info = OAuthHandler.get_google_user_info(access_token)
-        
-        # Create or update user in database
-        user = db.create_or_update_user(
-            email=user_info['email'],
-            name=user_info.get('name', ''),
-            provider='google',
-            provider_id=user_info['sub']
-        )
-        
-        # Create session
-        session_token = db.create_session(user['id'])
-        session['user_id'] = user['id']
-        session['session_token'] = session_token
-        
-        return redirect(url_for('dashboard'))
-    except Exception as e:
-        return redirect(url_for('login', error=str(e)))
+    return oauth_handler.handle_google_callback(code)
 
 @app.route('/auth/github')
 def github_auth():
-    auth_url = OAuthHandler.get_github_auth_url()
+    auth_url = oauth_handler.get_github_auth_url()
     return redirect(auth_url)
 
 @app.route('/auth/github/callback')
@@ -188,28 +169,7 @@ def github_callback():
     code = request.args.get('code')
     if not code:
         return redirect(url_for('login', error='No code provided'))
-
-    try:
-        access_token = OAuthHandler.get_github_token(code)
-        user_info = OAuthHandler.get_github_user_info(access_token)
-        email = OAuthHandler.get_github_user_email(access_token)
-        
-        # Create or update user in database
-        user = db.create_or_update_user(
-            email=email,
-            name=user_info.get('name', user_info['login']),
-            provider='github',
-            provider_id=str(user_info['id'])
-        )
-        
-        # Create session
-        session_token = db.create_session(user['id'])
-        session['user_id'] = user['id']
-        session['session_token'] = session_token
-        
-        return redirect(url_for('dashboard'))
-    except Exception as e:
-        return redirect(url_for('login', error=str(e)))
+    return oauth_handler.handle_github_callback(code)
 
 @app.route('/dashboard')
 def dashboard():
