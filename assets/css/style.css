@@ -132,6 +132,31 @@ header nav ul li a {
     font-size: 0.9rem;
 }
 
+/* Profile Icon in Navigation */
+.nav-profile {
+    margin-left: auto;
+}
+
+.profile-link {
+    padding: 0 !important;
+    border: none !important;
+}
+
+.nav-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold-primary);
+    transition: all 0.3s ease;
+}
+
+.nav-avatar:hover {
+    transform: scale(1.1);
+    border-color: var(--gold-light);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     header {
@@ -165,6 +190,15 @@ header nav ul li a {
         padding: 6px 12px;
         font-size: 0.8rem;
     }
+
+    .nav-profile {
+        margin-left: 0;
+    }
+    
+    .nav-avatar {
+        width: 35px;
+        height: 35px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -187,6 +221,11 @@ header nav ul li a {
     header nav ul li a {
         padding: 5px 10px;
         font-size: 0.75rem;
+    }
+
+    .nav-avatar {
+        width: 30px;
+        height: 30px;
     }
 }
 
