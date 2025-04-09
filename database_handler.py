@@ -9,6 +9,34 @@ class DatabaseHandler:
     def create_tables(self):
         # ... existing table creation code ...
 
+        # Courses table
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS courses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                level TEXT NOT NULL,
+                instructor TEXT NOT NULL,
+                price REAL NOT NULL,
+                duration TEXT NOT NULL,
+                pdf_path TEXT,
+                status TEXT DEFAULT 'active',
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
+        # Course details table
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS course_details (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                course_id INTEGER NOT NULL,
+                description TEXT,
+                learning_objectives TEXT,
+                prerequisites TEXT,
+                syllabus TEXT,
+                FOREIGN KEY (course_id) REFERENCES courses(id)
+            )
+        ''')
+
         # Admin-related tables
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS admin_logs (
@@ -56,14 +84,109 @@ class DatabaseHandler:
     # Course Management
     def get_all_courses(self):
         self.cursor.execute('''
-            SELECT id, title, level, instructor, price, status, created_at
+            SELECT id, title, level, instructor, price, duration, pdf_path, status, created_at
             FROM courses
+            WHERE status = 'active'
             ORDER BY created_at DESC
         ''')
-        return self.cursor.fetchall()
+        columns = [col[0] for col in self.cursor.description]
+        return [dict(zip(columns, row)) for row in self.cursor.fetchall()]
+
+    def get_course_by_id(self, course_id):
+        self.cursor.execute('''
+            SELECT id, title, level, instructor, price, duration, pdf_path, status, created_at
+            FROM courses
+            WHERE id = ? AND status = 'active'
+        ''', (course_id,))
+        columns = [col[0] for col in self.cursor.description]
+        row = self.cursor.fetchone()
+        return dict(zip(columns, row)) if row else None
+
+    def get_course_details(self, course_id):
+        self.cursor.execute('''
+            SELECT description, learning_objectives, prerequisites, syllabus
+            FROM course_details
+            WHERE course_id = ?
+        ''', (course_id,))
+        columns = [col[0] for col in self.cursor.description]
+        row = self.cursor.fetchone()
+        return dict(zip(columns, row)) if row else {}
+
+    def create_course(self, title, level, instructor, price, duration, pdf_path=None):
+        self.cursor.execute('''
+            INSERT INTO courses (title, level, instructor, price, duration, pdf_path)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (title, level, instructor, price, duration, pdf_path))
+        self.conn.commit()
+        return self.cursor.lastrowid
+
+    def create_course_details(self, course_id, description=None, learning_objectives=None, prerequisites=None, syllabus=None):
+        self.cursor.execute('''
+            INSERT INTO course_details (course_id, description, learning_objectives, prerequisites, syllabus)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (course_id, description, learning_objectives, prerequisites, syllabus))
+        self.conn.commit()
+
+    def update_course(self, course_id, title=None, level=None, instructor=None, price=None, duration=None, pdf_path=None):
+        update_fields = []
+        params = []
+        
+        if title is not None:
+            update_fields.append('title = ?')
+            params.append(title)
+        if level is not None:
+            update_fields.append('level = ?')
+            params.append(level)
+        if instructor is not None:
+            update_fields.append('instructor = ?')
+            params.append(instructor)
+        if price is not None:
+            update_fields.append('price = ?')
+            params.append(price)
+        if duration is not None:
+            update_fields.append('duration = ?')
+            params.append(duration)
+        if pdf_path is not None:
+            update_fields.append('pdf_path = ?')
+            params.append(pdf_path)
+        
+        if update_fields:
+            params.append(course_id)
+            self.cursor.execute(f'''
+                UPDATE courses
+                SET {', '.join(update_fields)}
+                WHERE id = ?
+            ''', params)
+            self.conn.commit()
+
+    def update_course_details(self, course_id, description=None, learning_objectives=None, prerequisites=None, syllabus=None):
+        update_fields = []
+        params = []
+        
+        if description is not None:
+            update_fields.append('description = ?')
+            params.append(description)
+        if learning_objectives is not None:
+            update_fields.append('learning_objectives = ?')
+            params.append(learning_objectives)
+        if prerequisites is not None:
+            update_fields.append('prerequisites = ?')
+            params.append(prerequisites)
+        if syllabus is not None:
+            update_fields.append('syllabus = ?')
+            params.append(syllabus)
+        
+        if update_fields:
+            params.append(course_id)
+            self.cursor.execute(f'''
+                UPDATE course_details
+                SET {', '.join(update_fields)}
+                WHERE course_id = ?
+            ''', params)
+            self.conn.commit()
 
     def delete_course(self, course_id):
-        self.cursor.execute('DELETE FROM courses WHERE id = ?', (course_id,))
+        self.cursor.execute('UPDATE courses SET status = "inactive" WHERE id = ?', (course_id,))
         self.conn.commit()
 
     def search_courses(self, query, filter='all'):

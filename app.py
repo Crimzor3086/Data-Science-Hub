@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response, redirect, session, url_for, render_template
+from flask import Flask, request, jsonify, make_response, redirect, session, url_for, render_template, send_file
 from database.db import Database
 from auth.email_service import EmailService
 import os
@@ -177,8 +177,8 @@ def dashboard():
         return redirect(url_for('login'))
     return "Welcome to your dashboard!"
 
-@app.route('/logout')
-def logout():
+@app.route('/auth/logout')
+def auth_logout():
     if 'session_token' in session:
         db.invalidate_session(session['session_token'])
     session.clear()
@@ -383,6 +383,111 @@ def search_services():
     try:
         services = db.search_services(query, filter)
         return jsonify(services), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Course endpoints
+@app.route('/api/courses', methods=['GET'])
+def get_all_courses():
+    try:
+        courses = db.get_all_courses()
+        return jsonify(courses), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/courses/<int:course_id>', methods=['GET'])
+def get_course_details(course_id):
+    try:
+        course = db.get_course_by_id(course_id)
+        if not course:
+            return jsonify({'error': 'Course not found'}), 404
+        
+        course_details = db.get_course_details(course_id)
+        course['details'] = course_details
+        
+        return jsonify(course), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/courses/<int:course_id>/pdf', methods=['GET'])
+def get_course_pdf(course_id):
+    try:
+        course = db.get_course_by_id(course_id)
+        if not course or not course.get('pdf_path'):
+            return jsonify({'error': 'PDF not found'}), 404
+        
+        # In a production environment, you would want to:
+        # 1. Check if the user has access to the course
+        # 2. Serve the PDF file securely
+        # 3. Log the download
+        
+        return send_file(course['pdf_path'], as_attachment=True)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Admin course management
+@app.route('/api/admin/courses', methods=['POST'])
+@admin_required
+def create_course():
+    try:
+        data = request.get_json()
+        required_fields = ['title', 'level', 'instructor', 'price', 'duration']
+        
+        if not all(field in data for field in required_fields):
+            return jsonify({'error': 'Missing required fields'}), 400
+        
+        course_id = db.create_course(
+            title=data['title'],
+            level=data['level'],
+            instructor=data['instructor'],
+            price=data['price'],
+            duration=data['duration'],
+            pdf_path=data.get('pdf_path')
+        )
+        
+        if 'details' in data:
+            db.create_course_details(
+                course_id=course_id,
+                description=data['details'].get('description'),
+                learning_objectives=data['details'].get('learning_objectives'),
+                prerequisites=data['details'].get('prerequisites'),
+                syllabus=data['details'].get('syllabus')
+            )
+        
+        return jsonify({'message': 'Course created successfully', 'course_id': course_id}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/admin/courses/<int:course_id>', methods=['PUT'])
+@admin_required
+def update_course(course_id):
+    try:
+        data = request.get_json()
+        course = db.get_course_by_id(course_id)
+        
+        if not course:
+            return jsonify({'error': 'Course not found'}), 404
+        
+        db.update_course(
+            course_id=course_id,
+            title=data.get('title', course['title']),
+            level=data.get('level', course['level']),
+            instructor=data.get('instructor', course['instructor']),
+            price=data.get('price', course['price']),
+            duration=data.get('duration', course['duration']),
+            pdf_path=data.get('pdf_path', course.get('pdf_path'))
+        )
+        
+        if 'details' in data:
+            db.update_course_details(
+                course_id=course_id,
+                description=data['details'].get('description'),
+                learning_objectives=data['details'].get('learning_objectives'),
+                prerequisites=data['details'].get('prerequisites'),
+                syllabus=data['details'].get('syllabus')
+            )
+        
+        return jsonify({'message': 'Course updated successfully'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

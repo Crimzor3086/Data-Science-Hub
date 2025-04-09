@@ -9,121 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="icon" href="../favicon.ico">
-    <style>
-        .admin-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #D4AF37;
-            padding-bottom: 0.5rem;
-        }
-
-        .admin-tab {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            color: #ffffff;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .admin-tab.active {
-            background-color: #D4AF37;
-            color: #1a1a1a;
-        }
-
-        .admin-content {
-            background-color: #2a2a2a;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #D4AF37;
-        }
-
-        .data-table th {
-            background-color: #1a1a1a;
-            color: #D4AF37;
-        }
-
-        .action-btn {
-            padding: 0.5rem 1rem;
-            margin: 0 0.25rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .edit-btn {
-            background-color: #D4AF37;
-            color: #1a1a1a;
-        }
-
-        .delete-btn {
-            background-color: #ff4444;
-            color: #ffffff;
-        }
-
-        .search-filter {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .search-filter input {
-            flex: 1;
-            padding: 0.5rem;
-            border: 1px solid #D4AF37;
-            border-radius: 4px;
-            background-color: #1a1a1a;
-            color: #ffffff;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .pagination-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #D4AF37;
-            border-radius: 4px;
-            background: none;
-            color: #ffffff;
-            cursor: pointer;
-        }
-
-        .pagination-btn.active {
-            background-color: #D4AF37;
-            color: #1a1a1a;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body>
     <header>
@@ -156,7 +42,7 @@
             <div class="admin-tab" data-tab="services">Services</div>
         </div>
 
-        <div class="admin-content" id="users-tab">
+        <div class="admin-content" id="users-tab" class="active">
             <div class="search-filter">
                 <input type="text" id="user-search" placeholder="Search users...">
                 <label for="user-filter" class="sr-only">Filter users by status</label>
@@ -190,7 +76,7 @@
             </div>
         </div>
 
-        <div class="admin-content" id="courses-tab" style="display: none;">
+        <div class="admin-content" id="courses-tab">
             <div class="search-filter">
                 <input type="text" id="course-search" placeholder="Search courses...">
                 <label for="course-filter" class="sr-only">Filter courses by level</label>
@@ -218,7 +104,7 @@
             </table>
         </div>
 
-        <div class="admin-content" id="blog-tab" style="display: none;">
+        <div class="admin-content" id="blog-tab">
             <div class="search-filter">
                 <input type="text" id="blog-search" placeholder="Search blog posts...">
                 <label for="blog-filter" class="sr-only">Filter blog posts by status</label>
@@ -245,7 +131,7 @@
             </table>
         </div>
 
-        <div class="admin-content" id="services-tab" style="display: none;">
+        <div class="admin-content" id="services-tab">
             <div class="search-filter">
                 <input type="text" id="service-search" placeholder="Search services...">
                 <label for="service-filter" class="sr-only">Filter services by status</label>
@@ -290,12 +176,12 @@
                 
                 // Hide all content
                 document.querySelectorAll('.admin-content').forEach(content => {
-                    content.style.display = 'none';
+                    content.classList.remove('active');
                 });
                 
                 // Show selected content
                 const tabId = tab.getAttribute('data-tab') + '-tab';
-                document.getElementById(tabId).style.display = 'block';
+                document.getElementById(tabId).classList.add('active');
             });
         });
 
