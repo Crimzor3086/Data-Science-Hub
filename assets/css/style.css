@@ -138,9 +138,15 @@ header nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: var(--background-color);
+    background-color: var(--black-primary);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
+    border-bottom: 2px solid var(--gold-primary);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
 }
 
 .logo img {
@@ -158,12 +164,12 @@ header nav {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
 }
 
 .nav-link {
-    color: var(--text-color);
+    color: var(--gold-primary);
     text-decoration: none;
     font-weight: 500;
     padding: 0.5rem 0;
@@ -178,12 +184,12 @@ header nav {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--primary-color);
+    background-color: var(--gold-primary);
     transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-    color: var(--primary-color);
+    color: var(--gold-light);
 }
 
 .nav-link:hover::after {
@@ -196,27 +202,44 @@ header nav {
     margin-left: auto;
 }
 
-.menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
+.nav-profile {
+    margin-left: 1rem;
 }
 
-.menu-icon {
-    display: block;
-    width: 25px;
-    height: 2px;
-    background-color: var(--text-color);
-    margin: 5px 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+.profile-link {
+    display: flex;
+    align-items: center;
+}
+
+.nav-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-primary);
+    transition: transform 0.3s ease;
+}
+
+.nav-avatar:hover {
+    transform: scale(1.1);
 }
 
 /* Mobile Navigation */
 @media (max-width: 768px) {
     .menu-toggle {
         display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+
+    .menu-icon {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: var(--gold-primary);
+        margin: 5px 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .nav-links {
@@ -224,7 +247,7 @@ header nav {
         top: 70px;
         left: 0;
         width: 100%;
-        background-color: var(--background-color);
+        background-color: var(--black-primary);
         flex-direction: column;
         padding: 2rem;
         gap: 1.5rem;
@@ -262,6 +285,10 @@ header nav {
         width: 100%;
         text-align: center;
     }
+
+    .nav-profile {
+        margin: 1rem 0;
+    }
 }
 
 /* Active State */
@@ -276,11 +303,6 @@ header nav {
 /* Profile Icon in Navigation */
 .nav-profile {
     margin-left: auto;
-}
-
-.profile-link {
-    padding: 0 !important;
-    border: none !important;
 }
 
 .nav-avatar {
