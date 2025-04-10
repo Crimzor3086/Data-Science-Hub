@@ -4,102 +4,106 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Data Science Hub - Your one-stop destination for data science, machine learning, and AI education and services">
-  <title>Data Science Hub</title>
+  <title>Data Science Hub - Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 </head>
-<body class="index-page">
+<body>
   <header>
-    <img src="assets/images/logo.svg" alt="Data Science Hub Logo - A stylized DS icon" class="logo">
-    <h1>Data Science Hub</h1>
     <nav>
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/images/logo.svg" alt="Data Science Hub Logo">
+        </a>
+      </div>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="pages/courses.html">Courses</a></li>
-        <li><a href="pages/blog.html">Blog</a></li>
-        <li><a href="pages/services.html">Services</a></li>
-        <li><a href="pages/about.html">About</a></li>
-        <li><a href="pages/contact.html">Contact</a></li>
-        <li class="nav-profile">
-          <a href="pages/profile.html" class="profile-link">
-            <img src="assets/images/placeholders/avatar.png" alt="Profile" class="nav-avatar">
-          </a>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="nav-auth">
+          <a href="login.html" class="btn-secondary">Login</a>
+          <a href="signup.html" class="btn-primary">Sign Up</a>
         </li>
-        <li><a href="#" id="logout-btn">Logout</a></li>
       </ul>
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </nav>
   </header>
 
   <main>
     <section class="hero">
-      <p class="hero-text">Data Science Hub is your one-stop destination for everything related to data science, machine learning, artificial intelligence, and data-driven solutions. Whether you're a beginner eager to explore the exciting world of data science or an experienced professional looking to enhance your skills and collaborate on cutting-edge projects, we have something for everyone.</p>
-    </section>
-
-    <section class="mission">
-      <h2>Our Mission</h2>
-      <p>Our mission is to empower individuals and organizations with the knowledge, tools, and expertise needed to harness the power of data. At Data Science Hub, we believe that data science is at the heart of innovation and transformation in today's digital world, and we're here to guide you through every step of your data science journey.</p>
-    </section>
-
-    <section class="offerings">
-      <h2>What We Offer</h2>
-      <div class="offerings-grid">
-        <div class="offering-card">
-          <h3>Expert-Led Courses</h3>
-          <p>Learn from industry professionals through a wide variety of courses ranging from beginner-level introductions to advanced topics in data science, machine learning, and AI.</p>
-        </div>
-        <div class="offering-card">
-          <h3>Hands-On Projects</h3>
-          <p>Gain practical experience through real-world data science projects that help you apply what you've learned and build a portfolio.</p>
-        </div>
-        <div class="offering-card">
-          <h3>Consulting Services</h3>
-          <p>Benefit from personalized mentorship, consulting, and solutions tailored to your business or individual needs.</p>
-        </div>
-        <div class="offering-card">
-          <h3>Collaborative Community</h3>
-          <p>Connect with a supportive network of data scientists, analysts, and researchers from around the world. Share knowledge, collaborate on projects, and grow together.</p>
+      <div class="hero-content">
+        <h1>Welcome to Data Science Hub</h1>
+        <p>Your gateway to mastering data science, machine learning, and AI</p>
+        <div class="hero-cta">
+          <a href="courses.html" class="btn-primary">Explore Courses</a>
+          <a href="about.html" class="btn-secondary">Learn More</a>
         </div>
       </div>
     </section>
 
-    <section class="why-us">
-      <h2>Why Choose Us?</h2>
+    <section class="features">
+      <h2>Why Choose Data Science Hub?</h2>
       <div class="features-grid">
         <div class="feature-card">
-          <h3>Comprehensive Learning Path</h3>
-          <p>From beginner tutorials to advanced machine learning algorithms, we cover every aspect of data science.</p>
+          <img src="assets/images/icons/expert.svg" alt="Expert Instructors">
+          <h3>Expert Instructors</h3>
+          <p>Learn from industry professionals with years of experience</p>
         </div>
         <div class="feature-card">
-          <h3>Real-World Impact</h3>
-          <p>Our courses and services are designed to have a tangible, real-world impact, helping you solve practical problems using data.</p>
+          <img src="assets/images/icons/hands-on.svg" alt="Hands-on Learning">
+          <h3>Hands-on Learning</h3>
+          <p>Practical projects and real-world applications</p>
         </div>
         <div class="feature-card">
-          <h3>Innovation-Driven</h3>
-          <p>We stay at the forefront of technology, integrating the latest tools and trends in data science to ensure you're always learning the most current methods.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Flexible Learning</h3>
-          <p>Access learning materials and resources at your own pace, with the flexibility to learn whenever and wherever it suits you.</p>
+          <img src="assets/images/icons/community.svg" alt="Community Support">
+          <h3>Community Support</h3>
+          <p>Join a vibrant community of data science enthusiasts</p>
         </div>
       </div>
     </section>
 
     <section class="cta">
-      <h2>Join the Data Science Hub</h2>
-      <p>Ready to take your data science skills to the next level? Whether you're here to learn, grow, or collaborate, Data Science Hub offers all the resources you need to succeed in the world of data.</p>
-      <div class="cta-buttons">
-        <a href="pages/signup.html" class="cta-btn primary">Get Started</a>
-        <a href="pages/courses.html" class="cta-btn secondary">Explore Courses</a>
-      </div>
+      <h2>Ready to Start Your Data Science Journey?</h2>
+      <p>Join thousands of learners who have transformed their careers</p>
+      <a href="signup.html" class="btn-primary">Get Started</a>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Data Science Hub</p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Data Science Hub</h3>
+        <p>Empowering the next generation of data scientists</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Email: info@datasciencehub.com</p>
+        <p>Phone: (123) 456-7890</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Data Science Hub. All rights reserved.</p>
+    </div>
   </footer>
+
   <script src="assets/js/main.js"></script>
 </body>
 </html>
