@@ -133,25 +133,143 @@ header nav {
 }
 
 /* Navigation Styles */
-header nav ul {
+.main-nav {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--background-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-header nav ul li a {
-    display: inline-block;
-    padding: 8px 15px;
-    color: var(--gold-primary);
+.logo img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-color);
     text-decoration: none;
-    border: 1px solid var(--gold-primary);
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-auth {
+    display: flex;
+    gap: 1rem;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.menu-icon {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: var(--text-color);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Mobile Navigation */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--background-color);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-icon:nth-child(1) {
+        transform: rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-icon:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] .menu-icon:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+
+    .nav-auth {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .nav-auth a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Active State */
+.nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link.active::after {
+    width: 100%;
 }
 
 /* Profile Icon in Navigation */
@@ -177,78 +295,6 @@ header nav ul li a {
     transform: scale(1.1);
     border-color: var(--gold-light);
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    header {
-        padding: 10px 15px;
-        gap: 10px;
-    }
-
-    .logo {
-        max-width: 100px;
-        order: 1;
-        margin: 0;
-    }
-
-    header h1 {
-        order: 2;
-        font-size: 1.8rem;
-        text-align: center;
-        width: 100%;
-    }
-
-    header nav {
-        order: 3;
-    }
-
-    header nav ul {
-        justify-content: center;
-        gap: 8px;
-    }
-
-    header nav ul li a {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-
-    .nav-profile {
-        margin-left: 0;
-    }
-    
-    .nav-avatar {
-        width: 35px;
-        height: 35px;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        padding: 8px 10px;
-    }
-
-    .logo {
-        max-width: 80px;
-    }
-
-    header h1 {
-        font-size: 1.5rem;
-    }
-
-    header nav ul {
-        gap: 5px;
-    }
-
-    header nav ul li a {
-        padding: 5px 10px;
-        font-size: 0.75rem;
-    }
-
-    .nav-avatar {
-        width: 30px;
-        height: 30px;
-    }
 }
 
 /* Main Section */

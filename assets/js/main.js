@@ -376,3 +376,47 @@ function handleFormSubmit(event) {
     }
   });
   
+  // Navigation functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const currentPath = window.location.pathname;
+
+    // Mobile menu toggle
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    // Set active state for current page
+    const navLinksList = document.querySelectorAll('.nav-link');
+    navLinksList.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (currentPath.includes(linkPath) && linkPath !== 'index.html') {
+            link.classList.add('active');
+        }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (menuToggle && navLinks.classList.contains('active') && 
+            !menuToggle.contains(event.target) && 
+            !navLinks.contains(event.target)) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('active');
+        }
+    });
+
+    // Handle keyboard navigation
+    navLinks.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && navLinks.classList.contains('active')) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('active');
+            menuToggle.focus();
+        }
+    });
+  });
+  
