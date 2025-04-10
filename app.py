@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response, redirect, session, url_for, render_template, send_file
+from flask import Flask, request, jsonify, make_response, redirect, session, url_for, render_template, send_file, send_from_directory
 from database.db import Database
 from auth.email_service import EmailService
 import os
@@ -7,11 +7,20 @@ from auth.oauth_handler import OAuthHandler
 from functools import wraps
 import jwt
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
 app.secret_key = os.urandom(24)
 db = Database()
 email_service = EmailService()
 oauth_handler = OAuthHandler()
+
+# Serve frontend
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 # Admin authentication middleware
 def admin_required(f):
