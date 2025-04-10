@@ -153,7 +153,7 @@ function handleFormSubmit(event) {
     // Handle login form submission
     const loginForm = document.querySelector('form[action="#"]');
     if (loginForm) {
-      loginForm.addEventListener('submit', function(e) {
+      loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const formData = {
@@ -161,12 +161,48 @@ function handleFormSubmit(event) {
           password: this.querySelector('input[name="password"]').value
         };
         
-        // Log form data (for debugging)
-        console.log('Login Form Submitted:', formData);
-        
-        // Here you would typically send the data to your server
-        alert('Login successful!');
-        window.location.href = '../index.html';
+        try {
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Store session token
+            sessionStorage.setItem('session_token', data.session_token);
+            
+            // Show success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.setAttribute('role', 'status');
+            successDiv.textContent = 'Login successful! Redirecting...';
+            document.querySelector('.auth-card').prepend(successDiv);
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1500);
+          } else {
+            // Show error message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.setAttribute('role', 'alert');
+            errorDiv.textContent = data.error || 'Login failed. Please try again.';
+            document.querySelector('.auth-card').prepend(errorDiv);
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'error-message';
+          errorDiv.setAttribute('role', 'alert');
+          errorDiv.textContent = 'An error occurred. Please try again later.';
+          document.querySelector('.auth-card').prepend(errorDiv);
+        }
       });
     }
     
