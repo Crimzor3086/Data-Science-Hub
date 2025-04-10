@@ -15,10 +15,6 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-}
-
-/* Homepage Background */
-body.index-page {
     background-image: url('../images/backgroundHome.jpg');
     background-size: cover;
     background-position: center;
@@ -27,7 +23,7 @@ body.index-page {
 }
 
 /* Overlay for better text readability */
-body.index-page::before {
+body::before {
     content: '';
     position: fixed;
     top: 0;
@@ -38,7 +34,7 @@ body.index-page::before {
     z-index: -1;
 }
 
-body.index-page main {
+body main {
     position: relative;
     z-index: 1;
 }
