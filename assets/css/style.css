@@ -138,9 +138,19 @@ header nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: var(--background-color);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
+    background-color: rgba(0, 0, 0, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 15px rgba(212, 175, 55, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.main-nav.scrolled {
+    padding: 0.5rem 2rem;
+    background-color: rgba(0, 0, 0, 0.98);
 }
 
 .logo img {
@@ -163,27 +173,31 @@ header nav {
 }
 
 .nav-link {
-    color: var(--text-color);
+    color: var(--gold-primary);
     text-decoration: none;
     font-weight: 500;
     padding: 0.5rem 0;
     position: relative;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--primary-color);
+    background-color: var(--gold-primary);
     transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-    color: var(--primary-color);
+    color: var(--gold-light);
+    transform: translateY(-1px);
 }
 
 .nav-link:hover::after {
@@ -192,7 +206,30 @@ header nav {
 
 .nav-auth {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-auth a {
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.nav-auth a:first-child {
+    background-color: transparent;
+    border: 2px solid var(--gold-primary);
+}
+
+.nav-auth a:last-child {
+    background-color: var(--gold-primary);
+    color: var(--black-primary);
+}
+
+.nav-auth a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
 }
 
 .menu-toggle {
@@ -2509,5 +2546,193 @@ form p a:hover {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Card Styles */
+.card {
+    background: rgba(26, 26, 26, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.card:hover::before {
+    transform: translateX(100%);
+}
+
+/* Course Card Specific Styles */
+.course-card {
+    composes: card;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.course-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.course-card:hover img {
+    transform: scale(1.05);
+}
+
+.course-card h3 {
+    font-size: 1.5rem;
+    color: var(--gold-primary);
+    margin: 1rem 0;
+}
+
+.course-card p {
+    color: #ffffff;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.course-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gold-primary);
+}
+
+.course-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rating-stars {
+    color: var(--gold-light);
+}
+
+/* Service Card Specific Styles */
+.service-card {
+    composes: card;
+    text-align: center;
+    padding: 2.5rem;
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: rotateY(180deg);
+    background: var(--gold-primary);
+}
+
+.service-icon img {
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon img {
+    filter: brightness(0) invert(1);
+}
+
+/* Team Card Specific Styles */
+.team-card {
+    composes: card;
+    text-align: center;
+}
+
+.team-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+    border: 3px solid var(--gold-primary);
+    transition: all 0.3s ease;
+}
+
+.team-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-avatar {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+}
+
+.team-card:hover .team-avatar img {
+    transform: scale(1.1);
+}
+
+.team-social {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(212, 175, 55, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: var(--gold-primary);
+    transform: translateY(-3px);
+}
+
+.social-link i {
+    color: var(--gold-primary);
+    transition: color 0.3s ease;
+}
+
+.social-link:hover i {
+    color: var(--black-primary);
 }
   
