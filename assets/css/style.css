@@ -138,15 +138,9 @@ header nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: var(--black-primary);
+    background-color: var(--background-color);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
-    border-bottom: 2px solid var(--gold-primary);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
 }
 
 .logo img {
@@ -164,12 +158,12 @@ header nav {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: center;
 }
 
 .nav-link {
-    color: var(--gold-primary);
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
     padding: 0.5rem 0;
@@ -184,12 +178,12 @@ header nav {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--gold-primary);
+    background-color: var(--primary-color);
     transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-    color: var(--gold-light);
+    color: var(--primary-color);
 }
 
 .nav-link:hover::after {
@@ -199,47 +193,29 @@ header nav {
 .nav-auth {
     display: flex;
     gap: 1rem;
-    margin-left: auto;
 }
 
-.nav-profile {
-    margin-left: 1rem;
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
 }
 
-.profile-link {
-    display: flex;
-    align-items: center;
-}
-
-.nav-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid var(--gold-primary);
-    transition: transform 0.3s ease;
-}
-
-.nav-avatar:hover {
-    transform: scale(1.1);
+.menu-icon {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: var(--text-color);
+    margin: 5px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 /* Mobile Navigation */
 @media (max-width: 768px) {
     .menu-toggle {
         display: block;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem;
-    }
-
-    .menu-icon {
-        display: block;
-        width: 25px;
-        height: 2px;
-        background-color: var(--gold-primary);
-        margin: 5px 0;
-        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .nav-links {
@@ -247,7 +223,7 @@ header nav {
         top: 70px;
         left: 0;
         width: 100%;
-        background-color: var(--black-primary);
+        background-color: var(--background-color);
         flex-direction: column;
         padding: 2rem;
         gap: 1.5rem;
@@ -278,16 +254,12 @@ header nav {
     .nav-auth {
         flex-direction: column;
         width: 100%;
-        margin-top: 1rem;
+        gap: 1rem;
     }
 
     .nav-auth a {
         width: 100%;
         text-align: center;
-    }
-
-    .nav-profile {
-        margin: 1rem 0;
     }
 }
 
@@ -303,6 +275,11 @@ header nav {
 /* Profile Icon in Navigation */
 .nav-profile {
     margin-left: auto;
+}
+
+.profile-link {
+    padding: 0 !important;
+    border: none !important;
 }
 
 .nav-avatar {
