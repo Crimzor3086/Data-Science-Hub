@@ -13,12 +13,9 @@
 </head>
 <body class="index-page">
     <header>
-        <nav>
-            <div class="logo">
-                <a href="../index.html">
-                    <img src="../assets/images/logo.svg" alt="Data Science Hub Logo">
-                </a>
-            </div>
+        <img src="../assets/images/logo.svg" alt="Data Science Hub Logo - A stylized DS icon" class="logo">
+        <h1>User Profile</h1>
+        <nav aria-label="Main navigation">
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
                 <li><a href="courses.html">Courses</a></li>
@@ -37,64 +34,116 @@
     </header>
 
     <main class="profile-container">
-        <h1>User Profile</h1>
-        
         <div class="profile-content">
             <div class="profile-header">
                 <div class="profile-avatar">
                     <img src="../assets/images/placeholders/avatar.png" alt="User Avatar" id="user-avatar">
-                    <button class="edit-avatar-btn">Change Avatar</button>
+                    <button class="edit-avatar-btn" aria-label="Change profile picture">Change Avatar</button>
                 </div>
                 <div class="profile-info">
                     <h2 id="user-name">Loading...</h2>
                     <p id="user-email">Loading...</p>
                     <p id="user-role">Loading...</p>
+                    <p id="member-since">Member since: <span id="join-date">Loading...</span></p>
                 </div>
             </div>
 
-            <div class="profile-details">
-                <h3>Account Details</h3>
-                <form id="profile-form">
-                    <div class="form-group">
-                        <label for="full-name">Full Name</label>
-                        <input type="text" id="full-name" name="full_name" required>
-                    </div>
+            <div class="profile-tabs">
+                <button class="profile-tab active" data-tab="details">Account Details</button>
+                <button class="profile-tab" data-tab="courses">My Courses</button>
+                <button class="profile-tab" data-tab="activity">Activity</button>
+                <button class="profile-tab" data-tab="settings">Settings</button>
+            </div>
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required readonly>
-                    </div>
+            <div class="profile-sections">
+                <section id="details-section" class="profile-section active">
+                    <h3>Account Details</h3>
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" name="full_name" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required readonly>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="bio">Bio</label>
-                        <textarea id="bio" name="bio" rows="4"></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="current-password">Current Password</label>
-                        <input type="password" id="current-password" name="current_password">
-                    </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea id="bio" name="bio" rows="4" maxlength="500"></textarea>
+                            <span class="char-count">0/500</span>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="new-password">New Password</label>
-                        <input type="password" id="new-password" name="new_password">
-                    </div>
+                        <div class="form-group">
+                            <label for="current-password">Current Password</label>
+                            <input type="password" id="current-password" name="current_password">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm New Password</label>
-                        <input type="password" id="confirm-password" name="confirm_password">
-                    </div>
+                        <div class="form-group">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" name="new_password">
+                        </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="save-btn">Save Changes</button>
-                        <button type="button" class="cancel-btn">Cancel</button>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm New Password</label>
+                            <input type="password" id="confirm-password" name="confirm_password">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="save-btn">Save Changes</button>
+                            <button type="button" class="cancel-btn">Cancel</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="courses-section" class="profile-section">
+                    <h3>My Courses</h3>
+                    <div class="enrolled-courses">
+                        <!-- Courses will be populated here -->
+                        <p class="no-courses">You haven't enrolled in any courses yet.</p>
                     </div>
-                </form>
+                </section>
+
+                <section id="activity-section" class="profile-section">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-feed">
+                        <!-- Activity will be populated here -->
+                        <p class="no-activity">No recent activity to show.</p>
+                    </div>
+                </section>
+
+                <section id="settings-section" class="profile-section">
+                    <h3>Account Settings</h3>
+                    <div class="settings-options">
+                        <div class="setting-item">
+                            <h4>Email Notifications</h4>
+                            <label class="switch" for="email-notifications">
+                                <input type="checkbox" id="email-notifications" checked aria-label="Toggle email notifications">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <h4>Course Updates</h4>
+                            <label class="switch" for="course-updates">
+                                <input type="checkbox" id="course-updates" checked aria-label="Toggle course updates">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <h4>Newsletter Subscription</h4>
+                            <label class="switch" for="newsletter">
+                                <input type="checkbox" id="newsletter" checked aria-label="Toggle newsletter subscription">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <div class="profile-stats">
@@ -146,7 +195,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 Data Science Hub. All rights reserved.</p>
+            <p>&copy; 2025 Data Science Hub. All rights reserved.</p>
         </div>
     </footer>
 
