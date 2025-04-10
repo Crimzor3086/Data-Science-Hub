@@ -5,7 +5,7 @@ cd frontend
 npm install
 
 # Build frontend
-npm run build
+npm run vercel-build
 
 # Install backend dependencies
 cd ..
