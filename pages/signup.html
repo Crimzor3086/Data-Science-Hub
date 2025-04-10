@@ -1,179 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Create your Data Science Hub account to access courses, services, and community features. Join our data science community today.">
-  <title>Sign Up - Data Science Hub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Data Science Hub</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="index-page">
-  <header>
-    <img src="../assets/images/logo.svg" alt="Data Science Hub Logo - A stylized DS icon" class="logo">
-    <h1>Sign Up</h1>
-    <nav aria-label="Main navigation">
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="courses.html">Courses</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="team.html">Team</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="signup.html" class="active">Sign Up</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="auth-container">
-    <div class="auth-card" role="main">
-      <h2>Create Your Account</h2>
-      <form id="signup-form" action="#" method="POST" class="auth-form" novalidate>
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" name="name" required 
-                 placeholder="Enter your full name"
-                 pattern="[A-Za-z\s]{2,50}"
-                 title="Please enter a valid name (2-50 characters, letters only)"
-                 aria-required="true"
-                 aria-describedby="name-error">
-          <div class="error-message" id="name-error" role="alert"></div>
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" required 
-                 placeholder="Enter your email"
-                 pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                 title="Please enter a valid email address"
-                 aria-required="true"
-                 aria-describedby="email-error">
-          <div class="error-message" id="email-error" role="alert"></div>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required 
-                 placeholder="Create a password"
-                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                 title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters"
-                 aria-required="true"
-                 aria-describedby="password-error password-requirements">
-          <div class="password-requirements" id="password-requirements" role="region" aria-label="Password requirements">
-            <p>Password must contain:</p>
-            <ul>
-              <li>At least 8 characters</li>
-              <li>One uppercase letter</li>
-              <li>One lowercase letter</li>
-              <li>One number</li>
+<body>
+    <header>
+        <img src="assets/images/logo.svg" alt="Data Science Hub Logo" class="logo">
+        <h1>Sign Up</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pages/team.html">Team</a></li>
+                <li><a href="pages/services.html">Our Services</a></li>
+                <li><a href="pages/courses.html">Courses</a></li>
+                <li><a href="pages/blog.html">Blog (FAQ)</a></li>
+                <li><a href="pages/about.html">About Us</a></li>
+                <li><a href="search.html">Search</a></li>
+                <li><a href="pages/contact.html">Contact Us</a></li>
+                <li><a href="pages/login.html">Log In</a></li>
+                <li><a href="pages/signup.html">Sign Up</a></li>
+                <li class="nav-profile">
+                    <a href="pages/profile.html" class="profile-link">
+                        <img src="assets/images/placeholders/avatar.png" alt="Profile" class="nav-avatar">
+                    </a>
+                </li>
+                <li><a href="#" id="logout-btn">Logout</a></li>
             </ul>
-          </div>
-          <div class="error-message" id="password-error" role="alert"></div>
+        </nav>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <h2>Create Your Account</h2>
+            <form id="signup-form" class="auth-form" novalidate>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required 
+                           placeholder="Enter your full name"
+                           minlength="2"
+                           aria-required="true"
+                           aria-describedby="name-error">
+                    <div class="error-message" id="name-error" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="Enter your email"
+                           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                           title="Please enter a valid email address"
+                           aria-required="true"
+                           aria-describedby="email-error">
+                    <div class="error-message" id="email-error" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Create a password"
+                           minlength="8"
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                           title="Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character"
+                           aria-required="true"
+                           aria-describedby="password-error">
+                    <div class="error-message" id="password-error" role="alert"></div>
+                    <div class="password-requirements">
+                        <p>Password must contain:</p>
+                        <ul>
+                            <li>At least 8 characters</li>
+                            <li>One uppercase letter</li>
+                            <li>One lowercase letter</li>
+                            <li>One number</li>
+                            <li>One special character</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required 
+                           placeholder="Confirm your password"
+                           aria-required="true"
+                           aria-describedby="confirm-password-error">
+                    <div class="error-message" id="confirm-password-error" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="terms" id="terms" required>
+                        I agree to the <a href="pages/terms.html">Terms of Service</a> and <a href="pages/privacy.html">Privacy Policy</a>
+                    </label>
+                    <div class="error-message" id="terms-error" role="alert"></div>
+                </div>
+
+                <button type="submit" class="btn-primary">Create Account</button>
+            </form>
+
+            <div class="auth-links">
+                <p>Already have an account? <a href="pages/login.html">Log in here</a></p>
+            </div>
+
+            <div class="social-login">
+                <p>Or sign up with</p>
+                <div class="social-buttons">
+                    <button type="button" class="social-btn google-btn" onclick="handleGoogleLogin()">
+                        <img src="assets/images/icons/google.svg" alt="Google logo" class="social-icon">
+                        <span>Google</span>
+                    </button>
+                    <button type="button" class="social-btn github-btn" onclick="handleGithubLogin()">
+                        <img src="assets/images/icons/github.svg" alt="GitHub logo" class="social-icon">
+                        <span>GitHub</span>
+                    </button>
+                </div>
+            </div>
         </div>
+    </main>
 
-        <div class="form-group">
-          <label for="confirm-password">Confirm Password</label>
-          <input type="password" id="confirm-password" name="confirm-password" required 
-                 placeholder="Confirm your password"
-                 aria-required="true"
-                 aria-describedby="confirm-password-error">
-          <div class="error-message" id="confirm-password-error" role="alert"></div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Data Science Hub</h3>
+                <p>Empowering the next generation of data scientists</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="pages/about.html">About Us</a></li>
+                    <li><a href="pages/services.html">Services</a></li>
+                    <li><a href="pages/courses.html">Courses</a></li>
+                    <li><a href="pages/blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@datasciencehub.com</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label class="checkbox-label">
-            <input type="checkbox" name="terms" id="terms" required
-                   aria-required="true"
-                   aria-describedby="terms-error">
-            I agree to the <a href="terms.html" aria-label="Read our Terms of Service">Terms of Service</a> and <a href="privacy.html" aria-label="Read our Privacy Policy">Privacy Policy</a>
-          </label>
-          <div class="error-message" id="terms-error" role="alert"></div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Data Science Hub. All rights reserved.</p>
         </div>
+    </footer>
 
-        <button type="submit" class="btn-primary" aria-label="Create your account">Create Account</button>
-      </form>
+    <script src="assets/js/main.js"></script>
+    <script>
+        function handleGoogleLogin() {
+            window.location.href = '/auth/google';
+        }
 
-      <div class="auth-links">
-        <p>Already have an account? <a href="login.html" aria-label="Log in to your existing account">Log in here</a></p>
-      </div>
-    </div>
-  </main>
+        function handleGithubLogin() {
+            window.location.href = '/auth/github';
+        }
 
-  <footer>
-    <p>&copy; 2025 Data Science Hub. All rights reserved.</p>
-  </footer>
+        // Password validation
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const passwordError = document.getElementById('password-error');
+        const confirmPasswordError = document.getElementById('confirm-password-error');
 
-  <script src="../assets/js/main.js"></script>
-  <script>
-    document.getElementById('signup-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Reset error messages
-      document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
-      
-      // Get form values
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirm-password').value;
-      const terms = document.getElementById('terms').checked;
-      
-      // Validate form
-      let isValid = true;
-      
-      if (!name.match(/^[A-Za-z\s]{2,50}$/)) {
-        document.getElementById('name-error').textContent = 'Please enter a valid name (2-50 characters, letters only)';
-        isValid = false;
-      }
-      
-      if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
-        document.getElementById('email-error').textContent = 'Please enter a valid email address';
-        isValid = false;
-      }
-      
-      if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/)) {
-        document.getElementById('password-error').textContent = 'Password must meet all requirements';
-        isValid = false;
-      }
-      
-      if (password !== confirmPassword) {
-        document.getElementById('confirm-password-error').textContent = 'Passwords do not match';
-        isValid = false;
-      }
-      
-      if (!terms) {
-        document.getElementById('terms-error').textContent = 'You must agree to the terms and conditions';
-        isValid = false;
-      }
-      
-      if (isValid) {
-        // Create form data object
-        const formData = {
-          name: name,
-          email: email,
-          password: password
-        };
-        
-        // Log form data (for debugging)
-        console.log('Form Submitted:', formData);
-        
-        // Here you would typically send the data to your server
-        const successDiv = document.createElement('div');
-        successDiv.className = 'success-message';
-        successDiv.setAttribute('role', 'status');
-        successDiv.textContent = 'Account created successfully! Redirecting to login page...';
-        document.querySelector('.auth-card').prepend(successDiv);
-        
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 2000);
-      }
-    });
-  </script>
+        function validatePassword() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = 'Passwords do not match';
+                return false;
+            }
+
+            confirmPasswordError.textContent = '';
+            return true;
+        }
+
+        confirmPasswordInput.addEventListener('input', validatePassword);
+        passwordInput.addEventListener('input', () => {
+            passwordError.textContent = '';
+            validatePassword();
+        });
+
+        // Form submission
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            if (!validatePassword()) {
+                return;
+            }
+
+            const formData = {
+                name: this.querySelector('input[name="name"]').value,
+                email: this.querySelector('input[name="email"]').value,
+                password: this.querySelector('input[name="password"]').value
+            };
+
+            try {
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const successDiv = document.createElement('div');
+                    successDiv.className = 'success-message';
+                    successDiv.setAttribute('role', 'status');
+                    successDiv.textContent = 'Account created successfully! Redirecting to login...';
+                    document.querySelector('.auth-card').prepend(successDiv);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'pages/login.html';
+                    }, 2000);
+                } else {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.setAttribute('role', 'alert');
+                    errorDiv.textContent = data.error || 'Failed to create account. Please try again.';
+                    document.querySelector('.auth-card').prepend(errorDiv);
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.setAttribute('role', 'alert');
+                errorDiv.textContent = 'An error occurred. Please try again later.';
+                document.querySelector('.auth-card').prepend(errorDiv);
+            }
+        });
+    </script>
 </body>
-</html>
+</html> 
