@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend && npm install && npm run build",
+  "buildCommand": "cd frontend && npm install --no-audit --prefer-offline || (sleep 5 && npm install --no-audit --prefer-offline) || (sleep 10 && npm install --no-audit --prefer-offline) && npm run build",
   "outputDirectory": "frontend/dist",
   "routes": [
     {
@@ -15,5 +15,4 @@
       "dest": "/index.html"
     }
   ]
-} 
 } 
