@@ -26,5 +26,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/pages/LoginPage.tsx", "src/pages/SignupPage.tsx"]
 }

@@ -1,11 +1,12 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, User } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, user } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -47,16 +48,14 @@ const Navbar = () => {
             </Button>
           </Link>
           <div className="flex items-center space-x-2">
-            <Link to="/login">
-              <Button variant="ghost" className="hover:text-amber-500">
-                Login
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button className="bg-amber-500 hover:bg-amber-600 text-black">
-                Sign Up
-              </Button>
-            </Link>
+            {isAuthenticated && (
+              <Link to="/profile">
+                <Button variant="ghost" className="hover:text-amber-500 flex items-center">
+                  <User className="h-4 w-4 mr-2" />
+                  {user?.name || "Profile"}
+                </Button>
+              </Link>
+            )}
           </div>
         </nav>
 
@@ -95,16 +94,14 @@ const Navbar = () => {
                 Contact
               </Link>
               <div className="flex items-center space-x-4 pt-2">
-                <Link to="/login" onClick={toggleMenu}>
-                  <Button variant="ghost" className="hover:text-amber-500">
-                    Login
-                  </Button>
-                </Link>
-                <Link to="/signup" onClick={toggleMenu}>
-                  <Button className="bg-amber-500 hover:bg-amber-600 text-black">
-                    Sign Up
-                  </Button>
-                </Link>
+                {isAuthenticated && (
+                  <Link to="/profile" onClick={toggleMenu} className="w-full">
+                    <Button variant="ghost" className="hover:text-amber-500 w-full flex items-center justify-center">
+                      <User className="h-4 w-4 mr-2" />
+                      {user?.name || "Profile"}
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
