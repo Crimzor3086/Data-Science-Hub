@@ -69,6 +69,9 @@ const Navbar = () => {
           <Link to="/about" className="hover:text-blue-600 transition-colors">
             About Us
           </Link>
+          <Link to="/team" className="hover:text-blue-600 transition-colors">
+            Our Team
+          </Link>
           <Button variant="ghost" size="icon" className="text-gray-600 hover:text-blue-600">
             <Search className="h-5 w-5" />
           </Button>
@@ -126,6 +129,9 @@ const Navbar = () => {
               ))}
               <Link to="/about" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
                 About Us
+              </Link>
+              <Link to="/team" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
+                Our Team
               </Link>
               {isAuthenticated ? (
                 <>

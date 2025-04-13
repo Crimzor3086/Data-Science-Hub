@@ -8,7 +8,7 @@ import { UserRole } from "@/lib/roles";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CoursesPage from "./pages/CoursesPage";
-import TeamPage from "./pages/TeamPage";
+import TeamsPage from "./pages/TeamsPage";
 import ServicesPage from "./pages/ServicesPage";
 import BlogPage from "./pages/BlogPage";
 import AboutPage from "./pages/AboutPage";
@@ -31,7 +31,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/courses" element={<CoursesPage />} />
-            <Route path="/team" element={<TeamPage />} />
+            <Route path="/team" element={<TeamsPage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/about" element={<AboutPage />} />
