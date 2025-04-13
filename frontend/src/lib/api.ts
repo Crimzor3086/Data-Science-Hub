@@ -64,9 +64,11 @@ interface AdminSettings {
   };
 }
 
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 // Create axios instance with base URL from environment variables
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
