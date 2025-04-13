@@ -213,4 +213,10 @@ export const adminAPI = {
     api.get('/admin/logs', { params: { type, limit } })
 };
 
+// Search API
+export const searchAPI = {
+  search: (query: string) => 
+    api.get(`/search?q=${encodeURIComponent(query)}`),
+};
+
 export { api }; 
