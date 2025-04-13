@@ -277,10 +277,9 @@ const courses = [
   }
 ];
 
-const courses = courses.map(course => ({
+const mappedCourses = courses.map(course => ({
   ...course,
   students: 0,
-  rating: 0,
   progress: 0
 }));
 
@@ -289,6 +288,7 @@ const CoursesPage = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedLevel, setSelectedLevel] = useState("All");
   const [selectedProgress, setSelectedProgress] = useState("All");
+  const [filteredCourses, setFilteredCourses] = useState(mappedCourses);
 
   // Filter courses based on search term, level, and progress
   const filteredCourses = courses.filter(course => {
