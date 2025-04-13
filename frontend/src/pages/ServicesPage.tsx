@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Background } from '@/components/ui/background';
-import Layout from "@/components/layout/Layout";
+import { Layout } from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { 
   BarChart2, 
