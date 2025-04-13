@@ -5,7 +5,7 @@ import { adminMiddleware } from '../middleware/authMiddleware';
 const router = express.Router();
 
 // Get platform statistics (admin only)
-router.get('/stats', adminMiddleware, async (req, res) => {
+router.get('/stats', adminMiddleware, async (_req, res) => {
   try {
     const totalUsers = await User.countDocuments();
     const activeUsers = await User.countDocuments({ status: 'active' });
@@ -26,7 +26,7 @@ router.get('/stats', adminMiddleware, async (req, res) => {
 });
 
 // Get recent user activity (admin only)
-router.get('/activity', adminMiddleware, async (req, res) => {
+router.get('/activity', adminMiddleware, async (_req, res) => {
   try {
     const recentUsers = await User.find()
       .sort({ lastLogin: -1 })
@@ -40,7 +40,7 @@ router.get('/activity', adminMiddleware, async (req, res) => {
 });
 
 // Get user growth over time (admin only)
-router.get('/growth', adminMiddleware, async (req, res) => {
+router.get('/growth', adminMiddleware, async (_req, res) => {
   try {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -69,7 +69,7 @@ router.get('/growth', adminMiddleware, async (req, res) => {
 });
 
 // Get user activity by role (admin only)
-router.get('/activity-by-role', adminMiddleware, async (req, res) => {
+router.get('/activity-by-role', adminMiddleware, async (_req, res) => {
   try {
     const roleActivity = await User.aggregate([
       {
@@ -147,7 +147,7 @@ router.get('/registration-trends', adminMiddleware, async (req, res) => {
 });
 
 // Get system performance metrics (admin only)
-router.get('/performance', adminMiddleware, async (req, res) => {
+router.get('/performance', adminMiddleware, async (_req, res) => {
   try {
     // In a real application, you would collect these metrics from your system
     // For now, we'll return mock data
@@ -183,7 +183,7 @@ router.get('/performance', adminMiddleware, async (req, res) => {
 });
 
 // Get error logs (admin only)
-router.get('/errors', adminMiddleware, async (req, res) => {
+router.get('/errors', adminMiddleware, async (_req, res) => {
   try {
     // In a real application, you would collect these from your error logging system
     // For now, we'll return mock data
@@ -203,14 +203,6 @@ router.get('/errors', adminMiddleware, async (req, res) => {
         message: 'High memory usage detected',
         stack: 'Warning: Memory usage above 80% at SystemMonitor.check...',
         user: 'system'
-      },
-      {
-        id: 3,
-        timestamp: new Date(Date.now() - 86400000),
-        level: 'error',
-        message: 'API endpoint failed',
-        stack: 'Error: 500 Internal Server Error at /api/users...',
-        user: 'admin'
       }
     ];
     

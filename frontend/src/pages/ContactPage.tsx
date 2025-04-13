@@ -73,7 +73,7 @@ const ContactPage = () => {
   
   return (
     <Background 
-      image="/images/backgrounds/contact-bg.jpg"
+      image="/images/image (9).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

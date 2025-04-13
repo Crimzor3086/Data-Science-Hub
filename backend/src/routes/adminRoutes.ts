@@ -12,7 +12,11 @@ router.use(adminMiddleware);
 const systemSettingsSchema = z.object({
   maintenanceMode: z.boolean().optional(),
   allowNewRegistrations: z.boolean().optional(),
-  maxUsersPerRole: z.record(z.number()).optional(),
+  maxUsersPerRole: z.object({
+    [UserRole.ADMIN]: z.number(),
+    [UserRole.CLIENT]: z.number(),
+    [UserRole.STUDENT]: z.number()
+  }).optional(),
   emailNotifications: z.boolean().optional(),
   sessionTimeout: z.number().optional(),
   passwordPolicy: z.object({
@@ -43,7 +47,7 @@ let systemSettings = {
 };
 
 // Get system settings
-router.get('/settings', (req, res) => {
+router.get('/settings', (_req, res) => {
   res.json(systemSettings);
 });
 
@@ -52,12 +56,12 @@ router.patch('/settings', (req, res) => {
   try {
     const updates = systemSettingsSchema.parse(req.body);
     systemSettings = { ...systemSettings, ...updates };
-    res.json(systemSettings);
+    return res.json(systemSettings);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: 'Invalid settings format', details: error.errors });
     }
-    res.status(500).json({ error: 'Error updating system settings' });
+    return res.status(500).json({ error: 'Error updating system settings' });
   }
 });
 
@@ -179,9 +183,9 @@ router.get('/users/search', async (req, res) => {
 });
 
 // Export user data
-router.get('/users/export', async (req, res) => {
+router.get('/users/export', async (_req, res) => {
   try {
-    const { format = 'json' } = req.query;
+    const { format = 'json' } = _req.query;
     
     const users = await User.find({}, '-password');
     
@@ -193,9 +197,9 @@ router.get('/users/export', async (req, res) => {
       return res.send(JSON.stringify(users));
     }
     
-    res.json(users);
+    return res.json(users);
   } catch (error) {
-    res.status(500).json({ error: 'Error exporting user data' });
+    return res.status(500).json({ error: 'Error exporting user data' });
   }
 });
 

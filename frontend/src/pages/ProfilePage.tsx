@@ -35,6 +35,7 @@ interface ProfileData {
     title: string;
     description: string;
     technologies: string[];
+    status?: string;
   }[];
   coverImage: string;
   stats: {
@@ -67,7 +68,7 @@ const ProfilePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('profile');
   const [isEditing, setIsEditing] = useState(false);
-  const [editedData, setEditedData] = useState<ProfileData>(user);
+  const [editedData, setEditedData] = useState<ProfileData | null>(null);
 
   useEffect(() => {
     // TODO: Fetch profile data from API
@@ -102,7 +103,8 @@ const ProfilePage: React.FC = () => {
         {
           title: 'Customer Churn Prediction',
           description: 'Built a machine learning model to predict customer churn',
-          technologies: ['Python', 'Scikit-learn', 'Pandas']
+          technologies: ['Python', 'Scikit-learn', 'Pandas'],
+          status: 'Completed'
         }
       ],
       coverImage: '/images/image (15).jpg',
@@ -150,6 +152,7 @@ const ProfilePage: React.FC = () => {
     };
 
     setProfile(mockProfile);
+    setEditedData(mockProfile);
     setLoading(false);
   }, []);
 
@@ -180,6 +183,9 @@ const ProfilePage: React.FC = () => {
 
   const handleSave = () => {
     // Here you would typically make an API call to update the user data
+    if (editedData) {
+      setProfile(editedData);
+    }
     setIsEditing(false);
   };
 
@@ -299,19 +305,19 @@ const ProfilePage: React.FC = () => {
                         <h3 className="text-lg font-medium mb-2">About</h3>
                         {isEditing ? (
                           <Input
-                            value={editedData.bio}
-                            onChange={(e) => setEditedData({ ...editedData, bio: e.target.value })}
+                            value={editedData?.bio || ''}
+                            onChange={(e) => setEditedData(prev => prev ? {...prev, bio: e.target.value} : null)}
                             className="mb-4"
                           />
                         ) : (
-                          <p className="text-sm text-muted-foreground">{editedData.bio}</p>
+                          <p className="text-sm text-muted-foreground">{editedData?.bio}</p>
                         )}
                       </div>
                       
                       <div>
                         <h3 className="text-lg font-medium mb-2">Skills</h3>
                         <div className="flex flex-wrap gap-2">
-                          {editedData.skills.map((skill) => (
+                          {editedData?.skills.map((skill) => (
                             <Badge key={skill} variant="outline">
                               {skill}
                             </Badge>
@@ -322,7 +328,7 @@ const ProfilePage: React.FC = () => {
                       <div>
                         <h3 className="text-lg font-medium mb-2">Certifications</h3>
                         <div className="space-y-4">
-                          {editedData.certifications.map((cert) => (
+                          {editedData?.certifications.map((cert) => (
                             <div key={cert.name} className="flex items-start gap-4">
                               <Award className="h-5 w-5 text-primary mt-0.5" />
                               <div>
@@ -339,7 +345,7 @@ const ProfilePage: React.FC = () => {
                       <div>
                         <h3 className="text-lg font-medium mb-2">Current Courses</h3>
                         <div className="space-y-4">
-                          {editedData.courses.map((course) => (
+                          {editedData?.courses.map((course) => (
                             <div key={course.title}>
                               <div className="flex justify-between text-sm mb-1">
                                 <span>{course.title}</span>
@@ -358,7 +364,7 @@ const ProfilePage: React.FC = () => {
 
                   <TabsContent value="education">
                     <div className="space-y-6">
-                      {editedData.education?.map((edu) => (
+                      {editedData?.education?.map((edu) => (
                         <div key={edu.degree} className="flex items-start gap-4">
                           <BookOpen className="h-5 w-5 text-primary mt-0.5" />
                           <div>
@@ -374,7 +380,7 @@ const ProfilePage: React.FC = () => {
 
                   <TabsContent value="experience">
                     <div className="space-y-6">
-                      {editedData.experience?.map((exp) => (
+                      {editedData?.experience?.map((exp) => (
                         <div key={exp.position} className="flex items-start gap-4">
                           <Briefcase className="h-5 w-5 text-primary mt-0.5" />
                           <div>
@@ -390,7 +396,7 @@ const ProfilePage: React.FC = () => {
 
                   <TabsContent value="projects">
                     <div className="space-y-6">
-                      {editedData.projects?.map((project) => (
+                      {editedData?.projects?.map((project) => (
                         <div key={project.title} className="flex items-start gap-4">
                           <Code className="h-5 w-5 text-primary mt-0.5" />
                           <div>

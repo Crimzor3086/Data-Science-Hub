@@ -17,153 +17,167 @@ import {
   Globe,
   ClipboardList,
   GraduationCap,
-  FileBarChart
+  FileBarChart,
+  Calculator,
+  File
 } from 'lucide-react';
 
 const services = [
   {
+    id: 1,
     title: 'Data Collection',
-    description: 'Accurate, reliable data is the foundation of informed decision-making. Our data collection services provide businesses with high-quality, actionable data that can drive strategy and improve performance.',
+    description: 'Comprehensive data collection services for research and analysis.',
     icon: <Database className="h-6 w-6" />,
     features: [
-      'Qualitative and quantitative data gathering',
-      'Industry-leading methods and tools',
-      'Timely and relevant data collection',
-      'Customized data collection strategies'
+      'Survey design and implementation',
+      'Data cleaning and preprocessing',
+      'Quality assurance protocols',
+      'Ethical considerations compliance'
     ],
-    image: '/images/services/data-collection.jpg'
+    image: '/images/image (1).jpg'
   },
   {
+    id: 2,
     title: 'Data Analysis',
-    description: 'Comprehensive data analysis services to help you make informed decisions.',
-    icon: <BarChart3 className="w-6 h-6" />,
+    description: 'Advanced statistical analysis and interpretation of research data.',
+    icon: <BarChart3 className="h-6 w-6" />,
     features: [
-      'Advanced analytical techniques',
-      'Trend identification and forecasting',
-      'Operational efficiency analysis',
-      'Customer behavior insights'
+      'Descriptive and inferential statistics',
+      'Multivariate analysis',
+      'Time series analysis',
+      'Predictive modeling'
     ],
-    image: '/images/services/data-analysis.jpg'
+    image: '/images/image (2).jpg'
   },
   {
+    id: 3,
     title: 'Machine Learning',
-    description: 'Custom machine learning solutions to automate and optimize your processes.',
-    icon: <Brain className="w-6 h-6" />,
+    description: 'Implementation of machine learning algorithms for data insights.',
+    icon: <Brain className="h-6 w-6" />,
     features: [
-      'Machine learning solutions',
+      'Supervised and unsupervised learning',
+      'Deep learning models',
       'Natural language processing',
-      'Custom AI development',
-      'Process optimization'
+      'Computer vision applications'
     ],
-    image: '/images/services/machine-learning.jpg'
+    image: '/images/image (3).jpg'
   },
   {
+    id: 4,
     title: 'Data Visualization',
-    description: 'Beautiful and interactive data visualizations to communicate insights effectively.',
-    icon: <PieChart className="w-6 h-6" />,
+    description: 'Creation of compelling visual representations of complex data.',
+    icon: <PieChart className="h-6 w-6" />,
     features: [
-      'Logo design',
-      'Brochure creation',
-      'Social media graphics',
-      'Brand identity development'
+      'Interactive dashboards',
+      'Custom chart development',
+      'Infographic design',
+      'Data storytelling'
     ],
-    image: '/images/services/data-visualization.jpg'
+    image: '/images/image (4).jpg'
   },
   {
+    id: 5,
     title: 'Statistical Consulting',
-    description: 'Expert statistical consulting to validate and enhance your research.',
-    icon: <LineChart className="w-6 h-6" />,
+    description: 'Expert guidance on statistical methods and research design.',
+    icon: <Calculator className="h-6 w-6" />,
     features: [
-      'Industry analysis reports',
-      'Academic research papers',
-      'Evidence-based documentation',
-      'Strategic research support'
+      'Research methodology design',
+      'Statistical power analysis',
+      'Hypothesis testing',
+      'Results interpretation'
     ],
-    image: '/images/services/statistical-consulting.jpg'
+    image: '/images/image (5).jpg'
   },
   {
+    id: 6,
     title: 'Research Writing',
-    description: 'We offer in-depth research writing services designed to support your business\'s strategic initiatives. From industry analysis to academic research, our experienced writers deliver meticulously sourced and structured content.',
+    description: 'Professional assistance with research papers and publications.',
     icon: <FileText className="h-6 w-6" />,
     features: [
-      'Internal reports',
-      'Client reports',
-      'Stakeholder communications',
-      'Performance analysis'
+      'Academic writing',
+      'Literature reviews',
+      'Manuscript preparation',
+      'Publication support'
     ],
-    image: '/images/services/research-writing.jpg'
+    image: '/images/image (6).jpg'
   },
   {
+    id: 7,
     title: 'Graphic Design',
-    description: 'Our graphic design services combine creativity and strategy to produce visually captivating content that aligns with your brand\'s identity. Whether it\'s logos, brochures, or social media graphics, we craft designs that are both aesthetically pleasing and functional.',
+    description: 'Visual design services for research presentations and publications.',
     icon: <Palette className="h-6 w-6" />,
     features: [
-      'Logo design',
-      'Brochure creation',
-      'Social media graphics',
-      'Brand identity development'
+      'Presentation design',
+      'Publication graphics',
+      'Brand identity',
+      'Visual communication'
     ],
-    image: '/images/services/graphic-design.jpg'
+    image: '/images/image (7).jpg'
   },
   {
+    id: 8,
     title: 'Web Design',
-    description: 'Stand out in the digital world with our custom web design services. We create responsive, user-friendly websites that not only look great but also offer seamless user experiences.',
+    description: 'Development of research websites and online platforms.',
     icon: <Globe className="h-6 w-6" />,
     features: [
-      'Responsive design',
-      'E-commerce solutions',
-      'Corporate websites',
-      'User experience optimization'
+      'Research portfolio sites',
+      'Data visualization platforms',
+      'Interactive dashboards',
+      'Content management systems'
     ],
-    image: '/images/services/web-design.jpg'
+    image: '/images/image (8).jpg'
   },
   {
+    id: 9,
     title: 'Project Management',
-    description: 'Effective project management is key to delivering results on time and within budget. Our certified project managers ensure that your projects are executed with precision and efficiency.',
+    description: 'Comprehensive project management for research initiatives.',
     icon: <ClipboardList className="h-6 w-6" />,
     features: [
-      'Project planning and coordination',
-      'Budget management',
-      'Timeline tracking',
-      'Progress reporting'
+      'Timeline development',
+      'Resource allocation',
+      'Progress tracking',
+      'Stakeholder communication'
     ],
-    image: '/images/services/project-management.jpg'
+    image: '/images/image (9).jpg'
   },
   {
+    id: 10,
     title: 'Training',
-    description: 'Empower your team with our comprehensive training programs designed to enhance skills and foster professional growth. From technical training to leadership development, our programs are tailored to address specific needs.',
+    description: 'Workshops and training sessions on data science and research methods.',
     icon: <GraduationCap className="h-6 w-6" />,
     features: [
-      'Technical skills training',
-      'Leadership development',
-      'Custom training programs',
-      'Performance improvement'
+      'Statistical software training',
+      'Research methodology workshops',
+      'Data analysis bootcamps',
+      'Custom training programs'
     ],
-    image: '/images/services/training.jpg'
+    image: '/images/image (10).jpg'
   },
   {
+    id: 11,
     title: 'Consultation',
-    description: 'Our consultation services provide you with expert advice and strategic insights to help you navigate complex business challenges. We offer personalized guidance across various industries.',
+    description: 'One-on-one consulting for research projects and data analysis.',
     icon: <Users className="h-6 w-6" />,
     features: [
-      'Business strategy consulting',
-      'Technology solutions guidance',
-      'Process improvement advice',
-      'Industry-specific expertise'
+      'Research planning',
+      'Methodology review',
+      'Data analysis guidance',
+      'Results interpretation'
     ],
-    image: '/images/services/consultation.jpg'
+    image: '/images/image (11).jpg'
   },
   {
-    title: 'Writing Reports',
-    description: 'Our expert team crafts comprehensive and insightful reports tailored to your specific needs. Whether it\'s for internal purposes, clients, or stakeholders, we ensure clear, concise, and well-researched content.',
-    icon: <FileBarChart className="h-6 w-6" />,
+    id: 12,
+    title: 'Report Writing',
+    description: 'Professional report writing for research findings and recommendations.',
+    icon: <File className="h-6 w-6" />,
     features: [
-      'Internal reports',
-      'Client reports',
-      'Stakeholder communications',
-      'Performance analysis'
+      'Executive summaries',
+      'Technical reports',
+      'Research briefs',
+      'Policy recommendations'
     ],
-    image: '/images/services/writing-reports.jpg'
+    image: '/images/image (12).jpg'
   }
 ];
 

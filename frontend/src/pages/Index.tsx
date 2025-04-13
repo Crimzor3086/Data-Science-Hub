@@ -83,7 +83,7 @@ At Data Science Hub, we are more than just a service provider—we are your part
 const Index = () => {
   return (
     <Background 
-      image="/images/backgrounds/home-bg.jpg"
+      image="/images/image (14).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">
