@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -291,18 +291,21 @@ const CoursesPage = () => {
   const [filteredCourses, setFilteredCourses] = useState(mappedCourses);
 
   // Filter courses based on search term, level, and progress
-  const filteredCourses = courses.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         course.instructor.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesLevel = selectedLevel === "All" || course.level === selectedLevel;
-    const matchesProgress = selectedProgress === "All" || 
-                          (selectedProgress === "In Progress" && course.progress > 0 && course.progress < 100) ||
-                          (selectedProgress === "Completed" && course.progress === 100) ||
-                          (selectedProgress === "Not Started" && course.progress === 0);
-    const matchesCategory = activeCategory === "all" || course.category === activeCategory;
-    return matchesSearch && matchesLevel && matchesProgress && matchesCategory;
-  });
+  useEffect(() => {
+    const filtered = mappedCourses.filter(course => {
+      const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                           course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           course.instructor.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesLevel = selectedLevel === "All" || course.level === selectedLevel;
+      const matchesProgress = selectedProgress === "All" || 
+                            (selectedProgress === "In Progress" && course.progress > 0 && course.progress < 100) ||
+                            (selectedProgress === "Completed" && course.progress === 100) ||
+                            (selectedProgress === "Not Started" && course.progress === 0);
+      const matchesCategory = activeCategory === "all" || course.category === activeCategory;
+      return matchesSearch && matchesLevel && matchesProgress && matchesCategory;
+    });
+    setFilteredCourses(filtered);
+  }, [searchQuery, selectedLevel, selectedProgress, activeCategory]);
 
   // Get unique levels for filter
   const levels = ["All", ...new Set(courses.map(course => course.level))];
