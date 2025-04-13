@@ -5,8 +5,8 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist",
-        "buildCommand": "cd frontend && npm install && npm run build && cp -r dist ../dist"
+        "distDir": "frontend/dist",
+        "buildCommand": "cd frontend && npm install && npm run build"
       }
     },
     {
@@ -24,22 +24,19 @@
     },
     {
       "src": "/favicon.ico",
-      "dest": "/dist/favicon.ico"
+      "dest": "/frontend/dist/favicon.ico"
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/dist/assets/$1"
+      "dest": "/frontend/dist/assets/$1"
     },
     {
       "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|webp|woff|woff2|ttf|eot))",
-      "dest": "/dist/$1"
-    },
-    {
-      "handle": "filesystem"
+      "dest": "/frontend/dist/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/index.html"
+      "dest": "/frontend/dist/index.html"
     }
   ],
   "env": {
