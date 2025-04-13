@@ -11,7 +11,7 @@ const experts = [
     role: "Biostatistician",
     bio: "I am an apt Biostatistician determined in applying various statistical methods to inform decisions in medicine, public health and science.",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2376&auto=format&fit=crop",
-    expertise: ["Statistics", "Public Health", "Medical Research"],
+    expertise: ["Biostatistics", "Statistical Methods", "Public Health"],
     education: "Biostatistics",
     linkedin: "https://www.linkedin.com/in/ogechi-koel-4b90b92ab",
     email: "ogechikoel@gmail.com",
@@ -35,7 +35,7 @@ const experts = [
     role: "Data Scientist",
     bio: "I'm a passionate data scientist driven by curiosity and a commitment to lifelong learning. I thrive on exploring new tools and techniques to uncover insights and solve real-world problems. My goal is to turn data into impactful solutions that drive informed decision-making and meaningful change.",
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2574&auto=format&fit=crop",
-    expertise: ["Machine Learning", "Data Science", "Problem Solving"],
+    expertise: ["Data Science", "Machine Learning", "Problem Solving"],
     education: "Data Science",
     linkedin: "https://www.linkedin.com/in/enock-bereka",
     email: "enochosenwafulah@gmail.com",
@@ -52,32 +52,6 @@ const experts = [
     linkedin: "https://www.linkedin.com/in/timothy-a-1bb74127b",
     email: "timothyachala695@gmail.com",
     publications: 0
-  },
-  {
-    id: 5,
-    name: "Dr. Elena Gonzalez",
-    role: "Senior ML Engineer",
-    bio: "Elena specializes in developing and deploying scalable machine learning models to solve complex business challenges.",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2522&auto=format&fit=crop",
-    expertise: ["MLOps", "AutoML", "Time Series Analysis"],
-    education: "Ph.D. in Statistics, University of Cambridge",
-    linkedin: "#",
-    twitter: "#",
-    email: "elena@datasciencehub.com",
-    publications: 27
-  },
-  {
-    id: 6,
-    name: "Robert Kim",
-    role: "Data Visualization Expert",
-    bio: "Robert specializes in transforming complex data into compelling visual narratives that drive decision-making and insights.",
-    image: "https://images.unsplash.com/photo-1542178243-bc20204b769f?q=80&w=2580&auto=format&fit=crop",
-    expertise: ["Data Visualization", "UX/UI Design", "Storytelling"],
-    education: "MS in Information Design, Rhode Island School of Design",
-    linkedin: "#",
-    twitter: "#",
-    email: "robert@datasciencehub.com",
-    publications: 9
   }
 ];
 
