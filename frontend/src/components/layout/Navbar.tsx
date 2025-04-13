@@ -1,15 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Search, Menu, X, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { UserRole } from "@/lib/roles";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -20,8 +23,11 @@ const Navbar = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement search functionality
-    console.log("Searching for:", searchQuery);
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
   };
 
   const getRoleSpecificLinks = () => {
@@ -80,18 +86,14 @@ const Navbar = () => {
           <Link to="/team" className="hover:text-blue-600 transition-colors">
             Our Team
           </Link>
-          <form onSubmit={handleSearch} className="flex items-center">
-            <Input
-              type="search"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-64"
-            />
-            <Button type="submit" variant="ghost" size="icon" className="ml-2">
-              <Search className="h-5 w-5" />
-            </Button>
-          </form>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-gray-600 hover:text-blue-600"
+            onClick={() => setIsSearchOpen(true)}
+          >
+            <Search className="h-5 w-5" />
+          </Button>
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
               <Link to="/profile">
@@ -197,6 +199,29 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      {/* Search Dialog */}
+      <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Search</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSearch} className="flex items-center space-x-2">
+            <Input
+              type="search"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1"
+              autoFocus
+            />
+            <Button type="submit">
+              <Search className="h-4 w-4 mr-2" />
+              Search
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 };
