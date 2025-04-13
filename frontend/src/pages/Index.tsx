@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import Navbar from "@/components/layout/Navbar";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Navbar />
       {/* Hero Section */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-90 z-10"></div>
