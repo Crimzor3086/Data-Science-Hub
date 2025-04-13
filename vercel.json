@@ -23,7 +23,12 @@
       "dest": "/backend/src/routes/$1.py"
     },
     {
-      "handle": "filesystem"
+      "src": "/assets/(.*)",
+      "dest": "/frontend/dist/assets/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|webp|woff|woff2|ttf|eot))",
+      "dest": "/frontend/dist/$1"
     },
     {
       "src": "/(.*)",
