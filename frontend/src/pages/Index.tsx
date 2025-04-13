@@ -48,22 +48,22 @@ const features = [
 
 const testimonials = [
   {
-    name: 'Sarah Johnson',
-    role: 'Data Scientist at Google',
-    image: '/images/image (16).jpg',
-    quote: 'The courses at Data Science Hub transformed my career. The practical approach and industry-relevant projects gave me the confidence to land my dream job.'
+    name: 'Research Scientist',
+    role: 'Healthcare Industry',
+    image: '/images/testimonials/testimonial1.jpg',
+    quote: 'The courses at Data Science Hub transformed my research capabilities. The practical approach and industry-relevant projects gave me the skills I needed.'
   },
   {
-    name: 'Michael Chen',
-    role: 'ML Engineer at Amazon',
-    image: '/images/image (17).jpg',
-    quote: 'I was a complete beginner when I started. The structured learning path and supportive community helped me become proficient in data science.'
+    name: 'Data Analyst',
+    role: 'Financial Services',
+    image: '/images/testimonials/testimonial2.jpg',
+    quote: 'The structured learning path and supportive community helped me transition into data science from a different field.'
   },
   {
-    name: 'Emily Rodriguez',
-    role: 'Data Analyst at Microsoft',
-    image: '/images/image (18).jpg',
-    quote: 'The hands-on projects and real-world datasets made learning engaging and practical. I highly recommend Data Science Hub to anyone interested in data science.'
+    name: 'Project Manager',
+    role: 'Technology Sector',
+    image: '/images/testimonials/testimonial3.jpg',
+    quote: 'The hands-on projects and real-world datasets made learning engaging and practical. Perfect for professionals looking to upskill.'
   }
 ];
 
@@ -82,7 +82,7 @@ At Data Science Hub, we are more than just a service provider—we are your part
 const Index = () => {
   return (
     <Background 
-      image="/images/image (19).jpg"
+      image="/images/backgrounds/home-bg.jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

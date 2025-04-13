@@ -277,6 +277,13 @@ const courses = [
   }
 ];
 
+const courses = courses.map(course => ({
+  ...course,
+  students: 0,
+  rating: 0,
+  progress: 0
+}));
+
 const CoursesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");

@@ -35,8 +35,8 @@ const services = [
   },
   {
     title: 'Data Analysis',
-    description: 'Transform your data into valuable insights with our expert data analysis services. We use advanced analytical techniques to interpret complex data sets, uncover trends, and provide actionable recommendations.',
-    icon: <BarChart3 className="h-6 w-6" />,
+    description: 'Comprehensive data analysis services to help you make informed decisions.',
+    icon: <BarChart3 className="w-6 h-6" />,
     features: [
       'Advanced analytical techniques',
       'Trend identification and forecasting',
@@ -46,14 +46,50 @@ const services = [
     image: '/images/services/data-analysis.jpg'
   },
   {
-    title: 'Research Writing',
-    description: 'We offer in-depth research writing services designed to support your business\'s strategic initiatives. From industry analysis to academic research, our experienced writers deliver meticulously sourced and structured content.',
-    icon: <FileText className="h-6 w-6" />,
+    title: 'Machine Learning',
+    description: 'Custom machine learning solutions to automate and optimize your processes.',
+    icon: <Brain className="w-6 h-6" />,
+    features: [
+      'Machine learning solutions',
+      'Natural language processing',
+      'Custom AI development',
+      'Process optimization'
+    ],
+    image: '/images/services/machine-learning.jpg'
+  },
+  {
+    title: 'Data Visualization',
+    description: 'Beautiful and interactive data visualizations to communicate insights effectively.',
+    icon: <PieChart className="w-6 h-6" />,
+    features: [
+      'Logo design',
+      'Brochure creation',
+      'Social media graphics',
+      'Brand identity development'
+    ],
+    image: '/images/services/data-visualization.jpg'
+  },
+  {
+    title: 'Statistical Consulting',
+    description: 'Expert statistical consulting to validate and enhance your research.',
+    icon: <LineChart className="w-6 h-6" />,
     features: [
       'Industry analysis reports',
       'Academic research papers',
       'Evidence-based documentation',
       'Strategic research support'
+    ],
+    image: '/images/services/statistical-consulting.jpg'
+  },
+  {
+    title: 'Research Writing',
+    description: 'We offer in-depth research writing services designed to support your business\'s strategic initiatives. From industry analysis to academic research, our experienced writers deliver meticulously sourced and structured content.',
+    icon: <FileText className="h-6 w-6" />,
+    features: [
+      'Internal reports',
+      'Client reports',
+      'Stakeholder communications',
+      'Performance analysis'
     ],
     image: '/images/services/research-writing.jpg'
   },
@@ -92,18 +128,6 @@ const services = [
       'Progress reporting'
     ],
     image: '/images/services/project-management.jpg'
-  },
-  {
-    title: 'AI Development',
-    description: 'Embrace the future with our advanced AI development services. Our team specializes in building intelligent systems that optimize processes, enhance decision-making, and provide valuable insights.',
-    icon: <Brain className="h-6 w-6" />,
-    features: [
-      'Machine learning solutions',
-      'Natural language processing',
-      'Custom AI development',
-      'Process optimization'
-    ],
-    image: '/images/services/ai-development.jpg'
   },
   {
     title: 'Training',
@@ -146,7 +170,7 @@ const services = [
 const ServicesPage = () => {
   return (
     <Background 
-      image="/images/image (7).jpg"
+      image="/images/backgrounds/services-bg.jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

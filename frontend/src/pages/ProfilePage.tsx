@@ -210,10 +210,10 @@ const ProfilePage: React.FC = () => {
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-8">
-            {/* Profile Sidebar */}
-            <div className="w-full md:w-1/3">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Profile Sidebar */}
+          <div className="w-full md:w-1/3">
               <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
                 <CardHeader className="text-center relative">
                   <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent rounded-t-lg" />
@@ -221,11 +221,11 @@ const ProfilePage: React.FC = () => {
                     <Avatar className="w-full h-full border-4 border-primary/20">
                       <AvatarImage src={profile.avatar} alt={profile.name} />
                       <AvatarFallback>{profile.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
+                  </Avatar>
                     {isEditing && (
-                      <Button 
-                        size="icon" 
-                        variant="outline" 
+                          <Button
+                            size="icon"
+                        variant="outline"
                         className="absolute bottom-0 right-0 rounded-full bg-white"
                       >
                         <Edit className="h-4 w-4" />
@@ -240,7 +240,7 @@ const ProfilePage: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <Mail className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm">{profile.email}</span>
-                    </div>
+                </div>
                     <div className="flex items-center gap-2">
                       <Phone className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm">{profile.phone}</span>
@@ -253,10 +253,10 @@ const ProfilePage: React.FC = () => {
                       <Calendar className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm">Joined {profile.joinDate}</span>
                     </div>
-                  </div>
-                </CardContent>
+                    </div>
+                  </CardContent>
                 <CardFooter className="flex justify-center">
-                  <Button 
+                    <Button
                     variant={isEditing ? "default" : "outline"}
                     onClick={() => setIsEditing(!isEditing)}
                   >
@@ -271,9 +271,9 @@ const ProfilePage: React.FC = () => {
                         Edit Profile
                       </>
                     )}
-                  </Button>
-                </CardFooter>
-              </Card>
+                    </Button>
+                  </CardFooter>
+                </Card>
             </div>
 
             {/* Profile Content */}
@@ -291,7 +291,7 @@ const ProfilePage: React.FC = () => {
                       </TabsList>
                     </Tabs>
                   </div>
-                </CardHeader>
+                  </CardHeader>
                 <CardContent>
                   <TabsContent value="overview">
                     <div className="space-y-6">
@@ -349,13 +349,13 @@ const ProfilePage: React.FC = () => {
                               <p className="text-xs text-muted-foreground mt-1">
                                 Last accessed {course.lastAccessed}
                               </p>
-                            </div>
-                          ))}
+                      </div>
+                    ))}
                         </div>
                       </div>
                     </div>
-                  </TabsContent>
-                  
+              </TabsContent>
+
                   <TabsContent value="education">
                     <div className="space-y-6">
                       {editedData.education?.map((edu) => (
@@ -369,9 +369,9 @@ const ProfilePage: React.FC = () => {
                           </div>
                         </div>
                       ))}
-                    </div>
-                  </TabsContent>
-                  
+                      </div>
+              </TabsContent>
+
                   <TabsContent value="experience">
                     <div className="space-y-6">
                       {editedData.experience?.map((exp) => (
@@ -385,9 +385,9 @@ const ProfilePage: React.FC = () => {
                           </div>
                         </div>
                       ))}
-                    </div>
-                  </TabsContent>
-                  
+                      </div>
+              </TabsContent>
+
                   <TabsContent value="projects">
                     <div className="space-y-6">
                       {editedData.projects?.map((project) => (
@@ -402,21 +402,21 @@ const ProfilePage: React.FC = () => {
                               }>
                                 {project.status}
                               </Badge>
-                            </div>
+                      </div>
                             <div className="flex flex-wrap gap-2 mt-2">
                               {project.technologies.map((tech) => (
                                 <Badge key={tech} variant="outline" className="bg-primary/5">
                                   {tech}
                                 </Badge>
                               ))}
-                            </div>
-                          </div>
+                      </div>
+                    </div>
                         </div>
                       ))}
                     </div>
                   </TabsContent>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
             </div>
           </div>
         </div>

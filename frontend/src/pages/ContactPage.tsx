@@ -73,7 +73,7 @@ const ContactPage = () => {
   
   return (
     <Background 
-      image="/images/image (9).jpg"
+      image="/images/backgrounds/contact-bg.jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">
@@ -139,8 +139,8 @@ const ContactPage = () => {
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         />
-                      </div>
                     </div>
+                  </div>
                     <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                       Send Message <Send className="ml-2 h-4 w-4" />
                     </Button>
@@ -212,13 +212,13 @@ const ContactPage = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex gap-4">
+              <div className="flex gap-4">
                     <Button variant="outline" className="flex-1">
                       LinkedIn
-                    </Button>
+                </Button>
                     <Button variant="outline" className="flex-1">
                       Twitter
-                    </Button>
+                </Button>
                     <Button variant="outline" className="flex-1">
                       GitHub
                     </Button>

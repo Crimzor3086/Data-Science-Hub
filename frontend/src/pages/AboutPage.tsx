@@ -73,7 +73,7 @@ const values = [
 const AboutPage = () => {
   return (
     <Background 
-      image="/images/image (14).jpg"
+      image="/images/backgrounds/about-bg.jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">
@@ -84,7 +84,7 @@ const AboutPage = () => {
               Empowering the next generation of data scientists and AI innovators
             </p>
           </div>
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
               <CardHeader>
@@ -103,15 +103,15 @@ const AboutPage = () => {
                 </p>
                 <div className="flex items-center gap-2 text-primary">
                   <BookOpen className="h-5 w-5" />
-                  <span className="font-medium">10,000+ Students</span>
+                  <span className="font-medium">Growing Student Community</span>
                 </div>
                 <div className="flex items-center gap-2 text-primary">
                   <Globe className="h-5 w-5" />
-                  <span className="font-medium">50+ Countries</span>
+                  <span className="font-medium">Global Reach</span>
                 </div>
                 <div className="flex items-center gap-2 text-primary">
                   <Heart className="h-5 w-5" />
-                  <span className="font-medium">95% Satisfaction Rate</span>
+                  <span className="font-medium">High Satisfaction Rate</span>
                 </div>
               </CardContent>
             </Card>
@@ -135,16 +135,16 @@ const AboutPage = () => {
                   <div className="bg-primary/10 p-4 rounded-lg">
                     <h3 className="font-medium text-primary mb-1">Research</h3>
                     <p className="text-sm text-muted-foreground">Pushing the boundaries of AI and ML</p>
-                  </div>
+            </div>
                   <div className="bg-primary/10 p-4 rounded-lg">
                     <h3 className="font-medium text-primary mb-1">Innovation</h3>
                     <p className="text-sm text-muted-foreground">Developing new learning methods</p>
-                  </div>
-                </div>
+          </div>
+        </div>
               </CardContent>
             </Card>
           </div>
-
+          
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Values</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -153,7 +153,7 @@ const AboutPage = () => {
                   <CardHeader>
                     <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
                       {value.icon}
-                    </div>
+                </div>
                     <CardTitle className="text-xl">{value.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -162,8 +162,8 @@ const AboutPage = () => {
                 </Card>
               ))}
             </div>
-          </div>
-
+            </div>
+            
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Team</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -177,7 +177,7 @@ const AboutPage = () => {
                         className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    </div>
+                </div>
                     <CardTitle>{member.name}</CardTitle>
                     <CardDescription>{member.role}</CardDescription>
                   </CardHeader>
@@ -186,9 +186,9 @@ const AboutPage = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
           </div>
-
+        </div>
+        
           <div className="text-center">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
               Join Our Team <ArrowRight className="ml-2 h-4 w-4" />
