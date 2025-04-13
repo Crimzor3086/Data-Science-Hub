@@ -170,7 +170,7 @@ const services = [
 const ServicesPage = () => {
   return (
     <Background 
-      image="/images/backgrounds/services-bg.jpg"
+      image="/images/image (13).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

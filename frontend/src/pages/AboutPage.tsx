@@ -73,7 +73,7 @@ const values = [
 const AboutPage = () => {
   return (
     <Background 
-      image="/images/backgrounds/about-bg.jpg"
+      image="/images/image (1).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

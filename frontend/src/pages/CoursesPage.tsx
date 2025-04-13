@@ -308,7 +308,7 @@ const CoursesPage = () => {
   }, [searchQuery, selectedLevel, selectedProgress, activeCategory]);
 
   // Get unique levels for filter
-  const levels = ["All", ...new Set(courses.map(course => course.level))];
+  const levels = ["All", ...new Set(mappedCourses.map(course => course.level))];
   const progressOptions = ["All", "Not Started", "In Progress", "Completed"];
 
   const getProgressColor = (progress: number) => {

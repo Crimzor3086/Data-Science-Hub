@@ -101,7 +101,7 @@ const ProjectsPage = () => {
 
   return (
     <Background 
-      image="/images/image (2).jpg"
+      image="/images/image (12).jpg"
       overlayOpacity={0.85}
     >
       <Layout>

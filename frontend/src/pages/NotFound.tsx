@@ -6,7 +6,7 @@ import { Home, ArrowLeft } from 'lucide-react';
 const NotFound = () => {
   return (
     <Background 
-      image="/images/backgrounds/not-found-bg.jpg"
+      image="/images/image (15).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">
