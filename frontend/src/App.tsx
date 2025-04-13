@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/lib/auth-context";
 import { RoleGuard } from "@/components/auth/RoleGuard";
 import { UserRole } from "@/lib/roles";
@@ -66,6 +66,23 @@ const App = () => (
               element={
                 <RoleGuard allowedRoles={[UserRole.ADMIN]}>
                   <AnalyticsPage />
+                </RoleGuard>
+              } 
+            />
+            {/* Redirects for convenience */}
+            <Route 
+              path="/users" 
+              element={
+                <RoleGuard allowedRoles={[UserRole.ADMIN]} redirectTo="/login">
+                  <Navigate to="/admin/users" replace />
+                </RoleGuard>
+              } 
+            />
+            <Route 
+              path="/analytics" 
+              element={
+                <RoleGuard allowedRoles={[UserRole.ADMIN]} redirectTo="/login">
+                  <Navigate to="/admin/analytics" replace />
                 </RoleGuard>
               } 
             />
