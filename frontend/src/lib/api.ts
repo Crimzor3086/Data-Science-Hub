@@ -1,6 +1,70 @@
 import axios from 'axios';
 
-// Create axios instance with base URL
+// Types and Interfaces
+interface UserData {
+  name: string;
+  email: string;
+  password: string;
+  role?: string;
+  company?: string;
+  position?: string;
+  phone?: string;
+}
+
+interface UserUpdateData {
+  name?: string;
+  email?: string;
+  role?: string;
+  status?: string;
+  company?: string;
+  position?: string;
+  phone?: string;
+}
+
+interface SearchParams {
+  query?: string;
+  role?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+
+interface BulkOperationData {
+  status?: string;
+  role?: string;
+  permissions?: string[];
+}
+
+interface AnalyticsParams {
+  period?: 'day' | 'week' | 'month' | 'year';
+  startDate?: string;
+  endDate?: string;
+}
+
+interface AdminSettings {
+  security?: {
+    passwordPolicy?: {
+      minLength?: number;
+      requireSpecialChars?: boolean;
+      requireNumbers?: boolean;
+    };
+    sessionTimeout?: number;
+    maxLoginAttempts?: number;
+  };
+  email?: {
+    smtpServer?: string;
+    smtpPort?: number;
+    senderEmail?: string;
+  };
+  notifications?: {
+    emailNotifications?: boolean;
+    systemAlerts?: boolean;
+  };
+}
+
+// Create an axios instance with default config
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   headers: {
@@ -8,10 +72,10 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor to add auth token
+// Add a request interceptor to add the auth token to requests
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('auth_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -22,13 +86,16 @@ api.interceptors.request.use(
   }
 );
 
-// Add response interceptor to handle errors
+// Add a response interceptor to handle common errors
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   (error) => {
-    // Handle 401 Unauthorized errors (token expired)
+    // Handle 401 Unauthorized errors (token expired or invalid)
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('token');
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_data');
       window.location.href = '/login';
     }
     return Promise.reject(error);
@@ -40,14 +107,15 @@ export const authAPI = {
   login: (email: string, password: string) => 
     api.post('/auth/login', { email, password }),
   
-  register: (userData: { name: string; email: string; password: string; role?: string }) => 
+  register: (userData: UserData) => 
     api.post('/auth/register', userData),
   
   getCurrentUser: () => 
     api.get('/auth/me'),
   
   logout: () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user_data');
     return Promise.resolve();
   }
 };
@@ -60,19 +128,19 @@ export const userAPI = {
   getUser: (id: string) => 
     api.get(`/users/${id}`),
   
-  createUser: (userData: any) => 
+  createUser: (userData: UserData) => 
     api.post('/users', userData),
   
-  updateUser: (id: string, userData: any) => 
+  updateUser: (id: string, userData: UserUpdateData) => 
     api.patch(`/users/${id}`, userData),
   
   deleteUser: (id: string) => 
     api.delete(`/users/${id}`),
   
-  searchUsers: (params: any) => 
+  searchUsers: (params: SearchParams) => 
     api.get('/admin/users/search', { params }),
   
-  bulkUserOperation: (operation: string, userIds: string[], data?: any) => 
+  bulkUserOperation: (operation: string, userIds: string[], data?: BulkOperationData) => 
     api.post('/admin/users/bulk', { operation, userIds, data }),
   
   exportUsers: (format: string = 'json') => 
@@ -108,11 +176,11 @@ export const adminAPI = {
   getSettings: () => 
     api.get('/admin/settings'),
   
-  updateSettings: (settings: any) => 
+  updateSettings: (settings: AdminSettings) => 
     api.patch('/admin/settings', settings),
   
   getLogs: (type: string = 'all', limit: number = 50) => 
     api.get('/admin/logs', { params: { type, limit } })
 };
 
-export default api; 
+export { api }; 
