@@ -1,195 +1,191 @@
 # Data Science Hub
 
-A comprehensive platform for data science education, resources, and community collaboration.
+A comprehensive platform for data science education, project management, and community collaboration.
 
-## Features
+## 🌟 Features
 
-- **User Authentication**
-  - Secure signup and login with form validation
-  - Social login (Google & GitHub)
-  - Password reset functionality
-  - Rate limiting for security
-  - Accessible form elements with ARIA labels
+### 🎓 Learning Platform
+- **Course Management**
+  - Interactive course catalog
+  - Progress tracking
+  - Module-based learning
+  - Assignment submission
+  - Achievement system
+  - Certificate generation
 
-- **Admin Dashboard**
-  - User management (view, edit, delete)
-  - Course management
-  - Blog post management
-  - Service management
-  - Search and filter functionality
-  - Pagination support
-  - Responsive design
-  - Accessible interface
+- **Progress Tracking**
+  - Real-time progress monitoring
+  - Learning statistics
+  - Achievement badges
+  - Performance analytics
+  - Course completion tracking
 
-- **Content Management**
-  - Blog posts about data science
-  - Course listings with filtering
-  - Team member profiles with expertise
-  - Service offerings
-  - Contact form with validation
-
-- **Security Features**
-  - Rate limiting for authentication attempts
-  - Secure password hashing
-  - Session management
-  - OAuth2 integration
-  - Form validation and sanitization
-  - Admin authentication and authorization
-
-- **Accessibility Features**
-  - ARIA labels and roles
-  - Semantic HTML structure
-  - Proper heading hierarchy
-  - Alt text for images
-  - Keyboard navigation support
-  - Screen reader compatibility
-  - High contrast color scheme
-
-## Tech Stack
-
-- **Frontend**
-  - HTML5 with semantic markup
-  - CSS3 with responsive design
-  - JavaScript with form validation
-  - SVG for icons and graphics
-  - Google Fonts integration
-  - Modern CSS features (Flexbox, Grid)
-  - CSS custom properties
-
-- **Backend**
-  - Python
-  - Flask
-  - SQLite
-  - SMTP for email services
+### 👥 User Management
+- **Role-Based Access**
+  - Admin dashboard
+  - Client portal
+  - Student learning environment
+  - Profile management
+  - Custom permissions
 
 - **Authentication**
-  - OAuth2 (Google & GitHub)
-  - JWT for session management
-  - SHA-256 for password hashing
+  - Secure login/registration
+  - Role-based authorization
+  - Protected routes
+  - Session management
 
-## Getting Started
+### 📊 Project Management
+- **Project Features**
+  - Project creation and tracking
+  - Team collaboration
+  - Resource allocation
+  - Progress monitoring
+  - Analytics dashboard
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Crimzor3086/Data-Science-Hub.git
-   cd Data-Science-Hub
-   ```
+- **Client Portal**
+  - Project overview
+  - Service requests
+  - Communication tools
+  - Analytics access
 
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 📈 Reports & Analytics
+- **Reporting System**
+  - Custom report generation
+  - Analytics visualization
+  - Performance metrics
+  - Usage statistics
+  - Downloadable reports
 
-3. **Set up environment variables**
-   Create a `.env` file with:
-   ```
-   SMTP_SERVER=smtp.gmail.com
-   SMTP_PORT=587
-   SMTP_USERNAME=your_email@gmail.com
-   SMTP_PASSWORD=your_app_password
-   BASE_URL=http://localhost:5000
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   GITHUB_CLIENT_ID=your_github_client_id
-   GITHUB_CLIENT_SECRET=your_github_client_secret
-   ```
+### 👥 Community Features
+- **Collaboration Tools**
+  - Team workspaces
+  - Resource sharing
+  - Community forums
+  - Blog platform
+  - Knowledge base
 
-4. **Initialize the database**
-   ```bash
-   python -c "from database.db import Database; db = Database()"
-   ```
+## 🚀 Getting Started
 
-5. **Run the application**
-   ```bash
-   python app.py
-   ```
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- Git
 
-## Project Structure
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/data-science-hub.git
+cd data-science-hub
+```
+
+2. Install dependencies
+```bash
+# Install backend dependencies
+cd backend
+npm install
+
+# Install frontend dependencies
+cd ../frontend
+npm install
+```
+
+3. Set up environment variables
+```bash
+# Backend (.env)
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+
+# Frontend (.env)
+VITE_API_URL=http://localhost:5000
+```
+
+4. Start the development servers
+```bash
+# Start backend server
+cd backend
+npm run dev
+
+# Start frontend server
+cd frontend
+npm run dev
+```
+
+## 🏗️ Project Structure
 
 ```
-Data-Science-Hub/
-├── assets/
-│   ├── css/
-│   │   ├── style.css
-│   │   └── admin.css
-│   ├── images/
-│   │   ├── about/
-│   │   ├── icons/
-│   │   ├── placeholders/
-│   │   └── logo.svg
-│   └── js/
-│       ├── admin.js
-│       └── main.js
-├── auth/
-│   ├── oauth_handler.py
-│   └── email_service.py
-├── config/
-│   └── oauth_config.py
-├── database/
-│   ├── db.py
-│   └── schema.sql
-├── pages/
-│   ├── about.html
-│   ├── admin.html
-│   ├── blog.html
-│   ├── contact.html
-│   ├── courses.html
-│   ├── login.html
-│   ├── services.html
-│   ├── signup.html
-│   └── team.html
-├── templates/
-│   ├── verification_success.html
-│   └── verification_error.html
-├── app.py
-├── database_handler.py
-├── index.html
-├── requirements.txt
+data-science-hub/
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── middleware/
+│   │   └── utils/
+│   ├── package.json
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   ├── context/
+│   │   ├── lib/
+│   │   └── utils/
+│   ├── package.json
+│   └── .env
 └── README.md
 ```
 
-## Key Improvements
+## 🛠️ Built With
 
-- **Admin Dashboard**
-  - Modern and responsive design
-  - Tab-based navigation
-  - Search and filter functionality
-  - Pagination support
-  - Accessible interface
-  - Secure authentication
+### Frontend
+- React
+- TypeScript
+- Tailwind CSS
+- Shadcn UI
+- React Query
+- React Router
+- Lucide Icons
 
-- **Accessibility**
-  - Added ARIA labels and roles
-  - Improved semantic HTML structure
-  - Enhanced keyboard navigation
-  - Added proper form validation feedback
-  - Improved error message handling
-  - Screen reader compatibility
+### Backend
+- Node.js
+- Express
+- MongoDB
+- JWT Authentication
+- Socket.IO
 
-- **User Experience**
-  - Enhanced form validation
-  - Improved error messages
-  - Added loading states
-  - Better navigation structure
-  - Consistent styling across pages
-  - Responsive design for all devices
+## 📱 Pages
 
-- **Security**
-  - Enhanced form validation
-  - Improved password requirements
-  - Better error handling
-  - Secure social login integration
-  - Protected routes and endpoints
-  - Admin authentication and authorization
+### Public Pages
+- Home
+- About
+- Contact
+- Services
+- Blog
+- Team
 
-- **SEO**
-  - Added meta descriptions
-  - Improved semantic structure
-  - Enhanced heading hierarchy
-  - Added proper alt text
-  - Optimized content structure
+### Protected Pages
+- Dashboard (Role-specific)
+- Profile
+- Courses
+- Assignments
+- Projects
+- Reports
+- Progress
+- Analytics
 
-## Contributing
+## 🔒 Security Features
+
+- Role-based access control
+- JWT authentication
+- Protected routes
+- Secure API endpoints
+- Data encryption
+- Session management
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -197,11 +193,20 @@ Data-Science-Hub/
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
+## 👥 Authors
 
-- GitHub: [Crimzor3086](https://github.com/Crimzor3086)
-- Email: dbliss852@gmail.com
+- Your Name - Initial work
+
+## 🙏 Acknowledgments
+
+- Shadcn UI for the component library
+- Lucide for the icons
+- All contributors and supporters
+
+## 📞 Support
+
+For support, email support@datasciencehub.com or join our community forum.
