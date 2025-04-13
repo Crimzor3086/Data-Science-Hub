@@ -1,182 +1,172 @@
-import { useState } from 'react';
-import Layout from '@/components/layout/Layout';
-import PageHeader from '@/components/layout/PageHeader';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { Background } from '@/components/ui/background';
+import { 
+  BarChart2, 
+  Database, 
+  Brain, 
+  Code, 
+  ArrowRight,
+  LineChart,
+  PieChart,
+  FileText,
+  Users,
+  Settings
+} from 'lucide-react';
 
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  category: 'data' | 'design' | 'development' | 'management' | 'training';
-  icon: string;
-}
-
-const services: Service[] = [
+const services = [
   {
-    id: 'data-collection',
-    title: 'Data Collection',
-    description: "Accurate, reliable data is the foundation of informed decision-making. Our data collection services provide businesses with high-quality, actionable data that can drive strategy and improve performance. We specialize in gathering data from diverse sources, ensuring it's relevant, timely, and tailored to your specific needs. Whether it's qualitative or quantitative data, we employ industry-leading methods and tools to deliver precise insights that support your business objectives.",
-    category: 'data',
-    icon: '📊'
+    id: 1,
+    title: 'Data Analysis & Visualization',
+    description: 'Transform your raw data into actionable insights with our comprehensive data analysis and visualization services.',
+    icon: <BarChart2 className="h-6 w-6" />,
+    features: [
+      'Exploratory Data Analysis',
+      'Statistical Analysis',
+      'Interactive Dashboards',
+      'Custom Visualizations'
+    ],
+    image: '/images/image (3).jpg'
   },
   {
-    id: 'data-analysis',
-    title: 'Data Analysis',
-    description: "Transform your data into valuable insights with our expert data analysis services. We use advanced analytical techniques to interpret complex data sets, uncover trends, and provide actionable recommendations that drive informed business decisions. Whether you need to improve operational efficiency, understand customer behavior, or forecast future trends, our data analysis services turn raw data into clear, strategic guidance that propels your business forward.",
-    category: 'data',
-    icon: '📈'
+    id: 2,
+    title: 'Machine Learning Solutions',
+    description: 'Leverage the power of machine learning to automate processes and predict future trends.',
+    icon: <Brain className="h-6 w-6" />,
+    features: [
+      'Predictive Modeling',
+      'Natural Language Processing',
+      'Computer Vision',
+      'Recommendation Systems'
+    ],
+    image: '/images/image (4).jpg'
   },
   {
-    id: 'research-writing',
-    title: 'Research Writing',
-    description: "We offer in-depth research writing services designed to support your business's strategic initiatives. From industry analysis to academic research, our experienced writers deliver meticulously sourced and structured content that provides actionable insights. We specialize in creating high-quality, evidence-based documents that inform decisions and foster growth.",
-    category: 'management',
-    icon: '📝'
+    id: 3,
+    title: 'Data Engineering',
+    description: 'Build robust and scalable data pipelines to handle your growing data needs.',
+    icon: <Database className="h-6 w-6" />,
+    features: [
+      'ETL Pipeline Development',
+      'Data Warehouse Design',
+      'Big Data Processing',
+      'Data Quality Assurance'
+    ],
+    image: '/images/image (5).jpg'
   },
   {
-    id: 'graphic-design',
-    title: 'Graphic Design',
-    description: "Our graphic design services combine creativity and strategy to produce visually captivating content that aligns with your brand's identity. Whether it's logos, brochures, or social media graphics, we craft designs that are both aesthetically pleasing and functional. Let us help you communicate your message with visual clarity and impact.",
-    category: 'design',
-    icon: '🎨'
-  },
-  {
-    id: 'web-design',
-    title: 'Web Design',
-    description: "Stand out in the digital world with our custom web design services. We create responsive, user-friendly websites that not only look great but also offer seamless user experiences. From e-commerce sites to corporate landing pages, our designs are tailored to meet the unique needs of your business, ensuring that your online presence leaves a lasting impression.",
-    category: 'design',
-    icon: '🌐'
-  },
-  {
-    id: 'project-management',
-    title: 'Project Management',
-    description: "Effective project management is key to delivering results on time and within budget. Our certified project managers ensure that your projects are executed with precision and efficiency. We handle the planning, coordination, and execution of all project phases, keeping you informed every step of the way. Trust us to keep your projects on track and aligned with your business goals.",
-    category: 'management',
-    icon: '📋'
-  },
-  {
-    id: 'ai-development',
-    title: 'AI Development',
-    description: "Embrace the future with our advanced AI development services. Our team specializes in building intelligent systems that optimize processes, enhance decision-making, and provide valuable insights. Whether you're looking for machine learning, natural language processing, or custom AI solutions, we deliver cutting-edge technology to accelerate your business success.",
-    category: 'development',
-    icon: '🤖'
-  },
-  {
-    id: 'training',
-    title: 'Training',
-    description: "Empower your team with our comprehensive training programs designed to enhance skills and foster professional growth. From technical training to leadership development, our programs are tailored to address specific needs, ensuring measurable improvements in performance. With our expert trainers, your team will gain the knowledge and confidence to drive success.",
-    category: 'training',
-    icon: '👥'
-  },
-  {
-    id: 'consultation',
-    title: 'Consultation',
-    description: "Our consultation services provide you with expert advice and strategic insights to help you navigate complex business challenges. We offer personalized guidance across various industries, helping you identify opportunities, optimize operations, and make informed decisions. Whether you're looking for business strategy, technology solutions, or process improvement, our consultants are here to support your goals.",
-    category: 'management',
-    icon: '💡'
-  },
-  {
-    id: 'writing-reports',
-    title: 'Writing Reports',
-    description: "Our expert team crafts comprehensive and insightful reports tailored to your specific needs. Whether it's for internal purposes, clients, or stakeholders, we ensure clear, concise, and well-researched content that drives decisions and actions. With a focus on accuracy and presentation, we provide detailed reports that enhance your business's credibility and performance.",
-    category: 'management',
-    icon: '📑'
+    id: 4,
+    title: 'Custom Software Development',
+    description: 'Develop tailored software solutions to meet your specific business requirements.',
+    icon: <Code className="h-6 w-6" />,
+    features: [
+      'Web Applications',
+      'API Development',
+      'Cloud Solutions',
+      'Integration Services'
+    ],
+    image: '/images/image (6).jpg'
   }
 ];
 
 const ServicesPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-
-  const filteredServices = services.filter(service => {
-    const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         service.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || service.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
   return (
-    <Layout>
-      <PageHeader
-        title="Our Services"
-        subtitle="Explore our comprehensive data science services and solutions"
-      />
-      
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <Input
-              placeholder="Search services..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
+    <Background 
+      image="/images/image (7).jpg"
+      overlayOpacity={0.85}
+    >
+      <div className="container mx-auto py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-primary mb-4">Our Services</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive data science solutions to help you make data-driven decisions
+            </p>
           </div>
-          <div className="flex gap-2">
-            <Button
-              variant={selectedCategory === 'all' ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory('all')}
-            >
-              All
-            </Button>
-            <Button
-              variant={selectedCategory === 'data' ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory('data')}
-            >
-              Data
-            </Button>
-            <Button
-              variant={selectedCategory === 'design' ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory('design')}
-            >
-              Design
-            </Button>
-            <Button
-              variant={selectedCategory === 'development' ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory('development')}
-            >
-              Development
-            </Button>
-            <Button
-              variant={selectedCategory === 'management' ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory('management')}
-            >
-              Management
-            </Button>
-            <Button
-              variant={selectedCategory === 'training' ? 'default' : 'outline'}
-              onClick={() => setSelectedCategory('training')}
-            >
-              Training
-            </Button>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
-            <Card key={service.id} className="hover:shadow-lg transition-shadow">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {services.map((service) => (
+              <Card key={service.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                <CardHeader>
+                  <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                    <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground p-2 rounded-lg">
+                      {service.icon}
+                    </div>
+                  </div>
+                  <CardTitle className="text-2xl">{service.title}</CardTitle>
+                  <CardDescription className="text-lg">{service.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {service.features.map((feature, index) => (
+                      <li key={index} className="flex items-center gap-2 text-muted-foreground">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter>
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
               <CardHeader>
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">{service.icon}</span>
-                  <CardTitle>{service.title}</CardTitle>
+                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
+                  <Users className="h-6 w-6" />
                 </div>
+                <CardTitle>Expert Team</CardTitle>
                 <CardDescription>
-                  {service.description}
+                  Our team of experienced data scientists and engineers
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <Button className="w-full">Learn More</Button>
-              </CardContent>
             </Card>
-          ))}
+
+            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+              <CardHeader>
+                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
+                  <Settings className="h-6 w-6" />
+                </div>
+                <CardTitle>Custom Solutions</CardTitle>
+                <CardDescription>
+                  Tailored approaches to meet your specific needs
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+              <CardHeader>
+                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
+                  <FileText className="h-6 w-6" />
+                </div>
+                <CardTitle>Documentation</CardTitle>
+                <CardDescription>
+                  Comprehensive documentation and support
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+
+          <div className="mt-16 text-center">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              Get Started <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
-    </Layout>
+    </Background>
   );
 };
 

@@ -1,214 +1,198 @@
-import Layout from "@/components/layout/Layout";
-import PageHeader from "@/components/layout/PageHeader";
-import { CheckCircle2, Award, BarChart, Users, GraduationCap, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Background } from '@/components/ui/background';
+import { 
+  Users, 
+  Target, 
+  Lightbulb, 
+  Award, 
+  ArrowRight,
+  BookOpen,
+  Globe,
+  Heart
+} from 'lucide-react';
+
+const teamMembers = [
+  {
+    id: 1,
+    name: 'Dr. Sarah Johnson',
+    role: 'Founder & CEO',
+    bio: 'PhD in Data Science with 15+ years of experience in machine learning and AI.',
+    image: '/images/image (10).jpg'
+  },
+  {
+    id: 2,
+    name: 'Michael Chen',
+    role: 'Head of Research',
+    bio: 'Former research lead at Google AI, specializing in deep learning and NLP.',
+    image: '/images/image (11).jpg'
+  },
+  {
+    id: 3,
+    name: 'Emily Rodriguez',
+    role: 'Lead Data Scientist',
+    bio: 'Expert in computer vision and data visualization with multiple publications.',
+    image: '/images/image (12).jpg'
+  },
+  {
+    id: 4,
+    name: 'David Kim',
+    role: 'Technical Director',
+    bio: 'Full-stack developer with expertise in scalable data systems.',
+    image: '/images/image (13).jpg'
+  }
+];
+
+const values = [
+  {
+    icon: <Target className="h-6 w-6" />,
+    title: 'Excellence',
+    description: 'We strive for excellence in everything we do, from education to research.'
+  },
+  {
+    icon: <Lightbulb className="h-6 w-6" />,
+    title: 'Innovation',
+    description: 'We embrace new ideas and technologies to push the boundaries of what\'s possible.'
+  },
+  {
+    icon: <Users className="h-6 w-6" />,
+    title: 'Collaboration',
+    description: 'We believe in the power of working together to achieve greater results.'
+  },
+  {
+    icon: <Award className="h-6 w-6" />,
+    title: 'Integrity',
+    description: 'We maintain the highest standards of integrity in our work and relationships.'
+  }
+];
 
 const AboutPage = () => {
   return (
-    <Layout>
-      <PageHeader 
-        title="About Data Science Hub" 
-        subtitle="Leading the way in data science education and innovation since 2015"
-        backgroundImage="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2670&auto=format&fit=crop"
-      />
-      
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
-          <div>
-            <h2 className="text-3xl font-bold text-primary mb-6">Our Mission</h2>
-            <p className="text-muted-foreground mb-6">
-              At Data Science Hub, we're dedicated to democratizing data science education and empowering 
-              individuals and organizations with the knowledge and skills needed to thrive in today's 
-              data-driven world. We believe that quality data science education should be accessible to all, 
-              regardless of background or previous experience.
-            </p>
-            <p className="text-muted-foreground">
-              Our comprehensive approach combines rigorous academic foundations with practical, industry-relevant 
-              skills, delivered through cutting-edge learning formats. We bridge the gap between theory and 
-              practice, ensuring our students can immediately apply their knowledge to real-world challenges.
+    <Background 
+      image="/images/image (14).jpg"
+      overlayOpacity={0.85}
+    >
+      <div className="container mx-auto py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-primary mb-4">About Us</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Empowering the next generation of data scientists and AI innovators
             </p>
           </div>
-          <div className="lg:pl-8">
-            <img 
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop" 
-              alt="Data Science Hub team meeting" 
-              className="rounded-lg shadow-lg"
-            />
-          </div>
-        </div>
-        
-        <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-bold text-primary mb-6">Our Values</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-card border-primary/20">
-              <CardContent className="pt-6">
-                <div className="bg-primary/10 p-3 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-primary mb-2">Excellence</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+              <CardHeader>
+                <CardTitle>Our Mission</CardTitle>
+                <CardDescription>
+                  To make data science education accessible and practical for everyone
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  We maintain the highest standards in our educational content, consulting services, and research.
+                  Data Science Hub was founded with a simple mission: to democratize data science education 
+                  and make it accessible to anyone with the curiosity and drive to learn. We believe that 
+                  data literacy is a fundamental skill in today's digital world, and we're committed to 
+                  providing high-quality, practical education that empowers individuals and organizations 
+                  to harness the power of data.
                 </p>
+                <div className="flex items-center gap-2 text-primary">
+                  <BookOpen className="h-5 w-5" />
+                  <span className="font-medium">10,000+ Students</span>
+                </div>
+                <div className="flex items-center gap-2 text-primary">
+                  <Globe className="h-5 w-5" />
+                  <span className="font-medium">50+ Countries</span>
+                </div>
+                <div className="flex items-center gap-2 text-primary">
+                  <Heart className="h-5 w-5" />
+                  <span className="font-medium">95% Satisfaction Rate</span>
+                </div>
               </CardContent>
             </Card>
-            
-            <Card className="bg-card border-primary/20">
-              <CardContent className="pt-6">
-                <div className="bg-primary/10 p-3 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-primary mb-2">Inclusion</h3>
+
+            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+              <CardHeader>
+                <CardTitle>Our Vision</CardTitle>
+                <CardDescription>
+                  To be the leading platform for data science education and research
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  We believe in making data science accessible to individuals from all backgrounds and skill levels.
+                  We envision a world where data science is not just a specialized field, but a fundamental 
+                  skill that everyone can access and apply. Our platform combines cutting-edge technology 
+                  with expert instruction to create an immersive learning experience that prepares students 
+                  for real-world challenges. Through our research initiatives and industry partnerships, 
+                  we're constantly pushing the boundaries of what's possible in data science education.
                 </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-primary/10 p-4 rounded-lg">
+                    <h3 className="font-medium text-primary mb-1">Research</h3>
+                    <p className="text-sm text-muted-foreground">Pushing the boundaries of AI and ML</p>
+                  </div>
+                  <div className="bg-primary/10 p-4 rounded-lg">
+                    <h3 className="font-medium text-primary mb-1">Innovation</h3>
+                    <p className="text-sm text-muted-foreground">Developing new learning methods</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
-            
-            <Card className="bg-card border-primary/20">
-              <CardContent className="pt-6">
-                <div className="bg-primary/10 p-3 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <GraduationCap className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold text-primary mb-2">Innovation</h3>
-                <p className="text-muted-foreground">
-                  We continuously evolve our teaching methodologies and content to reflect advances in the field.
-                </p>
-              </CardContent>
-            </Card>
           </div>
-        </div>
-        
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
-          <div className="order-2 lg:order-1">
-            <img 
-              src="https://images.unsplash.com/photo-1655721530791-59f5d84e6e90?q=80&w=2574&auto=format&fit=crop" 
-              alt="Data visualization on screen" 
-              className="rounded-lg shadow-lg"
-            />
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Values</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {values.map((value, index) => (
+                <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
+                  <CardHeader>
+                    <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
+                      {value.icon}
+                    </div>
+                    <CardTitle className="text-xl">{value.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{value.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-          <div className="order-1 lg:order-2">
-            <h2 className="text-3xl font-bold text-primary mb-6">Our Story</h2>
-            <p className="text-muted-foreground mb-6">
-              Founded in 2015 by a team of data scientists and educators from leading tech companies and 
-              research institutions, Data Science Hub began with a clear vision: to create a center of 
-              excellence for data science education that would prepare professionals for the challenges 
-              of tomorrow's data landscape.
-            </p>
-            <p className="text-muted-foreground">
-              What started as a small team offering workshops to local companies has grown into a 
-              global education platform with a community of over 100,000 learners across 130 countries. 
-              Throughout our growth, we've maintained our commitment to quality, accessibility, and 
-              innovation, consistently evolving our curriculum to reflect the latest developments in 
-              the rapidly changing field of data science.
-            </p>
+
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Team</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {teamMembers.map((member) => (
+                <Card key={member.id} className="bg-white/95 backdrop-blur-sm border-primary/20">
+                  <CardHeader>
+                    <div className="aspect-square relative overflow-hidden rounded-lg mb-4">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                    </div>
+                    <CardTitle>{member.name}</CardTitle>
+                    <CardDescription>{member.role}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{member.bio}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-        
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-primary mb-4">Our Impact</h2>
-          <p className="text-muted-foreground max-w-3xl mx-auto">
-            We measure our success by the achievements of our students and clients. Here's the impact 
-            we've made over the years:
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <Card className="bg-card border-primary/20">
-            <CardContent className="pt-6">
-              <p className="text-4xl font-bold text-primary mb-2">100K+</p>
-              <p className="text-muted-foreground">Students Trained</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-card border-primary/20">
-            <CardContent className="pt-6">
-              <p className="text-4xl font-bold text-primary mb-2">130+</p>
-              <p className="text-muted-foreground">Countries Reached</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-card border-primary/20">
-            <CardContent className="pt-6">
-              <p className="text-4xl font-bold text-primary mb-2">500+</p>
-              <p className="text-muted-foreground">Enterprise Clients</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-card border-primary/20">
-            <CardContent className="pt-6">
-              <p className="text-4xl font-bold text-primary mb-2">92%</p>
-              <p className="text-muted-foreground">Career Advancement</p>
-            </CardContent>
-          </Card>
-        </div>
-        
-        <div className="text-center mb-12 mt-20">
-          <h2 className="text-3xl font-bold text-primary mb-4">Recognition & Partnerships</h2>
-          <p className="text-muted-foreground max-w-3xl mx-auto">
-            Our commitment to excellence has been recognized by industry leaders and educational institutions.
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-8">
-          <Card className="bg-card border-primary/20">
-            <CardContent className="pt-6">
-              <div className="flex items-start">
-                <div className="bg-primary/10 p-2 rounded-lg mr-4">
-                  <Award className="h-8 w-8 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Awards & Recognition</h3>
-                  <ul className="text-muted-foreground space-y-2">
-                    <li>• Best Data Science Education Platform - Tech Education Awards 2023</li>
-                    <li>• Innovation in EdTech - Global Learning Summit 2022</li>
-                    <li>• Top 10 Online Learning Platforms - Industry Today Magazine</li>
-                    <li>• Excellence in Corporate Training - Enterprise Learning Conference</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-card border-primary/20">
-            <CardContent className="pt-6">
-              <div className="flex items-start">
-                <div className="bg-primary/10 p-2 rounded-lg mr-4">
-                  <Globe className="h-8 w-8 text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-primary mb-2">Strategic Partnerships</h3>
-                  <ul className="text-muted-foreground space-y-2">
-                    <li>• Cloud computing partnerships with leading providers</li>
-                    <li>• Academic collaborations with top universities</li>
-                    <li>• Industry affiliations with major tech companies</li>
-                    <li>• Research initiatives with governmental organizations</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        
-        <Card className="bg-card border-primary/20 rounded-lg p-8 text-center max-w-4xl mx-auto mt-20">
-          <h2 className="text-3xl font-bold text-primary mb-6">Join Our Journey</h2>
-          <p className="text-muted-foreground mb-8">
-            Whether you're looking to advance your career, transform your organization with data-driven 
-            decision making, or simply explore the fascinating world of data science, we invite you to 
-            join our community of learners and innovators.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Link to="/courses">Explore Courses</Link>
-            </Button>
-            <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              <Link to="/contact">Contact Us</Link>
+
+          <div className="text-center">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              Join Our Team <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
-        </Card>
+        </div>
       </div>
-    </Layout>
+    </Background>
   );
 };
 

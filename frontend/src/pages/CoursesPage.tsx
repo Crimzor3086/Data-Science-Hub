@@ -135,8 +135,8 @@ const CoursesPage = () => {
 
   return (
     <Background 
-      image="/images/image (4).jpg"
-      overlayOpacity={0.8}
+      image="/images/image (14).jpg"
+      overlayOpacity={0.85}
     >
       <Layout>
         <PageHeader 
@@ -165,7 +165,7 @@ const CoursesPage = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
                 placeholder="Search courses..." 
-                className="pl-10"
+                className="pl-10 bg-white/95 backdrop-blur-sm border-primary/20"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Camera, Star, Award, BookOpen, Briefcase, Edit, Save } from 'lucide-react';
+import { Loader2, Camera, Star, Award, BookOpen, Briefcase, Edit, Save, Mail, Phone, MapPin, Calendar, Globe, X, Building, Linkedin, Twitter, Github, Code } from 'lucide-react';
 import { Background } from '@/components/ui/background';
 import { Progress } from '@/components/ui/progress';
 
@@ -36,6 +36,29 @@ interface ProfileData {
     description: string;
     technologies: string[];
   }[];
+  coverImage: string;
+  stats: {
+    projects: number;
+    courses: number;
+    certifications: number;
+    experience: string;
+  };
+  title: string;
+  company: string;
+  location: string;
+  phone: string;
+  website: string;
+  joinDate: string;
+  certifications: {
+    name: string;
+    issuer: string;
+    year: string;
+  }[];
+  courses: {
+    title: string;
+    progress: number;
+    lastAccessed: string;
+  }[];
 }
 
 const ProfilePage: React.FC = () => {
@@ -44,6 +67,7 @@ const ProfilePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('profile');
   const [isEditing, setIsEditing] = useState(false);
+  const [editedData, setEditedData] = useState<ProfileData>(user);
 
   useEffect(() => {
     // TODO: Fetch profile data from API
@@ -80,6 +104,48 @@ const ProfilePage: React.FC = () => {
           description: 'Built a machine learning model to predict customer churn',
           technologies: ['Python', 'Scikit-learn', 'Pandas']
         }
+      ],
+      coverImage: '/images/image (15).jpg',
+      stats: {
+        projects: 12,
+        courses: 8,
+        certifications: 5,
+        experience: '8 years'
+      },
+      title: 'Senior Data Scientist',
+      company: 'Tech Solutions Inc.',
+      location: 'San Francisco, CA',
+      phone: '+1 (555) 123-4567',
+      website: 'www.johndoe.com',
+      joinDate: '2020-05-15',
+      certifications: [
+        {
+          name: 'AWS Certified Machine Learning Specialist',
+          issuer: 'Amazon Web Services',
+          year: '2022'
+        },
+        {
+          name: 'Google Cloud Professional Data Engineer',
+          issuer: 'Google Cloud',
+          year: '2021'
+        },
+        {
+          name: 'IBM Data Science Professional Certificate',
+          issuer: 'IBM',
+          year: '2020'
+        }
+      ],
+      courses: [
+        {
+          title: 'Machine Learning Fundamentals',
+          progress: 85,
+          lastAccessed: '2023-07-15'
+        },
+        {
+          title: 'Data Visualization with Python',
+          progress: 75,
+          lastAccessed: '2023-06-20'
+        }
       ]
     };
 
@@ -112,6 +178,16 @@ const ProfilePage: React.FC = () => {
     console.log('Saving profile:', profile);
   };
 
+  const handleSave = () => {
+    // Here you would typically make an API call to update the user data
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditedData(profile);
+    setIsEditing(false);
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -130,18 +206,19 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Background 
-      image="/images/image (2).jpg"
-      overlayOpacity={0.8}
+      image="/images/image (15).jpg"
+      overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Profile Sidebar */}
             <div className="w-full md:w-1/3">
-              <Card className="bg-white/90 backdrop-blur-sm">
-                <CardHeader className="text-center">
+              <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+                <CardHeader className="text-center relative">
+                  <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent rounded-t-lg" />
                   <div className="relative mx-auto w-32 h-32 mb-4">
-                    <Avatar className="w-full h-full">
+                    <Avatar className="w-full h-full border-4 border-primary/20">
                       <AvatarImage src={profile.avatar} alt={profile.name} />
                       <AvatarFallback>{profile.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                     </Avatar>
@@ -201,29 +278,40 @@ const ProfilePage: React.FC = () => {
 
             {/* Profile Content */}
             <div className="w-full md:w-2/3">
-              <Card className="bg-white/90 backdrop-blur-sm">
-                <CardHeader>
-                  <Tabs value={activeTab} onValueChange={setActiveTab}>
-                    <TabsList className="grid grid-cols-4">
-                      <TabsTrigger value="overview">Overview</TabsTrigger>
-                      <TabsTrigger value="education">Education</TabsTrigger>
-                      <TabsTrigger value="experience">Experience</TabsTrigger>
-                      <TabsTrigger value="projects">Projects</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
+              <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+                <CardHeader className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent rounded-t-lg" />
+                  <div className="relative">
+                    <Tabs value={activeTab} onValueChange={setActiveTab}>
+                      <TabsList className="grid grid-cols-4">
+                        <TabsTrigger value="overview">Overview</TabsTrigger>
+                        <TabsTrigger value="education">Education</TabsTrigger>
+                        <TabsTrigger value="experience">Experience</TabsTrigger>
+                        <TabsTrigger value="projects">Projects</TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <TabsContent value="overview">
                     <div className="space-y-6">
                       <div>
                         <h3 className="text-lg font-medium mb-2">About</h3>
-                        <p className="text-sm text-muted-foreground">{profile.bio}</p>
+                        {isEditing ? (
+                          <Input
+                            value={editedData.bio}
+                            onChange={(e) => setEditedData({ ...editedData, bio: e.target.value })}
+                            className="mb-4"
+                          />
+                        ) : (
+                          <p className="text-sm text-muted-foreground">{editedData.bio}</p>
+                        )}
                       </div>
                       
                       <div>
                         <h3 className="text-lg font-medium mb-2">Skills</h3>
                         <div className="flex flex-wrap gap-2">
-                          {profile.skills.map((skill) => (
+                          {editedData.skills.map((skill) => (
                             <Badge key={skill} variant="outline">
                               {skill}
                             </Badge>
@@ -234,7 +322,7 @@ const ProfilePage: React.FC = () => {
                       <div>
                         <h3 className="text-lg font-medium mb-2">Certifications</h3>
                         <div className="space-y-4">
-                          {profile.certifications.map((cert) => (
+                          {editedData.certifications.map((cert) => (
                             <div key={cert.name} className="flex items-start gap-4">
                               <Award className="h-5 w-5 text-primary mt-0.5" />
                               <div>
@@ -251,7 +339,7 @@ const ProfilePage: React.FC = () => {
                       <div>
                         <h3 className="text-lg font-medium mb-2">Current Courses</h3>
                         <div className="space-y-4">
-                          {profile.courses.map((course) => (
+                          {editedData.courses.map((course) => (
                             <div key={course.title}>
                               <div className="flex justify-between text-sm mb-1">
                                 <span>{course.title}</span>
@@ -270,7 +358,7 @@ const ProfilePage: React.FC = () => {
                   
                   <TabsContent value="education">
                     <div className="space-y-6">
-                      {profile.education?.map((edu) => (
+                      {editedData.education?.map((edu) => (
                         <div key={edu.degree} className="flex items-start gap-4">
                           <BookOpen className="h-5 w-5 text-primary mt-0.5" />
                           <div>
@@ -286,7 +374,7 @@ const ProfilePage: React.FC = () => {
                   
                   <TabsContent value="experience">
                     <div className="space-y-6">
-                      {profile.experience?.map((exp) => (
+                      {editedData.experience?.map((exp) => (
                         <div key={exp.position} className="flex items-start gap-4">
                           <Briefcase className="h-5 w-5 text-primary mt-0.5" />
                           <div>
@@ -302,7 +390,7 @@ const ProfilePage: React.FC = () => {
                   
                   <TabsContent value="projects">
                     <div className="space-y-6">
-                      {profile.projects?.map((project) => (
+                      {editedData.projects?.map((project) => (
                         <div key={project.title} className="flex items-start gap-4">
                           <Code className="h-5 w-5 text-primary mt-0.5" />
                           <div>

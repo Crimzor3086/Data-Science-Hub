@@ -5,22 +5,17 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { 
   Search, 
   Filter, 
-  BarChart2, 
-  Database, 
-  Brain, 
-  Code, 
+  Calendar, 
   Users, 
-  Calendar,
-  Clock,
-  CheckCircle,
-  AlertCircle,
-  ArrowUpRight,
-  ArrowDownRight,
-  Github,
-  ExternalLink
+  Clock, 
+  ArrowRight,
+  FolderGit2,
+  CheckCircle2,
+  AlertCircle
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -30,69 +25,51 @@ import { Background } from '@/components/ui/background';
 const projects = [
   {
     id: 1,
-    title: "Customer Segmentation Analysis",
-    description: "Advanced customer segmentation using machine learning algorithms to identify distinct customer groups based on purchasing behavior and demographics.",
+    title: "Customer Churn Prediction",
+    description: "Build a machine learning model to predict customer churn for a telecom company.",
     status: "In Progress",
-    team: ["Ogechi Daniel Koel", "Nobert Wafula"],
-    category: "Data Analysis",
-    technologies: ["Python", "Scikit-learn", "Pandas", "Matplotlib"],
-    githubUrl: "https://github.com/example/project1",
-    demoUrl: "https://demo.example.com/project1",
+    progress: 65,
+    dueDate: "2024-05-15",
+    team: ["Sarah Johnson", "Michael Chen", "Emily Brown"],
+    category: "Machine Learning",
+    tags: ["Python", "Scikit-learn", "Pandas"],
+    image: "/images/image (15).jpg"
   },
   {
     id: 2,
-    title: "Sales Forecasting Model",
-    description: "Development of a predictive model to forecast future sales based on historical data, seasonal trends, and market conditions.",
+    title: "Sales Forecasting Dashboard",
+    description: "Create an interactive dashboard for sales forecasting using historical data.",
     status: "Completed",
-    team: ["Enock Bereka", "Timothy Achala"],
-    category: "Predictive Analytics",
-    technologies: ["R", "Time Series Analysis", "ARIMA", "Prophet"],
-    githubUrl: "https://github.com/example/project2",
-    demoUrl: "https://demo.example.com/project2",
+    progress: 100,
+    dueDate: "2024-04-01",
+    team: ["David Wilson", "Sarah Johnson"],
+    category: "Data Visualization",
+    tags: ["Tableau", "SQL", "Time Series"],
+    image: "/images/image (16).jpg"
   },
   {
     id: 3,
-    title: "Market Basket Analysis",
-    description: "Analysis of customer purchasing patterns to identify product associations and optimize product placement and marketing strategies.",
-    status: "Planning",
-    team: ["Ogechi Daniel Koel"],
-    category: "Data Analysis",
-    technologies: ["Python", "Association Rules", "Apriori Algorithm"],
-    githubUrl: "https://github.com/example/project3",
-    demoUrl: "https://demo.example.com/project3",
+    title: "Sentiment Analysis API",
+    description: "Develop a REST API for sentiment analysis of customer reviews.",
+    status: "In Progress",
+    progress: 40,
+    dueDate: "2024-06-01",
+    team: ["Michael Chen", "Emily Brown", "David Wilson"],
+    category: "NLP",
+    tags: ["Python", "FastAPI", "BERT"],
+    image: "/images/image (17).jpg"
   },
   {
     id: 4,
-    title: "Sentiment Analysis Dashboard",
-    description: "Real-time sentiment analysis of customer feedback and social media mentions to track brand perception and customer satisfaction.",
-    status: "In Progress",
-    team: ["Nobert Wafula", "Timothy Achala"],
-    category: "NLP",
-    technologies: ["Python", "NLTK", "BERT", "React", "D3.js"],
-    githubUrl: "https://github.com/example/project4",
-    demoUrl: "https://demo.example.com/project4",
-  },
-  {
-    id: 5,
-    title: "Fraud Detection System",
-    description: "Implementation of machine learning models to detect fraudulent transactions in real-time with high accuracy and low false positives.",
-    status: "In Progress",
-    team: ["Enock Bereka", "Ogechi Daniel Koel"],
-    category: "Machine Learning",
-    technologies: ["Python", "TensorFlow", "XGBoost", "AWS"],
-    githubUrl: "https://github.com/example/project5",
-    demoUrl: "https://demo.example.com/project5",
-  },
-  {
-    id: 6,
-    title: "Supply Chain Optimization",
-    description: "Data-driven optimization of supply chain operations to reduce costs, improve delivery times, and enhance inventory management.",
+    title: "Data Pipeline Optimization",
+    description: "Optimize existing data pipelines for better performance and reliability.",
     status: "Planning",
-    team: ["Nobert Wafula", "Enock Bereka"],
-    category: "Operations Research",
-    technologies: ["Python", "Linear Programming", "Simulation", "Tableau"],
-    githubUrl: "https://github.com/example/project6",
-    demoUrl: "https://demo.example.com/project6",
+    progress: 20,
+    dueDate: "2024-07-01",
+    team: ["Sarah Johnson", "David Wilson"],
+    category: "Data Engineering",
+    tags: ["Airflow", "Python", "AWS"],
+    image: "/images/image (1).jpg"
   }
 ];
 
@@ -108,37 +85,24 @@ const categories = [
 
 const ProjectsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [statusFilter, setStatusFilter] = useState("All");
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
-  // Filter projects based on search term, category, and status
+  // Filter projects based on search query and status
   const filteredProjects = projects.filter(project => {
-    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         project.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === "all" || project.category === activeCategory;
-    const matchesStatus = statusFilter === "All" || project.status === statusFilter;
-    
-    return matchesSearch && matchesCategory && matchesStatus;
+    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesStatus = selectedStatus === "All" || project.status === selectedStatus;
+    return matchesSearch && matchesStatus;
   });
 
-  // Get status color
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Completed":
-        return "bg-green-500/10 text-green-500 border-green-500/30";
-      case "In Progress":
-        return "bg-blue-500/10 text-blue-500 border-blue-500/30";
-      case "Planning":
-        return "bg-amber-500/10 text-amber-500 border-amber-500/30";
-      default:
-        return "bg-gray-500/10 text-gray-500 border-gray-500/30";
-    }
-  };
+  // Get unique statuses for filter
+  const statuses = ["All", ...new Set(projects.map(project => project.status))];
 
   return (
     <Background 
-      image="/images/image (7).jpg"
-      overlayOpacity={0.8}
+      image="/images/image (2).jpg"
+      overlayOpacity={0.85}
     >
       <Layout>
         <PageHeader 
@@ -149,79 +113,136 @@ const ProjectsPage = () => {
         
         <div className="container mx-auto py-8">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6 text-white">Projects</h1>
-            
-            <div className="flex gap-4 mb-8">
-              <div className="flex-1">
-                <Input
-                  type="search"
-                  placeholder="Search projects..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-white/90 backdrop-blur-sm"
-                />
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+              <div className="w-full md:w-auto">
+                <h1 className="text-3xl font-bold text-primary">Projects</h1>
+                <p className="text-muted-foreground mt-2">
+                  Manage and track your data science projects
+                </p>
               </div>
-              <Button variant="outline" className="bg-white/90 backdrop-blur-sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                Create New Project
               </Button>
             </div>
 
-            <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory}>
-              <TabsList className="mb-6 bg-white/90 backdrop-blur-sm">
-                <TabsTrigger value="all">All Projects</TabsTrigger>
-                <TabsTrigger value="Analytics">Analytics</TabsTrigger>
-                <TabsTrigger value="Machine Learning">Machine Learning</TabsTrigger>
-                <TabsTrigger value="Data Visualization">Data Visualization</TabsTrigger>
-              </TabsList>
+            {/* Search and Filters */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input 
+                  placeholder="Search projects..." 
+                  className="pl-10 bg-white/95 backdrop-blur-sm border-primary/20"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {statuses.map((status) => (
+                  <Button 
+                    key={status}
+                    variant={selectedStatus === status ? "default" : "outline"}
+                    className={selectedStatus === status ? "bg-primary text-primary-foreground" : "border-primary text-primary hover:bg-primary/10"}
+                    onClick={() => setSelectedStatus(status)}
+                  >
+                    {status}
+                  </Button>
+                ))}
+              </div>
 
-              <TabsContent value={activeCategory}>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredProjects.map((project) => (
-                    <Card key={project.id} className="bg-white/90 backdrop-blur-sm">
-                      <CardHeader>
-                        <CardTitle>{project.title}</CardTitle>
-                        <CardDescription>{project.description}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-2">
-                          <p className="text-sm">
-                            <span className="font-medium">Status:</span> {project.status}
-                          </p>
-                          <p className="text-sm">
-                            <span className="font-medium">Team:</span> {project.team.join(', ')}
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {project.technologies.map((tech) => (
-                              <span
-                                key={tech}
-                                className="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary"
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
+              <Button variant="outline" className="w-full md:w-auto border-primary text-primary hover:bg-primary/10">
+                <Filter className="h-4 w-4 mr-2" />
+                More Filters
+              </Button>
+            </div>
+
+            {/* Projects Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProjects.map((project) => (
+                <Card key={project.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                  <CardHeader>
+                    <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                      <img 
+                        src={project.image} 
+                        alt={project.title}
+                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      <Badge 
+                        className={`absolute top-2 right-2 ${
+                          project.status === "Completed" 
+                            ? "bg-green-500/90 text-white" 
+                            : project.status === "In Progress"
+                            ? "bg-blue-500/90 text-white"
+                            : "bg-yellow-500/90 text-white"
+                        }`}
+                      >
+                        {project.status}
+                      </Badge>
+                    </div>
+                    <CardTitle className="line-clamp-2">{project.title}</CardTitle>
+                    <CardDescription className="line-clamp-2">{project.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          <span>Due {project.dueDate}</span>
                         </div>
-                      </CardContent>
-                      <CardFooter className="flex gap-2">
-                        <Button variant="outline" className="flex-1" asChild>
-                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                            <Github className="h-4 w-4 mr-2" />
-                            GitHub
-                          </a>
-                        </Button>
-                        <Button variant="outline" className="flex-1" asChild>
-                          <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="h-4 w-4 mr-2" />
-                            Demo
-                          </a>
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
+                        <div className="flex items-center gap-1">
+                          <Users className="h-4 w-4" />
+                          <span>{project.team.length} members</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <Badge key={tag} variant="outline" className="bg-primary/5">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span>Progress</span>
+                          <span>{project.progress}%</span>
+                        </div>
+                        <Progress value={project.progress} className="h-2" />
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex justify-between">
+                    <Button variant="ghost" size="sm" className="text-primary hover:text-primary/90 hover:bg-primary/10">
+                      <FolderGit2 className="h-4 w-4 mr-1" />
+                      View Details
+                    </Button>
+                    <Button variant="ghost" size="sm" className="text-primary hover:text-primary/90 hover:bg-primary/10">
+                      Team <ArrowRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+
+            {filteredProjects.length === 0 && (
+              <div className="text-center py-12">
+                <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-primary mb-2">No projects found</h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search or filters to find what you're looking for.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="border-primary text-primary hover:bg-primary/10"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedStatus("All");
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </Layout>

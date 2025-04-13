@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Calendar, User, Clock, ArrowRight } from "lucide-react";
+import { Search, Calendar, User, Clock, ArrowRight, Filter } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Background } from '@/components/ui/background';
 
@@ -108,154 +108,94 @@ const BlogPage = () => {
   
   return (
     <Background 
-      image="/images/image (9).jpg"
-      overlayOpacity={0.8}
+      image="/images/image (5).jpg"
+      overlayOpacity={0.85}
     >
-      <Layout>
-        <PageHeader 
-          title="Data Science Blog" 
-          subtitle="Insights, tutorials, and trends from our data science experts"
-          backgroundImage="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?q=80&w=2670&auto=format&fit=crop"
-        />
-        
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto mb-8">
+      <div className="container mx-auto py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div className="w-full md:w-auto">
+              <h1 className="text-3xl font-bold text-primary">Blog</h1>
+              <p className="text-muted-foreground mt-2">
+                Insights and tutorials from our data science experts
+              </p>
+            </div>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              Write a Post
+            </Button>
+          </div>
+
+          {/* Search and Filters */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-5 w-5" />
-              <Input
-                type="search"
-                placeholder="Search articles..."
-                className="pl-10 bg-gray-800 border-gray-700 text-white"
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input 
+                placeholder="Search articles..." 
+                className="pl-10 bg-white/95 backdrop-blur-sm border-primary/20"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-          </div>
-          
-          {searchQuery === "" && (
-            <div className="mb-16">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-white">Featured Articles</h2>
-              </div>
-              
-              <div className="grid md:grid-cols-3 gap-8">
-                {featuredPosts.map((post) => (
-                  <Card key={post.id} className="bg-gray-900 border-gray-800 hover:border-amber-500/50 transition-colors overflow-hidden h-full flex flex-col">
-                    <div className="h-48 overflow-hidden">
-                      <img 
-                        src={post.image} 
-                        alt={post.title} 
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      />
-                    </div>
-                    <CardHeader className="pb-0">
-                      <div className="flex gap-2 mb-2">
-                        {post.tags.map((tag, index) => (
-                          <Badge key={index} variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-500/30">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                      <h3 className="text-xl font-bold text-white hover:text-amber-500 transition-colors">
-                        <a href="#">{post.title}</a>
-                      </h3>
-                    </CardHeader>
-                    <CardContent className="py-4 flex-grow">
-                      <p className="text-gray-400">{post.excerpt}</p>
-                    </CardContent>
-                    <CardFooter className="pt-0 text-sm text-gray-500 flex items-center space-x-4">
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        <span>{post.date}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Clock className="h-4 w-4 mr-1" />
-                        <span>{post.readTime}</span>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </div>
+            
+            <div className="flex gap-2 overflow-x-auto pb-2">
+              {categories.map((category) => (
+                <Button 
+                  key={category.value}
+                  variant={activeCategory === category.value ? "default" : "outline"}
+                  className={activeCategory === category.value ? "bg-primary text-primary-foreground" : "border-primary text-primary hover:bg-primary/10"}
+                  onClick={() => setActiveCategory(category.value)}
+                >
+                  {category.label}
+                </Button>
+              ))}
             </div>
-          )}
-          
-          <div className="mb-8">
-            <Tabs defaultValue="all" onValueChange={setActiveCategory}>
-              <div className="overflow-x-auto pb-2 mb-8">
-                <TabsList className="bg-gray-800 h-auto p-1">
-                  {categories.map((category) => (
-                    <TabsTrigger 
-                      key={category.value}
-                      value={category.value} 
-                      className="data-[state=active]:bg-amber-500 data-[state=active]:text-black py-2 px-4"
-                    >
-                      {category.label}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </div>
-              
-              <TabsContent value={activeCategory} forceMount>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredPosts.map((post) => (
-                    <Card key={post.id} className="bg-gray-900 border-gray-800 hover:border-amber-500/50 transition-colors overflow-hidden h-full flex flex-col">
-                      <div className="h-48 overflow-hidden">
-                        <img 
-                          src={post.image} 
-                          alt={post.title} 
-                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        />
-                      </div>
-                      <CardHeader className="pb-0">
-                        <div className="flex gap-2 mb-2">
-                          {post.tags.slice(0, 2).map((tag, index) => (
-                            <Badge key={index} variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-500/30">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                        <h3 className="text-xl font-bold text-white hover:text-amber-500 transition-colors">
-                          <a href="#">{post.title}</a>
-                        </h3>
-                      </CardHeader>
-                      <CardContent className="py-4 flex-grow">
-                        <p className="text-gray-400 line-clamp-3">{post.excerpt}</p>
-                      </CardContent>
-                      <CardFooter className="flex justify-between items-center border-t border-gray-800 pt-4">
-                        <div className="flex items-center text-sm text-gray-500">
-                          <User className="h-4 w-4 mr-1" />
-                          <span>{post.author}</span>
-                        </div>
-                        <Button variant="ghost" size="sm" className="text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 -mr-2">
-                          Read more <ArrowRight className="ml-1 h-4 w-4" />
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-                
-                {filteredPosts.length === 0 && (
-                  <div className="text-center py-12">
-                    <h3 className="text-xl text-white mb-2">No articles found</h3>
-                    <p className="text-gray-400 mb-6">Try adjusting your search or category filter</p>
-                    <Button 
-                      variant="outline"
-                      className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-black"
-                      onClick={() => {
-                        setSearchQuery("");
-                        setActiveCategory("all");
-                      }}
-                    >
-                      Clear filters
-                    </Button>
+
+            <Button variant="outline" className="w-full md:w-auto border-primary text-primary hover:bg-primary/10">
+              <Filter className="h-4 w-4 mr-2" />
+              More Filters
+            </Button>
+          </div>
+
+          {/* Blog Posts Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPosts.map((post) => (
+              <Card key={post.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                <CardHeader>
+                  <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   </div>
-                )}
-              </TabsContent>
-            </Tabs>
+                  <CardTitle className="line-clamp-2">{post.title}</CardTitle>
+                  <CardDescription className="line-clamp-2">{post.excerpt}</CardDescription>
+                </CardHeader>
+                <CardContent className="py-4 flex-grow">
+                  <div className="flex gap-2 mb-2">
+                    {post.tags.slice(0, 2).map((tag, index) => (
+                      <Badge key={index} variant="outline" className="bg-primary/10 text-primary border-primary">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-between items-center border-t border-primary pt-4">
+                  <div className="flex items-center text-sm text-primary">
+                    <User className="h-4 w-4 mr-1" />
+                    <span>{post.author}</span>
+                  </div>
+                  <Button variant="ghost" size="sm" className="text-primary hover:text-primary/90 hover:bg-primary/10 -mr-2">
+                    Read more <ArrowRight className="ml-1 h-4 w-4" />
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
           
           <div className="mt-12 flex justify-center">
-            <Button className="bg-amber-500 hover:bg-amber-600 text-black">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
               Load more articles
             </Button>
           </div>
@@ -267,13 +207,13 @@ const BlogPage = () => {
             </p>
             <div className="flex gap-2">
               <Input type="email" placeholder="your@email.com" className="bg-gray-700 border-gray-600" />
-              <Button className="bg-amber-500 hover:bg-amber-600 text-black whitespace-nowrap">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground whitespace-nowrap">
                 Subscribe
               </Button>
             </div>
           </div>
         </div>
-      </Layout>
+      </div>
     </Background>
   );
 };
