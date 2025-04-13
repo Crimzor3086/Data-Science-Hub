@@ -20,6 +20,9 @@ import UsersPage from "./pages/UsersPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import ClientDashboardPage from "./pages/ClientDashboardPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import ReportsPage from "./pages/ReportsPage";
+import AssignmentsPage from "./pages/AssignmentsPage";
+import ProgressPage from "./pages/ProgressPage";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +58,9 @@ const App = () => (
               } 
             />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/assignments" element={<AssignmentsPage />} />
+            <Route path="/progress" element={<ProgressPage />} />
             {/* Admin Routes */}
             <Route 
               path="/admin" 
