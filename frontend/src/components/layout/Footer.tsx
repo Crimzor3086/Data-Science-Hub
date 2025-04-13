@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Mail } from "lucide-react";
 
@@ -13,19 +12,19 @@ const Footer = () => {
               Empowering professionals with cutting-edge data science knowledge and skills.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-amber-500 transition-colors">
+              <a href="https://facebook.com/datasciencehub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-amber-500 transition-colors">
+              <a href="https://twitter.com/datasciencehub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-amber-500 transition-colors">
+              <a href="https://instagram.com/datasciencehub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-amber-500 transition-colors">
+              <a href="https://linkedin.com/company/datasciencehub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="hover:text-amber-500 transition-colors">
+              <a href="https://youtube.com/datasciencehub" target="_blank" rel="noopener noreferrer" className="hover:text-amber-500 transition-colors">
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
@@ -56,19 +55,19 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-amber-500 transition-colors">Free Tutorials</a>
+                <Link to="/resources/tutorials" className="hover:text-amber-500 transition-colors">Free Tutorials</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-500 transition-colors">Webinars</a>
+                <Link to="/resources/webinars" className="hover:text-amber-500 transition-colors">Webinars</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-500 transition-colors">E-books</a>
+                <Link to="/resources/ebooks" className="hover:text-amber-500 transition-colors">E-books</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-500 transition-colors">Case Studies</a>
+                <Link to="/resources/case-studies" className="hover:text-amber-500 transition-colors">Case Studies</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-amber-500 transition-colors">FAQ</a>
+                <Link to="/resources/faq" className="hover:text-amber-500 transition-colors">FAQ</Link>
               </li>
             </ul>
           </div>
@@ -88,9 +87,9 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p>&copy; {new Date().getFullYear()} Data Science Hub. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link to="/privacy" className="hover:text-amber-500 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-amber-500 transition-colors">Terms of Service</Link>
-            <Link to="/cookies" className="hover:text-amber-500 transition-colors">Cookie Policy</Link>
+            <Link to="/legal/privacy" className="hover:text-amber-500 transition-colors">Privacy Policy</Link>
+            <Link to="/legal/terms" className="hover:text-amber-500 transition-colors">Terms of Service</Link>
+            <Link to="/legal/cookies" className="hover:text-amber-500 transition-colors">Cookie Policy</Link>
           </div>
         </div>
       </div>

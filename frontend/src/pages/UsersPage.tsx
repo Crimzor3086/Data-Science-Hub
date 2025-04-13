@@ -101,22 +101,22 @@ const UsersPage = () => {
                 All Users
               </Button>
               <Button
-                variant={selectedRole === 'Student' ? 'default' : 'outline'}
+                variant={selectedRole === UserRole.STUDENT ? 'default' : 'outline'}
                 size="sm"
-                onClick={() => setSelectedRole('Student')}
-                className={selectedRole === 'Student' ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'border-primary/20 hover:border-primary/40'}
+                onClick={() => setSelectedRole(UserRole.STUDENT)}
+                className={selectedRole === UserRole.STUDENT ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'border-primary/20 hover:border-primary/40'}
               >
                 <User className="mr-2 h-4 w-4" />
                 Students
               </Button>
               <Button
-                variant={selectedRole === 'Instructor' ? 'default' : 'outline'}
+                variant={selectedRole === UserRole.CLIENT ? 'default' : 'outline'}
                 size="sm"
-                onClick={() => setSelectedRole('Instructor')}
-                className={selectedRole === 'Instructor' ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'border-primary/20 hover:border-primary/40'}
+                onClick={() => setSelectedRole(UserRole.CLIENT)}
+                className={selectedRole === UserRole.CLIENT ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : 'border-primary/20 hover:border-primary/40'}
               >
                 <BookOpen className="mr-2 h-4 w-4" />
-                Instructors
+                Clients
               </Button>
               {selectedRole && (
                 <Button
