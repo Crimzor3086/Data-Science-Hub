@@ -18,6 +18,8 @@ import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
 import UsersPage from "./pages/UsersPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import ClientDashboardPage from "./pages/ClientDashboardPage";
+import ProjectsPage from "./pages/ProjectsPage";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,15 @@ const App = () => (
                 </RoleGuard>
               } 
             />
+            <Route 
+              path="/client-dashboard" 
+              element={
+                <RoleGuard allowedRoles={[UserRole.CLIENT]}>
+                  <ClientDashboardPage />
+                </RoleGuard>
+              } 
+            />
+            <Route path="/projects" element={<ProjectsPage />} />
             {/* Admin Routes */}
             <Route 
               path="/admin" 
