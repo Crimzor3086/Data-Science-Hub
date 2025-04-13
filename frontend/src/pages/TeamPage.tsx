@@ -3,6 +3,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Linkedin, Mail, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const experts = [
   {

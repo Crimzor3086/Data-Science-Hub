@@ -1,7 +1,7 @@
-
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { CheckCircle2, Award, BarChart, Users, GraduationCap, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AboutPage = () => {
   return (

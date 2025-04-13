@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { ChevronRight, BarChart2, Database, Brain, Code, FileCheck, Users } from "lucide-react";
