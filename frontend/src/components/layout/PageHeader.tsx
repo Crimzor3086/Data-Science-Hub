@@ -1,4 +1,3 @@
-
 import React from "react";
 
 interface PageHeaderProps {
@@ -14,7 +13,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <div 
-      className="relative bg-gray-900 py-24 px-8 mb-12"
+      className="relative bg-primary py-24 px-8 mb-12"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url(${backgroundImage})`,
         backgroundPosition: 'center',
@@ -22,9 +21,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({
       }}
     >
       <div className="container mx-auto text-center relative z-10">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{title}</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-4">{title}</h1>
         {subtitle && (
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">{subtitle}</p>
+          <p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto">{subtitle}</p>
         )}
       </div>
     </div>
