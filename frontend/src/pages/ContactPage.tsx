@@ -16,7 +16,11 @@ import {
   Briefcase,
   Send,
   Building,
-  User
+  User,
+  Youtube,
+  Linkedin,
+  Facebook,
+  MessageCircle
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { 
@@ -139,8 +143,8 @@ const ContactPage = () => {
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         />
+                      </div>
                     </div>
-                  </div>
                     <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                       Send Message <Send className="ml-2 h-4 w-4" />
                     </Button>
@@ -164,7 +168,9 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <h3 className="font-medium">Email</h3>
-                      <p className="text-muted-foreground">contact@datasciencehub.com</p>
+                      <a href="mailto:datasciencehub254@gmail.com" className="text-muted-foreground hover:text-primary">
+                        datasciencehub254@gmail.com
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -173,32 +179,20 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <h3 className="font-medium">Phone</h3>
-                      <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                      <a href="tel:+254707612395" className="text-muted-foreground hover:text-primary">
+                        +254 707 612 395
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="bg-primary/10 text-primary p-2 rounded-lg">
-                      <MapPin className="h-5 w-5" />
+                      <MessageCircle className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="font-medium">Address</h3>
-                      <p className="text-muted-foreground">
-                        123 Data Science Street<br />
-                        Tech City, TC 12345<br />
-                        United States
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 text-primary p-2 rounded-lg">
-                      <Clock className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium">Business Hours</h3>
-                      <p className="text-muted-foreground">
-                        Monday - Friday: 9:00 AM - 6:00 PM<br />
-                        Saturday - Sunday: Closed
-                      </p>
+                      <h3 className="font-medium">WhatsApp</h3>
+                      <a href="https://wa.me/254707612395" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">
+                        +254 707 612 395
+                      </a>
                     </div>
                   </div>
                 </CardContent>
@@ -212,16 +206,34 @@ const ContactPage = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-              <div className="flex gap-4">
-                    <Button variant="outline" className="flex-1">
-                      LinkedIn
-                </Button>
-                    <Button variant="outline" className="flex-1">
-                      Twitter
-                </Button>
-                    <Button variant="outline" className="flex-1">
-                      GitHub
-                    </Button>
+                  <div className="flex flex-col gap-4">
+                    <a 
+                      href="https://www.youtube.com/@DataScienceHubDataAspire" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary"
+                    >
+                      <Youtube className="h-5 w-5" />
+                      <span>YouTube</span>
+                    </a>
+                    <a 
+                      href="https://www.linkedin.com/groups/10084405/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary"
+                    >
+                      <Linkedin className="h-5 w-5" />
+                      <span>LinkedIn</span>
+                    </a>
+                    <a 
+                      href="https://web.facebook.com/profile.php?id=61575132957776" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-muted-foreground hover:text-primary"
+                    >
+                      <Facebook className="h-5 w-5" />
+                      <span>Facebook</span>
+                    </a>
                   </div>
                 </CardContent>
               </Card>

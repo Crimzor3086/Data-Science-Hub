@@ -19,118 +19,81 @@ import {
   GraduationCap,
   FileBarChart,
   Calculator,
-  File
+  File,
+  MessageSquare,
+  Wrench
 } from 'lucide-react';
 
 const services = [
   {
     id: 1,
     title: 'Data Collection',
-    description: 'Comprehensive data collection services for research and analysis.',
+    description: 'Accurate, reliable data is the foundation of informed decision-making. Our data collection services provide businesses with high-quality, actionable data that can drive strategy and improve performance.',
     icon: <Database className="h-6 w-6" />,
     features: [
-      'Survey design and implementation',
-      'Data cleaning and preprocessing',
-      'Quality assurance protocols',
-      'Ethical considerations compliance'
+      'Qualitative and quantitative data collection',
+      'Industry-leading methods and tools',
+      'Timely and relevant data',
+      'Tailored to specific needs'
     ],
     image: '/images/image (1).jpg'
   },
   {
     id: 2,
     title: 'Data Analysis',
-    description: 'Advanced statistical analysis and interpretation of research data.',
+    description: 'Transform your data into valuable insights with our expert data analysis services. We use advanced analytical techniques to interpret complex data sets, uncover trends, and provide actionable recommendations.',
     icon: <BarChart3 className="h-6 w-6" />,
     features: [
-      'Descriptive and inferential statistics',
-      'Multivariate analysis',
-      'Time series analysis',
-      'Predictive modeling'
+      'Advanced analytical techniques',
+      'Complex data interpretation',
+      'Trend identification',
+      'Actionable recommendations'
     ],
     image: '/images/image (2).jpg'
   },
   {
     id: 3,
-    title: 'Machine Learning',
-    description: 'Implementation of machine learning algorithms for data insights.',
-    icon: <Brain className="h-6 w-6" />,
+    title: 'Research Writing',
+    description: 'We offer in-depth research writing services designed to support your business\'s strategic initiatives. From industry analysis to academic research, our experienced writers deliver meticulously sourced and structured content.',
+    icon: <FileText className="h-6 w-6" />,
     features: [
-      'Supervised and unsupervised learning',
-      'Deep learning models',
-      'Natural language processing',
-      'Computer vision applications'
+      'Industry analysis',
+      'Academic research',
+      'Evidence-based content',
+      'Strategic insights'
     ],
     image: '/images/image (3).jpg'
   },
   {
     id: 4,
-    title: 'Data Visualization',
-    description: 'Creation of compelling visual representations of complex data.',
-    icon: <PieChart className="h-6 w-6" />,
+    title: 'Graphic Design',
+    description: 'Our graphic design services combine creativity and strategy to produce visually captivating content that aligns with your brand\'s identity. Whether it\'s logos, brochures, or social media graphics, we craft designs that are both aesthetically pleasing and functional.',
+    icon: <Palette className="h-6 w-6" />,
     features: [
-      'Interactive dashboards',
-      'Custom chart development',
-      'Infographic design',
-      'Data storytelling'
+      'Logo design',
+      'Brochure creation',
+      'Social media graphics',
+      'Brand identity development'
     ],
     image: '/images/image (4).jpg'
   },
   {
     id: 5,
-    title: 'Statistical Consulting',
-    description: 'Expert guidance on statistical methods and research design.',
-    icon: <Calculator className="h-6 w-6" />,
+    title: 'Web Design',
+    description: 'Stand out in the digital world with our custom web design services. We create responsive, user-friendly websites that not only look great but also offer seamless user experiences.',
+    icon: <Globe className="h-6 w-6" />,
     features: [
-      'Research methodology design',
-      'Statistical power analysis',
-      'Hypothesis testing',
-      'Results interpretation'
+      'Responsive design',
+      'User-friendly interfaces',
+      'E-commerce solutions',
+      'Corporate websites'
     ],
     image: '/images/image (5).jpg'
   },
   {
     id: 6,
-    title: 'Research Writing',
-    description: 'Professional assistance with research papers and publications.',
-    icon: <FileText className="h-6 w-6" />,
-    features: [
-      'Academic writing',
-      'Literature reviews',
-      'Manuscript preparation',
-      'Publication support'
-    ],
-    image: '/images/image (6).jpg'
-  },
-  {
-    id: 7,
-    title: 'Graphic Design',
-    description: 'Visual design services for research presentations and publications.',
-    icon: <Palette className="h-6 w-6" />,
-    features: [
-      'Presentation design',
-      'Publication graphics',
-      'Brand identity',
-      'Visual communication'
-    ],
-    image: '/images/image (7).jpg'
-  },
-  {
-    id: 8,
-    title: 'Web Design',
-    description: 'Development of research websites and online platforms.',
-    icon: <Globe className="h-6 w-6" />,
-    features: [
-      'Research portfolio sites',
-      'Data visualization platforms',
-      'Interactive dashboards',
-      'Content management systems'
-    ],
-    image: '/images/image (8).jpg'
-  },
-  {
-    id: 9,
     title: 'Project Management',
-    description: 'Comprehensive project management for research initiatives.',
+    description: 'Effective project management is key to delivering results on time and within budget. Our certified project managers ensure that your projects are executed with precision and efficiency.',
     icon: <ClipboardList className="h-6 w-6" />,
     features: [
       'Timeline development',
@@ -138,46 +101,59 @@ const services = [
       'Progress tracking',
       'Stakeholder communication'
     ],
+    image: '/images/image (6).jpg'
+  },
+  {
+    id: 7,
+    title: 'AI Development',
+    description: 'Embrace the future with our advanced AI development services. Our team specializes in building intelligent systems that optimize processes, enhance decision-making, and provide valuable insights.',
+    icon: <Brain className="h-6 w-6" />,
+    features: [
+      'Machine learning solutions',
+      'Natural language processing',
+      'Custom AI development',
+      'Process optimization'
+    ],
+    image: '/images/image (7).jpg'
+  },
+  {
+    id: 8,
+    title: 'Training',
+    description: 'Empower your team with our comprehensive training programs designed to enhance skills and foster professional growth. From technical training to leadership development, our programs are tailored to address specific needs.',
+    icon: <GraduationCap className="h-6 w-6" />,
+    features: [
+      'Technical training',
+      'Leadership development',
+      'Custom programs',
+      'Skill enhancement'
+    ],
+    image: '/images/image (8).jpg'
+  },
+  {
+    id: 9,
+    title: 'Consultation',
+    description: 'Our consultation services provide you with expert advice and strategic insights to help you navigate complex business challenges. We offer personalized guidance across various industries.',
+    icon: <MessageSquare className="h-6 w-6" />,
+    features: [
+      'Business strategy',
+      'Technology solutions',
+      'Process improvement',
+      'Strategic guidance'
+    ],
     image: '/images/image (9).jpg'
   },
   {
     id: 10,
-    title: 'Training',
-    description: 'Workshops and training sessions on data science and research methods.',
-    icon: <GraduationCap className="h-6 w-6" />,
-    features: [
-      'Statistical software training',
-      'Research methodology workshops',
-      'Data analysis bootcamps',
-      'Custom training programs'
-    ],
-    image: '/images/image (10).jpg'
-  },
-  {
-    id: 11,
-    title: 'Consultation',
-    description: 'One-on-one consulting for research projects and data analysis.',
-    icon: <Users className="h-6 w-6" />,
-    features: [
-      'Research planning',
-      'Methodology review',
-      'Data analysis guidance',
-      'Results interpretation'
-    ],
-    image: '/images/image (11).jpg'
-  },
-  {
-    id: 12,
     title: 'Report Writing',
-    description: 'Professional report writing for research findings and recommendations.',
+    description: 'Our expert team crafts comprehensive and insightful reports tailored to your specific needs. Whether it\'s for internal purposes, clients, or stakeholders, we ensure clear, concise, and well-researched content.',
     icon: <File className="h-6 w-6" />,
     features: [
-      'Executive summaries',
-      'Technical reports',
-      'Research briefs',
-      'Policy recommendations'
+      'Internal reports',
+      'Client reports',
+      'Stakeholder communications',
+      'Research findings'
     ],
-    image: '/images/image (12).jpg'
+    image: '/images/image (10).jpg'
   }
 ];
 
@@ -192,7 +168,7 @@ const ServicesPage = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-primary mb-4">Our Services</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive data science solutions to help you make data-driven decisions
+              Comprehensive solutions to help you make data-driven decisions and achieve your goals
             </p>
           </div>
 
@@ -241,7 +217,19 @@ const ServicesPage = () => {
                 </div>
                 <CardTitle>Expert Team</CardTitle>
                 <CardDescription>
-                  Our team of experienced data scientists and engineers
+                  Our team of experienced professionals
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
+              <CardHeader>
+                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
+                  <Wrench className="h-6 w-6" />
+                </div>
+                <CardTitle>Custom Solutions</CardTitle>
+                <CardDescription>
+                  Tailored services to meet your specific needs
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -251,30 +239,12 @@ const ServicesPage = () => {
                 <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
                   <Settings className="h-6 w-6" />
                 </div>
-                <CardTitle>Custom Solutions</CardTitle>
+                <CardTitle>Quality Assurance</CardTitle>
                 <CardDescription>
-                  Tailored approaches to meet your specific needs
+                  High-quality results and deliverables
                 </CardDescription>
               </CardHeader>
             </Card>
-
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
-              <CardHeader>
-                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
-                  <FileText className="h-6 w-6" />
-                </div>
-                <CardTitle>Documentation</CardTitle>
-                <CardDescription>
-                  Comprehensive documentation and support
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-
-          <div className="mt-16 text-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Get Started <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
           </div>
         </div>
       </div>

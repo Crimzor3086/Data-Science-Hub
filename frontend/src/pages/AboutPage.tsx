@@ -9,7 +9,9 @@ import {
   ArrowRight,
   BookOpen,
   Globe,
-  Heart
+  Heart,
+  Mail,
+  Linkedin
 } from 'lucide-react';
 
 const teamMembers = [
@@ -32,7 +34,7 @@ const teamMembers = [
   {
     name: 'Enock Bereka',
     role: 'Data Scientist',
-    bio: 'I\'m a passionate data scientist driven by curiosity and a commitment to lifelong learning. I thrive on exploring new tools and techniques to uncover insights and solve real-world problems.',
+    bio: 'I\'m a passionate data scientist driven by curiosity and a commitment to lifelong learning. I thrive on exploring new tools and techniques to uncover insights and solve real-world problems. My goal is to turn data into impactful solutions that drive informed decision-making and meaningful change.',
     image: '/images/team/enock.jpg',
     email: 'enochosenwafulah@gmail.com',
     linkedin: 'https://www.linkedin.com/in/enock-bereka'
@@ -40,7 +42,7 @@ const teamMembers = [
   {
     name: 'Timothy Achala',
     role: 'AI Enthusiast & Computer Scientist',
-    bio: 'I am an AI Enthusiast and computer scientist with a deep passion for data. My work lies at the intersection of theory and real-world application—leveraging mathematical rigor and computational power to extract meaningful insights from complex datasets.',
+    bio: 'I am an AI Enthusiast and computer scientist with a deep passion for data. My work lies at the intersection of theory and real-world application—leveraging mathematical rigor and computational power to extract meaningful insights from complex datasets. With a strong foundation in algorithms, statistics, and machine learning, I specialize in transforming raw data into actionable intelligence.',
     image: '/images/team/timothy.jpg',
     email: 'timothyachala695@gmail.com',
     linkedin: 'https://www.linkedin.com/in/timothy-a-1bb74127b'
@@ -81,7 +83,7 @@ const AboutPage = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-primary mb-4">About Us</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Empowering the next generation of data scientists and AI innovators
+              Empowering businesses, organizations and individuals with tools and knowledge for the data-driven world
             </p>
           </div>
           
@@ -90,28 +92,28 @@ const AboutPage = () => {
               <CardHeader>
                 <CardTitle>Our Mission</CardTitle>
                 <CardDescription>
-                  To make data science education accessible and practical for everyone
+                  Empowering through innovation and expertise
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  Data Science Hub was founded with a simple mission: to democratize data science education 
-                  and make it accessible to anyone with the curiosity and drive to learn. We believe that 
-                  data literacy is a fundamental skill in today's digital world, and we're committed to 
-                  providing high-quality, practical education that empowers individuals and organizations 
-                  to harness the power of data.
+                  Our mission is to empower businesses, organizations, and individuals by providing innovative tools,
+                  expert knowledge, and tailored solutions that foster growth, enhance decision-making, and drive
+                  success in a data-driven world. Through high-quality services, cutting-edge AI development, and
+                  comprehensive training programs, we enable our clients to optimize performance and stay ahead of
+                  industry trends.
                 </p>
                 <div className="flex items-center gap-2 text-primary">
                   <BookOpen className="h-5 w-5" />
-                  <span className="font-medium">Growing Student Community</span>
+                  <span className="font-medium">Comprehensive Training</span>
                 </div>
                 <div className="flex items-center gap-2 text-primary">
                   <Globe className="h-5 w-5" />
-                  <span className="font-medium">Global Reach</span>
+                  <span className="font-medium">Global Expertise</span>
                 </div>
                 <div className="flex items-center gap-2 text-primary">
                   <Heart className="h-5 w-5" />
-                  <span className="font-medium">High Satisfaction Rate</span>
+                  <span className="font-medium">Client Success</span>
                 </div>
               </CardContent>
             </Card>
@@ -120,27 +122,26 @@ const AboutPage = () => {
               <CardHeader>
                 <CardTitle>Our Vision</CardTitle>
                 <CardDescription>
-                  To be the leading platform for data science education and research
+                  Leading the way in data-driven transformation
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  We envision a world where data science is not just a specialized field, but a fundamental 
-                  skill that everyone can access and apply. Our platform combines cutting-edge technology 
-                  with expert instruction to create an immersive learning experience that prepares students 
-                  for real-world challenges. Through our research initiatives and industry partnerships, 
-                  we're constantly pushing the boundaries of what's possible in data science education.
+                  Our vision is to be a trusted partner in transforming the way businesses and individuals leverage data,
+                  technology, and knowledge. We strive to lead the way in innovation, providing strategic insights and
+                  expertise that fuel progress, drive operational excellence, and unlock new opportunities for success in
+                  an ever-evolving digital landscape.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-primary/10 p-4 rounded-lg">
-                    <h3 className="font-medium text-primary mb-1">Research</h3>
-                    <p className="text-sm text-muted-foreground">Pushing the boundaries of AI and ML</p>
-            </div>
-                  <div className="bg-primary/10 p-4 rounded-lg">
                     <h3 className="font-medium text-primary mb-1">Innovation</h3>
-                    <p className="text-sm text-muted-foreground">Developing new learning methods</p>
-          </div>
-        </div>
+                    <p className="text-sm text-muted-foreground">Leading digital transformation</p>
+                  </div>
+                  <div className="bg-primary/10 p-4 rounded-lg">
+                    <h3 className="font-medium text-primary mb-1">Excellence</h3>
+                    <p className="text-sm text-muted-foreground">Delivering superior results</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -153,7 +154,7 @@ const AboutPage = () => {
                   <CardHeader>
                     <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
                       {value.icon}
-                </div>
+                    </div>
                     <CardTitle className="text-xl">{value.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -162,7 +163,7 @@ const AboutPage = () => {
                 </Card>
               ))}
             </div>
-            </div>
+          </div>
             
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Team</h2>
@@ -177,17 +178,25 @@ const AboutPage = () => {
                         className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                </div>
+                    </div>
                     <CardTitle>{member.name}</CardTitle>
                     <CardDescription>{member.role}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">{member.bio}</p>
+                    <p className="text-muted-foreground mb-4">{member.bio}</p>
+                    <div className="flex gap-4">
+                      <a href={`mailto:${member.email}`} className="text-primary hover:text-primary/80">
+                        <Mail className="h-5 w-5" />
+                      </a>
+                      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80">
+                        <Linkedin className="h-5 w-5" />
+                      </a>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
+            </div>
           </div>
-        </div>
         
           <div className="text-center">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
