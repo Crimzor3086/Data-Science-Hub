@@ -9,7 +9,7 @@
       }
     },
     {
-      "src": "api/**/*.py",
+      "src": "api/*.py",
       "use": "@vercel/python"
     }
   ],
@@ -30,5 +30,8 @@
       "src": "/(.*)",
       "dest": "/frontend/dist/index.html"
     }
-  ]
+  ],
+  "env": {
+    "JWT_SECRET": "@jwt_secret"
+  }
 } 
