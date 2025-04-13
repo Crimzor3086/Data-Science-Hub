@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Layout } from '@/components/layout';
-import { PageHeader } from '@/components/layout';
-import { Card, Button, Tabs, TabsContent, TabsList, TabsTrigger, Badge, Progress, Avatar, AvatarImage, AvatarFallback, Input, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Alert, AlertDescription, AlertTitle, AlertCircle, CheckCircle, Clock, Download, FileText, MessageSquare, Users, BarChart, Settings, HelpCircle, Bell } from '@/components/ui';
-import { ChevronRight, Plus, Upload, Send, Filter, RefreshCw, MoreVertical, Calendar, DollarSign, CreditCard, FileUp, Check, X } from 'lucide-react';
+import Layout from '@/components/layout/Layout';
+import PageHeader from '@/components/layout/PageHeader';
+import { Card, Button, Tabs, TabsContent, TabsList, TabsTrigger, Badge, Progress, Avatar, AvatarImage, AvatarFallback, Input, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Alert, AlertDescription, AlertTitle } from '@/components/ui';
+import { ChevronRight, Plus, Upload, Send, Filter, RefreshCw, MoreVertical, Calendar, DollarSign, CreditCard, FileUp, Check, X, AlertCircle, CheckCircle, Clock, Download, FileText, MessageSquare, Users, BarChart, Settings, HelpCircle, Bell } from 'lucide-react';
 import clientService from '@/services/clientService';
 import { Project, Dataset, Student, Course, Message, Announcement, SupportTicket, Report, BillingInfo, ActivityLog } from '@/types/client';
 import { Search, Book, Star, Archive, Trash } from 'lucide-react';
