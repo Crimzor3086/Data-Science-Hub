@@ -7,14 +7,21 @@ import { UserRole } from "@/lib/roles";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-const Navbar = () => {
+interface NavbarProps {
+  onMenuClick?: () => void;
+}
+
+const Navbar = ({ onMenuClick }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    onMenuClick?.();
+  };
 
   const handleLogout = () => {
     logout();
