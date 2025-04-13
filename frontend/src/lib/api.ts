@@ -1,66 +1,118 @@
-import { API_BASE_URL } from './config';
+import axios from 'axios';
 
-// Get auth token from localStorage
-const getAuthToken = (): string | null => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('auth_token');
+// Create axios instance with base URL
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Add request interceptor to add auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return null;
+);
+
+// Add response interceptor to handle errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Handle 401 Unauthorized errors (token expired)
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Auth API
+export const authAPI = {
+  login: (email: string, password: string) => 
+    api.post('/auth/login', { email, password }),
+  
+  register: (userData: { name: string; email: string; password: string; role?: string }) => 
+    api.post('/auth/register', userData),
+  
+  getCurrentUser: () => 
+    api.get('/auth/me'),
+  
+  logout: () => {
+    localStorage.removeItem('token');
+    return Promise.resolve();
+  }
 };
 
-// Generic fetch wrapper with error handling
-async function fetchAPI<T>(
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<T> {
-  const url = `${API_BASE_URL}${endpoint}`;
+// User API
+export const userAPI = {
+  getUsers: () => 
+    api.get('/users'),
   
-  // Add auth token to headers if available
-  const token = getAuthToken();
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...options.headers as Record<string, string>,
-  };
+  getUser: (id: string) => 
+    api.get(`/users/${id}`),
   
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
+  createUser: (userData: any) => 
+    api.post('/users', userData),
   
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  });
+  updateUser: (id: string, userData: any) => 
+    api.patch(`/users/${id}`, userData),
+  
+  deleteUser: (id: string) => 
+    api.delete(`/users/${id}`),
+  
+  searchUsers: (params: any) => 
+    api.get('/admin/users/search', { params }),
+  
+  bulkUserOperation: (operation: string, userIds: string[], data?: any) => 
+    api.post('/admin/users/bulk', { operation, userIds, data }),
+  
+  exportUsers: (format: string = 'json') => 
+    api.get('/admin/users/export', { params: { format } })
+};
 
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
-    throw new Error(error.message || `API error: ${response.status}`);
-  }
-
-  return response.json();
-}
-
-// API methods
-export const api = {
-  // Courses endpoints
-  courses: {
-    getAll: () => fetchAPI('/courses'),
-    getById: (id: number) => fetchAPI(`/courses/${id}`),
-  },
+// Analytics API
+export const analyticsAPI = {
+  getStats: () => 
+    api.get('/analytics/stats'),
   
-  // Profile endpoints
-  profile: {
-    get: (userId: string) => fetchAPI(`/profile?user_id=${userId}`),
-    update: (userId: string, data: any) =>
-      fetchAPI(`/profile?user_id=${userId}`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-      }),
-    create: (data: any) =>
-      fetchAPI('/profile', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      }),
-  },
+  getActivity: () => 
+    api.get('/analytics/activity'),
   
-  // Add more API methods as needed
-}; 
+  getGrowth: () => 
+    api.get('/analytics/growth'),
+  
+  getActivityByRole: () => 
+    api.get('/analytics/activity-by-role'),
+  
+  getRegistrationTrends: (period: string = 'month') => 
+    api.get('/analytics/registration-trends', { params: { period } }),
+  
+  getPerformance: () => 
+    api.get('/analytics/performance'),
+  
+  getErrors: () => 
+    api.get('/analytics/errors')
+};
+
+// Admin API
+export const adminAPI = {
+  getSettings: () => 
+    api.get('/admin/settings'),
+  
+  updateSettings: (settings: any) => 
+    api.patch('/admin/settings', settings),
+  
+  getLogs: (type: string = 'all', limit: number = 50) => 
+    api.get('/admin/logs', { params: { type, limit } })
+};
+
+export default api; 

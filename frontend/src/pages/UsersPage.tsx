@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UserRole } from '@/lib/roles';
-import { Search, Plus, MoreVertical } from 'lucide-react';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Users, Search, Plus, MoreVertical, UserPlus } from "lucide-react";
+import { useUsers } from "@/hooks/useApi";
+import { UserRole } from "@/lib/roles";
 
 interface User {
   id: string;
@@ -14,121 +16,125 @@ interface User {
   role: UserRole;
   avatar?: string;
   status: 'active' | 'inactive';
-  lastLogin: string;
+  lastLogin?: Date;
 }
 
-const UsersPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  // Mock data
-  const users: User[] = [
-    {
-      id: '1',
-      name: 'Admin User',
-      email: 'admin@example.com',
-      role: UserRole.ADMIN,
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
-      status: 'active',
-      lastLogin: '2024-04-13T10:00:00Z'
-    },
-    {
-      id: '2',
-      name: 'Client User',
-      email: 'client@example.com',
-      role: UserRole.CLIENT,
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=client',
-      status: 'active',
-      lastLogin: '2024-04-12T15:30:00Z'
-    },
-    {
-      id: '3',
-      name: 'Student User',
-      email: 'student@example.com',
-      role: UserRole.STUDENT,
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=student',
-      status: 'inactive',
-      lastLogin: '2024-04-10T09:15:00Z'
-    }
-  ];
+export default function UsersPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const { data: users, loading, error, execute: refreshUsers } = useUsers();
 
-  const filteredUsers = users.filter(user => 
-    user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter users based on search query
+  const filteredUsers = users?.filter(
+    (user: User) =>
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
 
+  // Get badge variant based on user role
   const getRoleBadgeVariant = (role: UserRole) => {
     switch (role) {
       case UserRole.ADMIN:
-        return 'destructive';
+        return "destructive";
       case UserRole.CLIENT:
-        return 'default';
+        return "default";
       case UserRole.STUDENT:
-        return 'secondary';
+        return "secondary";
       default:
-        return 'outline';
+        return "outline";
     }
   };
 
+  // Get status badge variant
+  const getStatusBadgeVariant = (status: string) => {
+    return status === 'active' ? 'success' : 'destructive';
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-blue-600">User Management</h1>
-        <Button className="bg-blue-500 hover:bg-blue-600">
-          <Plus className="w-4 h-4 mr-2" />
-          Add User
+        <Button asChild>
+          <Link to="/admin/users/new">
+            <UserPlus className="mr-2 h-4 w-4" />
+            Add User
+          </Link>
         </Button>
       </div>
 
-      <Card>
+      <Card className="mb-8">
         <CardHeader>
           <CardTitle>Users</CardTitle>
-          <CardDescription>Manage user accounts and permissions</CardDescription>
+          <CardDescription>
+            Manage user accounts and permissions
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="relative mb-6">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search users..."
-              className="pl-10"
+              className="pl-8"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          <div className="space-y-4">
-            {filteredUsers.map((user) => (
-              <div
-                key={user.id}
-                className="flex items-center justify-between p-4 bg-white rounded-lg border hover:shadow-sm transition-shadow"
-              >
-                <div className="flex items-center gap-4">
-                  <Avatar>
-                    <AvatarImage src={user.avatar} />
-                    <AvatarFallback>{user.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="font-medium">{user.name}</h3>
-                    <p className="text-sm text-gray-500">{user.email}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <Badge variant={getRoleBadgeVariant(user.role)}>
-                    {user.role}
-                  </Badge>
-                  <Badge variant={user.status === 'active' ? 'default' : 'secondary'}>
-                    {user.status}
-                  </Badge>
-                  <Button variant="ghost" size="icon">
-                    <MoreVertical className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="text-center py-8">Loading users...</div>
+          ) : error ? (
+            <div className="text-center py-8 text-red-500">
+              Error loading users: {error}
+            </div>
+          ) : filteredUsers.length === 0 ? (
+            <div className="text-center py-8">
+              {searchQuery ? "No users found matching your search." : "No users found."}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredUsers.map((user: User) => (
+                <Card key={user.id} className="overflow-hidden">
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <Avatar>
+                          <AvatarImage src={user.avatar} alt={user.name} />
+                          <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <h3 className="font-medium">{user.name}</h3>
+                          <p className="text-sm text-muted-foreground">{user.email}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Badge variant={getRoleBadgeVariant(user.role)}>
+                          {user.role}
+                        </Badge>
+                        <Badge variant={getStatusBadgeVariant(user.status)}>
+                          {user.status}
+                        </Badge>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button variant="outline" onClick={() => refreshUsers()}>
+            Refresh
+          </Button>
+          <Button asChild>
+            <Link to="/admin/users/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add New User
+            </Link>
+          </Button>
+        </CardFooter>
       </Card>
     </div>
   );
-};
-
-export default UsersPage; 
+} 

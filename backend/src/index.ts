@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { userRoutes } from './routes/userRoutes';
 import { analyticsRoutes } from './routes/analyticsRoutes';
+import { adminRoutes } from './routes/adminRoutes';
 import { authMiddleware } from './middleware/authMiddleware';
 
 dotenv.config();
@@ -23,6 +24,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/data-scie
 // Routes
 app.use('/api/users', authMiddleware, userRoutes);
 app.use('/api/analytics', authMiddleware, analyticsRoutes);
+app.use('/api/admin', authMiddleware, adminRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
