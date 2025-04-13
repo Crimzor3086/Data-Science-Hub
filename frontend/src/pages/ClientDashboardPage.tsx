@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '@/components/layout/Layout';
+import { Layout } from '@/components/layout/Layout';
 import PageHeader from '@/components/layout/PageHeader';
 import { Card, Button, Tabs, TabsContent, TabsList, TabsTrigger, Badge, Progress, Avatar, AvatarImage, AvatarFallback, Input, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Alert, AlertDescription, AlertTitle } from '@/components/ui';
 import { ChevronRight, Plus, Upload, Send, Filter, RefreshCw, MoreVertical, Calendar, DollarSign, CreditCard, FileUp, Check, X, AlertCircle, CheckCircle, Clock, Download, FileText, MessageSquare, Users, BarChart, Settings, HelpCircle, Bell, XCircle } from 'lucide-react';
