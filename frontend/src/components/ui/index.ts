@@ -1,7 +1,5 @@
 export * from './alert';
 export * from './avatar';
-export * from './avatar-fallback';
-export * from './avatar-image';
 export * from './badge';
 export * from './button';
 export * from './card';
