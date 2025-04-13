@@ -1,45 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "frontend/dist",
-        "buildCommand": "cd frontend && npm install && npm run build"
-      }
-    },
-    {
-      "src": "backend/src/routes/*.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
-    }
-  ],
+  "buildCommand": "cd frontend && npm install --no-audit --prefer-offline || (sleep 5 && npm install --no-audit --prefer-offline) || (sleep 10 && npm install --no-audit --prefer-offline) && npm run build",
+  "outputDirectory": "frontend/dist",
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/backend/src/routes/$1.py"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/frontend/dist/favicon.ico"
+      "handle": "filesystem"
     },
     {
       "src": "/assets/(.*)",
-      "dest": "/frontend/dist/assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|webp|woff|woff2|ttf|eot))",
-      "dest": "/frontend/dist/$1"
+      "dest": "/assets/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/dist/index.html"
+      "dest": "/index.html"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 } 
