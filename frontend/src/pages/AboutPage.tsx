@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Background } from '@/components/ui/background';
+import Layout from "@/components/layout/Layout";
+import PageHeader from "@/components/layout/PageHeader";
 import { 
   Users, 
   Target, 
@@ -78,133 +80,134 @@ const AboutPage = () => {
       image="/images/image (13).jpg"
       overlayOpacity={0.85}
     >
-      <div className="container mx-auto py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-primary mb-4">About Us</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Empowering businesses, organizations and individuals with tools and knowledge for the data-driven world
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
-              <CardHeader>
-                <CardTitle>Our Mission</CardTitle>
-                <CardDescription>
-                  Empowering through innovation and expertise
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">
-                  Our mission is to empower businesses, organizations, and individuals by providing innovative tools,
-                  expert knowledge, and tailored solutions that foster growth, enhance decision-making, and drive
-                  success in a data-driven world. Through high-quality services, cutting-edge AI development, and
-                  comprehensive training programs, we enable our clients to optimize performance and stay ahead of
-                  industry trends.
-                </p>
-                <div className="flex items-center gap-2 text-primary">
-                  <BookOpen className="h-5 w-5" />
-                  <span className="font-medium">Comprehensive Training</span>
-                </div>
-                <div className="flex items-center gap-2 text-primary">
-                  <Globe className="h-5 w-5" />
-                  <span className="font-medium">Global Expertise</span>
-                </div>
-                <div className="flex items-center gap-2 text-primary">
-                  <Heart className="h-5 w-5" />
-                  <span className="font-medium">Client Success</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
-              <CardHeader>
-                <CardTitle>Our Vision</CardTitle>
-                <CardDescription>
-                  Leading the way in data-driven transformation
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">
-                  Our vision is to be a trusted partner in transforming the way businesses and individuals leverage data,
-                  technology, and knowledge. We strive to lead the way in innovation, providing strategic insights and
-                  expertise that fuel progress, drive operational excellence, and unlock new opportunities for success in
-                  an ever-evolving digital landscape.
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-primary/10 p-4 rounded-lg">
-                    <h3 className="font-medium text-primary mb-1">Innovation</h3>
-                    <p className="text-sm text-muted-foreground">Leading digital transformation</p>
-                  </div>
-                  <div className="bg-primary/10 p-4 rounded-lg">
-                    <h3 className="font-medium text-primary mb-1">Excellence</h3>
-                    <p className="text-sm text-muted-foreground">Delivering superior results</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Values</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {values.map((value, index) => (
-                <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
-                  <CardHeader>
-                    <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
-                      {value.icon}
-                    </div>
-                    <CardTitle className="text-xl">{value.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{value.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-            
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Team</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {teamMembers.map((member) => (
-                <Card key={member.name} className="bg-white/95 backdrop-blur-sm border-primary/20">
-                  <CardHeader>
-                    <div className="aspect-square relative overflow-hidden rounded-lg mb-4">
-                      <img 
-                        src={member.image} 
-                        alt={member.name}
-                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    </div>
-                    <CardTitle>{member.name}</CardTitle>
-                    <CardDescription>{member.role}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground mb-4">{member.bio}</p>
-                    <div className="flex gap-4">
-                      <a href={`mailto:${member.email}`} className="text-primary hover:text-primary/80">
-                        <Mail className="h-5 w-5" />
-                      </a>
-                      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80">
-                        <Linkedin className="h-5 w-5" />
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
+      <Layout>
+        <PageHeader 
+          title="About Us" 
+          subtitle="Empowering businesses, organizations and individuals with tools and knowledge for the data-driven world"
+          backgroundImage="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2670&auto=format&fit=crop"
+        />
         
-          <div className="text-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Join Our Team <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+        <div className="container mx-auto py-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+              <Card className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                <CardHeader>
+                  <CardTitle>Our Mission</CardTitle>
+                  <CardDescription>
+                    Empowering through innovation and expertise
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Our mission is to empower businesses, organizations, and individuals by providing innovative tools,
+                    expert knowledge, and tailored solutions that foster growth, enhance decision-making, and drive
+                    success in a data-driven world. Through high-quality services, cutting-edge AI development, and
+                    comprehensive training programs, we enable our clients to optimize performance and stay ahead of
+                    industry trends.
+                  </p>
+                  <div className="flex items-center gap-2 text-primary">
+                    <BookOpen className="h-5 w-5" />
+                    <span className="font-medium">Comprehensive Training</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-primary">
+                    <Globe className="h-5 w-5" />
+                    <span className="font-medium">Global Expertise</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-primary">
+                    <Heart className="h-5 w-5" />
+                    <span className="font-medium">Client Success</span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                <CardHeader>
+                  <CardTitle>Our Vision</CardTitle>
+                  <CardDescription>
+                    Leading the way in data-driven transformation
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Our vision is to be a trusted partner in transforming the way businesses and individuals leverage data,
+                    technology, and knowledge. We strive to lead the way in innovation, providing strategic insights and
+                    expertise that fuel progress, drive operational excellence, and unlock new opportunities for success in
+                    an ever-evolving digital landscape.
+                  </p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-primary/10 p-4 rounded-lg">
+                      <h3 className="font-medium text-primary mb-1">Innovation</h3>
+                      <p className="text-sm text-muted-foreground">Leading digital transformation</p>
+                    </div>
+                    <div className="bg-primary/10 p-4 rounded-lg">
+                      <h3 className="font-medium text-primary mb-1">Excellence</h3>
+                      <p className="text-sm text-muted-foreground">Delivering superior results</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Values</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {values.map((value, index) => (
+                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                    <CardHeader>
+                      <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
+                        {value.icon}
+                      </div>
+                      <CardTitle className="text-xl">{value.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{value.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+              
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Team</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {teamMembers.map((member) => (
+                  <Card key={member.name} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                    <CardHeader>
+                      <div className="aspect-square relative overflow-hidden rounded-lg mb-4">
+                        <img 
+                          src={member.image} 
+                          alt={member.name}
+                          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      </div>
+                      <CardTitle>{member.name}</CardTitle>
+                      <CardDescription>{member.role}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground mb-4">{member.bio}</p>
+                      <div className="flex gap-4">
+                        <a href={`mailto:${member.email}`} className="text-primary hover:text-primary/80">
+                          <Mail className="h-5 w-5" />
+                        </a>
+                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80">
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          
+            <div className="text-center">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                Join Our Team <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </Layout>
     </Background>
   );
 };

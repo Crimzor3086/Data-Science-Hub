@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Background } from '@/components/ui/background';
+import Layout from "@/components/layout/Layout";
+import PageHeader from "@/components/layout/PageHeader";
 import { 
   BarChart2, 
   Database, 
@@ -160,94 +162,57 @@ const services = [
 const ServicesPage = () => {
   return (
     <Background 
-      image="/images/image (7).jpg"
+      image="/images/image (14).jpg"
       overlayOpacity={0.85}
     >
-      <div className="container mx-auto py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-primary mb-4">Our Services</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive solutions to help you make data-driven decisions and achieve your goals
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service) => (
-              <Card key={service.title} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
-                <CardHeader>
-                  <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
-                    <img 
-                      src={service.image} 
-                      alt={service.title}
-                      className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                    <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground p-2 rounded-lg">
-                      {service.icon}
+      <Layout>
+        <PageHeader 
+          title="Our Services" 
+          subtitle="Comprehensive data science and analytics solutions for your business needs"
+          backgroundImage="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop"
+        />
+        
+        <div className="container mx-auto py-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service) => (
+                <Card key={service.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                  <CardHeader>
+                    <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                      <img 
+                        src={service.image} 
+                        alt={service.title}
+                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground p-2 rounded-lg">
+                        {service.icon}
+                      </div>
                     </div>
-                  </div>
-                  <CardTitle className="text-2xl">{service.title}</CardTitle>
-                  <CardDescription className="text-lg">{service.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {service.features.map((feature, index) => (
-                      <li key={index} className="flex items-center gap-2 text-muted-foreground">
-                        <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
-              <CardHeader>
-                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
-                  <Users className="h-6 w-6" />
-                </div>
-                <CardTitle>Expert Team</CardTitle>
-                <CardDescription>
-                  Our team of experienced professionals
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
-              <CardHeader>
-                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
-                  <Wrench className="h-6 w-6" />
-                </div>
-                <CardTitle>Custom Solutions</CardTitle>
-                <CardDescription>
-                  Tailored services to meet your specific needs
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20">
-              <CardHeader>
-                <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
-                  <Settings className="h-6 w-6" />
-                </div>
-                <CardTitle>Quality Assurance</CardTitle>
-                <CardDescription>
-                  High-quality results and deliverables
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                    <CardTitle>{service.title}</CardTitle>
+                    <CardDescription>{service.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {service.features.map((feature, index) => (
+                        <li key={index} className="flex items-center gap-2 text-muted-foreground">
+                          <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                  <CardFooter>
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </Layout>
     </Background>
   );
 };

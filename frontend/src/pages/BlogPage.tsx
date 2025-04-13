@@ -95,125 +95,132 @@ const categories = [
 
 const BlogPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
-  
-  // Filter posts based on search query and category
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
   const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === "all" || post.category === activeCategory;
-    
+    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "all" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
-  
+
   return (
     <Background 
-      image="/images/image (10).jpg"
+      image="/images/image (15).jpg"
       overlayOpacity={0.85}
     >
-      <div className="container mx-auto py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-            <div className="w-full md:w-auto">
-              <h1 className="text-3xl font-bold text-primary">Blog</h1>
-              <p className="text-muted-foreground mt-2">
-                Insights and tutorials from our data science experts
-              </p>
+      <Layout>
+        <PageHeader 
+          title="Blog" 
+          subtitle="Latest insights, tutorials, and updates from our data science experts"
+          backgroundImage="https://images.unsplash.com/photo-1499750310107-5f9f28a66643?q=80&w=2670&auto=format&fit=crop"
+        />
+        
+        <div className="container mx-auto py-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+              <div className="w-full md:w-auto">
+                <h2 className="text-3xl font-bold text-primary">Latest Posts</h2>
+                <p className="text-muted-foreground mt-2">
+                  Stay updated with the latest in data science
+                </p>
+              </div>
+              <div className="relative w-full md:w-auto">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search posts..."
+                  className="pl-10 bg-white/95 backdrop-blur-sm border-primary/20"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
             </div>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Write a Post
-            </Button>
-          </div>
 
-          {/* Search and Filters */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Search articles..." 
-                className="pl-10 bg-white/95 backdrop-blur-sm border-primary/20"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              {categories.map((category) => (
-                <Button 
+            <div className="flex gap-4 overflow-x-auto pb-4 mb-8">
+              {categories.map(category => (
+                <Button
                   key={category.value}
-                  variant={activeCategory === category.value ? "default" : "outline"}
-                  className={activeCategory === category.value ? "bg-primary text-primary-foreground" : "border-primary text-primary hover:bg-primary/10"}
-                  onClick={() => setActiveCategory(category.value)}
+                  variant={selectedCategory === category.value ? "default" : "outline"}
+                  className="whitespace-nowrap"
+                  onClick={() => setSelectedCategory(category.value)}
                 >
                   {category.label}
                 </Button>
               ))}
             </div>
 
-            <Button variant="outline" className="w-full md:w-auto border-primary text-primary hover:bg-primary/10">
-              <Filter className="h-4 w-4 mr-2" />
-              More Filters
-            </Button>
-          </div>
-
-          {/* Blog Posts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPosts.map((post) => (
-              <Card key={post.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
-                <CardHeader>
-                  <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
-                    <img 
-                      src={post.image} 
-                      alt={post.title}
-                      className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  </div>
-                  <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                  <CardDescription className="line-clamp-2">{post.excerpt}</CardDescription>
-                </CardHeader>
-                <CardContent className="py-4 flex-grow">
-                  <div className="flex gap-2 mb-2">
-                    {post.tags.slice(0, 2).map((tag, index) => (
-                      <Badge key={index} variant="outline" className="bg-primary/10 text-primary border-primary">
-                        {tag}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPosts.map((post) => (
+                <Card key={post.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                  <CardHeader>
+                    <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                      <img 
+                        src={post.image} 
+                        alt={post.title}
+                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      <Badge 
+                        className="absolute top-4 right-4 bg-primary/90 text-primary-foreground"
+                      >
+                        {post.category}
                       </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between items-center border-t border-primary pt-4">
-                  <div className="flex items-center text-sm text-primary">
-                    <User className="h-4 w-4 mr-1" />
-                    <span>{post.author}</span>
-                  </div>
-                  <Button variant="ghost" size="sm" className="text-primary hover:text-primary/90 hover:bg-primary/10 -mr-2">
-                    Read more <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="mt-12 flex justify-center">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Load more articles
-            </Button>
-          </div>
-          
-          <div className="mt-20 max-w-lg mx-auto p-8 bg-gray-800 rounded-lg border border-gray-700 text-center">
-            <h3 className="text-xl font-bold text-white mb-4">Subscribe to our newsletter</h3>
-            <p className="text-gray-300 mb-6">
-              Get the latest data science insights delivered straight to your inbox
-            </p>
-            <div className="flex gap-2">
-              <Input type="email" placeholder="your@email.com" className="bg-gray-700 border-gray-600" />
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground whitespace-nowrap">
-                Subscribe
-              </Button>
+                    </div>
+                    <CardTitle className="line-clamp-2">{post.title}</CardTitle>
+                    <CardDescription className="line-clamp-2">{post.excerpt}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <User className="h-4 w-4" />
+                        <span>{post.author}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{post.date}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        <span>{post.readTime}</span>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {post.tags.map((tag, index) => (
+                        <Badge key={index} variant="secondary">{tag}</Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                      Read More <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
             </div>
+
+            {filteredPosts.length === 0 && (
+              <div className="text-center py-12">
+                <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-primary mb-2">No posts found</h3>
+                <p className="text-muted-foreground mb-4">
+                  Try adjusting your search or filters to find what you're looking for.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="border-primary text-primary hover:bg-primary/10"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("all");
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </Layout>
     </Background>
   );
 };
