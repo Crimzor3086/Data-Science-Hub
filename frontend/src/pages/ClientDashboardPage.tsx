@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Layout from '@/components/layout/Layout';
 import PageHeader from '@/components/layout/PageHeader';
 import { Card, Button, Tabs, TabsContent, TabsList, TabsTrigger, Badge, Progress, Avatar, AvatarImage, AvatarFallback, Input, Textarea, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Alert, AlertDescription, AlertTitle } from '@/components/ui';
-import { ChevronRight, Plus, Upload, Send, Filter, RefreshCw, MoreVertical, Calendar, DollarSign, CreditCard, FileUp, Check, X, AlertCircle, CheckCircle, Clock, Download, FileText, MessageSquare, Users, BarChart, Settings, HelpCircle, Bell } from 'lucide-react';
+import { ChevronRight, Plus, Upload, Send, Filter, RefreshCw, MoreVertical, Calendar, DollarSign, CreditCard, FileUp, Check, X, AlertCircle, CheckCircle, Clock, Download, FileText, MessageSquare, Users, BarChart, Settings, HelpCircle, Bell, XCircle } from 'lucide-react';
 import clientService from '@/services/clientService';
 import { Project, Dataset, Student, Course, Message, Announcement, SupportTicket, Report, BillingInfo, ActivityLog } from '@/types/client';
 import { Search, Book, Star, Archive, Trash } from 'lucide-react';
 import { Background } from '@/components/ui/background';
+import { toast } from '@/components/ui/use-toast';
 
 const ClientDashboardPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -32,42 +33,58 @@ const ClientDashboardPage: React.FC = () => {
   const [billingInfo, setBillingInfo] = useState<BillingInfo | null>(null);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         setIsLoading(true);
-        const data = await clientService.getDashboardData();
-        setDashboardData(data);
+        setError(null);
         
-        const datasetsData = await clientService.getDatasets();
+        const [
+          dashboardData,
+          datasetsData,
+          studentsData,
+          coursesData,
+          messagesData,
+          announcementsData,
+          ticketsData,
+          reportsData,
+          billingData,
+          activityData
+        ] = await Promise.all([
+          clientService.getDashboardData(),
+          clientService.getDatasets(),
+          clientService.getAssignedStudents(),
+          clientService.getClientCourses(),
+          clientService.getMessages(),
+          clientService.getAnnouncements(),
+          clientService.getSupportTickets(),
+          clientService.getReports(),
+          clientService.getBillingInfo(),
+          clientService.getActivityLogs()
+        ]);
+        
+        setDashboardData(dashboardData);
         setDatasets(datasetsData);
-        
-        const studentsData = await clientService.getAssignedStudents();
         setStudents(studentsData);
-        
-        const coursesData = await clientService.getClientCourses();
         setCourses(coursesData);
-        
-        const messagesData = await clientService.getMessages();
         setMessages(messagesData);
-        
-        const announcementsData = await clientService.getAnnouncements();
         setAnnouncements(announcementsData);
-        
-        const ticketsData = await clientService.getSupportTickets();
         setTickets(ticketsData);
-        
-        const reportsData = await clientService.getReports();
         setReports(reportsData);
-        
-        const billingData = await clientService.getBillingInfo();
         setBillingInfo(billingData);
-        
-        const activityData = await clientService.getActivityLogs();
         setActivityLogs(activityData);
       } catch (error) {
-        console.error('Error fetching dashboard data:', error);
+        const errorMessage = error instanceof Error 
+          ? error.message 
+          : 'Failed to load dashboard data. Please try again.';
+        setError(errorMessage);
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
       } finally {
         setIsLoading(false);
       }
@@ -139,6 +156,21 @@ const ClientDashboardPage: React.FC = () => {
         return 'bg-gray-100 text-gray-800';
     }
   };
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <div className="text-red-500 mb-4">
+          <XCircle className="h-12 w-12" />
+        </div>
+        <h2 className="text-2xl font-bold mb-2">Error Loading Dashboard</h2>
+        <p className="text-gray-600 mb-4">{error}</p>
+        <Button onClick={() => window.location.reload()}>
+          Try Again
+        </Button>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

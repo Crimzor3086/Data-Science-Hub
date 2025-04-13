@@ -21,7 +21,9 @@ const SignUpPage = () => {
   const [errors, setErrors] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    role: '',
+    company: ''
   });
   
   const { register } = useAuth();
@@ -41,16 +43,23 @@ const SignUpPage = () => {
     const newErrors = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      role: '',
+      company: ''
     };
     
     let isValid = true;
     
+    // Name validation
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
       isValid = false;
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+      isValid = false;
     }
     
+    // Email validation
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
       isValid = false;
@@ -59,11 +68,33 @@ const SignUpPage = () => {
       isValid = false;
     }
     
+    // Password validation
     if (!formData.password) {
       newErrors.password = 'Password is required';
       isValid = false;
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
+      isValid = false;
+    } else if (!/(?=.*[a-z])/.test(formData.password)) {
+      newErrors.password = 'Password must contain at least one lowercase letter';
+      isValid = false;
+    } else if (!/(?=.*[A-Z])/.test(formData.password)) {
+      newErrors.password = 'Password must contain at least one uppercase letter';
+      isValid = false;
+    } else if (!/(?=.*\d)/.test(formData.password)) {
+      newErrors.password = 'Password must contain at least one number';
+      isValid = false;
+    }
+    
+    // Role validation
+    if (!formData.role) {
+      newErrors.role = 'Please select a role';
+      isValid = false;
+    }
+    
+    // Company validation (only for client role)
+    if (formData.role === 'client' && !formData.company.trim()) {
+      newErrors.company = 'Company name is required for client accounts';
       isValid = false;
     }
     
@@ -75,6 +106,11 @@ const SignUpPage = () => {
     e.preventDefault();
     
     if (!validateForm()) {
+      toast({
+        title: "Validation Error",
+        description: "Please fix the errors in the form before submitting.",
+        variant: "destructive",
+      });
       return;
     }
     
@@ -96,11 +132,23 @@ const SignUpPage = () => {
       
       navigate('/');
     } catch (error) {
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : error.response?.data?.error || "Failed to create account";
+      
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to create account",
+        description: errorMessage,
         variant: "destructive",
       });
+      
+      // If the error is related to email already being registered
+      if (errorMessage.toLowerCase().includes('email') && errorMessage.toLowerCase().includes('registered')) {
+        setErrors(prev => ({
+          ...prev,
+          email: 'This email is already registered. Please use a different email or try logging in.'
+        }));
+      }
     } finally {
       setIsLoading(false);
     }

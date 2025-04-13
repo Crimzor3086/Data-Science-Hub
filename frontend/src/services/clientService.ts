@@ -11,8 +11,44 @@ import {
   BillingInfo,
   ActivityLog
 } from '../types/client';
+import axios, { AxiosError, AxiosInstance } from 'axios';
+import { NotFoundError, ValidationError, ApiError } from '@/lib/errors';
 
-class ClientService {
+// Define error types
+export class ClientServiceError extends Error {
+  constructor(message: string, public code?: string, public status?: number) {
+    super(message);
+    this.name = 'ClientServiceError';
+  }
+}
+
+export class NetworkError extends ClientServiceError {
+  constructor(message: string = 'Network error occurred') {
+    super(message, 'NETWORK_ERROR');
+    this.name = 'NetworkError';
+  }
+}
+
+export class AuthenticationError extends ClientServiceError {
+  constructor(message: string = 'Authentication failed') {
+    super(message, 'AUTH_ERROR', 401);
+    this.name = 'AuthenticationError';
+  }
+}
+
+export class AuthorizationError extends ClientServiceError {
+  constructor(message: string = 'You do not have permission to perform this action') {
+    super(message, 'FORBIDDEN', 403);
+    this.name = 'AuthorizationError';
+  }
+}
+
+interface ApiErrorResponse {
+  message: string;
+  errors?: Record<string, string[]>;
+}
+
+export class ClientService {
   private static instance: ClientService;
   private client: User | null = null;
   private projects: Project[] = [];
@@ -25,9 +61,17 @@ class ClientService {
   private reports: Report[] = [];
   private billingInfo: BillingInfo | null = null;
   private activityLogs: ActivityLog[] = [];
+  private readonly baseUrl: string;
+  private readonly api: AxiosInstance;
 
   private constructor() {
-    // Initialize with empty data
+    this.baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    this.api = axios.create({
+      baseURL: this.baseUrl,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   public static getInstance(): ClientService {
@@ -37,6 +81,24 @@ class ClientService {
     return ClientService.instance;
   }
 
+  private handleApiError(error: AxiosError<ApiErrorResponse>): never {
+    if (error.response) {
+      const { status, data } = error.response;
+      
+      if (status === 404) {
+        throw new NotFoundError(data.message || 'Resource not found');
+      }
+      
+      if (status === 422 && data.errors) {
+        throw new ValidationError(data.message || 'Validation failed', data.errors);
+      }
+      
+      throw new ApiError(data.message || 'An error occurred');
+    }
+    
+    throw new ApiError('Network error occurred');
+  }
+
   // Client Dashboard
   public async getDashboardData(): Promise<{
     ongoingProjects: Project[];
@@ -44,12 +106,20 @@ class ClientService {
     recentActivity: ActivityLog[];
     notifications: Message[];
   }> {
-    return {
-      ongoingProjects: this.projects.filter(p => p.status === 'in-progress'),
-      assignedStudents: this.students,
-      recentActivity: this.activityLogs.slice(0, 10),
-      notifications: this.messages.filter(m => m.isNotification && !m.isRead)
-    };
+    try {
+      // In a real app, this would be an API call
+      return {
+        ongoingProjects: this.projects.filter(p => p.status === 'in-progress'),
+        assignedStudents: this.students.slice(0, 5),
+        recentActivity: this.activityLogs.slice(0, 10),
+        notifications: this.messages.filter(m => !m.isRead)
+      };
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to fetch dashboard data');
+    }
   }
 
   // Profile Management
@@ -81,7 +151,15 @@ class ClientService {
 
   // Project / Dataset Access
   public async getDatasets(): Promise<Dataset[]> {
-    return this.datasets;
+    try {
+      // In a real app, this would be an API call
+      return this.datasets;
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to fetch datasets');
+    }
   }
 
   public async requestDataset(request: { name: string; description: string; purpose: string }): Promise<Dataset> {
@@ -123,12 +201,18 @@ class ClientService {
     return newDataset;
   }
 
-  public async downloadDataset(id: string): Promise<Blob> {
-    const dataset = this.datasets.find(d => d.id === id);
-    if (!dataset) throw new Error('Dataset not found');
-    
-    // In a real app, this would download the file from a server
-    return new Blob(['Mock dataset content'], { type: 'text/plain' });
+  public async downloadDataset(datasetId: string): Promise<Blob> {
+    try {
+      const response = await this.api.get(`/datasets/${datasetId}/download`, {
+        responseType: 'blob'
+      });
+      return response.data;
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to download dataset');
+    }
   }
 
   public async addDatasetFeedback(id: string, feedback: { comment: string; rating: number }): Promise<Dataset> {
@@ -148,7 +232,15 @@ class ClientService {
 
   // Student Monitoring
   public async getAssignedStudents(): Promise<Student[]> {
-    return this.students;
+    try {
+      // In a real app, this would be an API call
+      return this.students;
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to fetch assigned students');
+    }
   }
 
   public async getStudentProgress(studentId: string): Promise<{
@@ -188,7 +280,15 @@ class ClientService {
 
   // Course / Content Access
   public async getClientCourses(): Promise<Course[]> {
-    return this.courses;
+    try {
+      // In a real app, this would be an API call
+      return this.courses;
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to fetch client courses');
+    }
   }
 
   public async getCourseInsights(courseId: string): Promise<{
@@ -208,7 +308,12 @@ class ClientService {
 
   // Communication Tools
   public async getMessages(): Promise<Message[]> {
-    return this.messages;
+    try {
+      // In a real app, this would be an API call
+      return this.messages;
+    } catch (error) {
+      return this.handleApiError(error as AxiosError<ApiErrorResponse>);
+    }
   }
 
   public async sendMessage(message: { to: string; subject: string; content: string }): Promise<Message> {
@@ -236,7 +341,12 @@ class ClientService {
   }
 
   public async getAnnouncements(): Promise<Announcement[]> {
-    return this.announcements;
+    try {
+      // In a real app, this would be an API call
+      return this.announcements;
+    } catch (error) {
+      return this.handleApiError(error as AxiosError<ApiErrorResponse>);
+    }
   }
 
   // Request Services / Reports
@@ -262,7 +372,15 @@ class ClientService {
   }
 
   public async getReports(): Promise<Report[]> {
-    return this.reports;
+    try {
+      // In a real app, this would be an API call
+      return [];
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to fetch reports');
+    }
   }
 
   public async downloadReport(reportId: string): Promise<Blob> {
@@ -274,8 +392,13 @@ class ClientService {
   }
 
   // Billing & Subscription
-  public async getBillingInfo(): Promise<BillingInfo | null> {
-    return this.billingInfo;
+  public async getBillingInfo(): Promise<BillingInfo> {
+    try {
+      // In a real app, this would be an API call
+      return this.billingInfo;
+    } catch (error) {
+      return this.handleApiError(error as AxiosError<ApiErrorResponse>);
+    }
   }
 
   public async updateBillingInfo(info: Partial<BillingInfo>): Promise<BillingInfo | null> {
@@ -300,7 +423,12 @@ class ClientService {
 
   // Support & Help
   public async getSupportTickets(): Promise<SupportTicket[]> {
-    return this.tickets;
+    try {
+      // In a real app, this would be an API call
+      return this.tickets;
+    } catch (error) {
+      return this.handleApiError(error as AxiosError<ApiErrorResponse>);
+    }
   }
 
   public async createSupportTicket(ticket: { 
@@ -335,7 +463,54 @@ class ClientService {
 
   // Activity Logs
   public async getActivityLogs(): Promise<ActivityLog[]> {
-    return this.activityLogs;
+    try {
+      // In a real app, this would be an API call
+      return this.activityLogs;
+    } catch (error) {
+      return this.handleApiError(error as AxiosError<ApiErrorResponse>);
+    }
+  }
+
+  public async getAnalytics(): Promise<{
+    totalStudents: number;
+    activeProjects: number;
+    completedCourses: number;
+    averageProgress: number;
+  }> {
+    try {
+      // In a real app, this would be an API call
+      return {
+        totalStudents: this.students.length,
+        activeProjects: this.projects.filter(p => p.status === 'in-progress').length,
+        completedCourses: 0,
+        averageProgress: 0
+      };
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to fetch analytics');
+    }
+  }
+
+  public async generateReport(type: 'analytics' | 'performance' | 'usage' | 'custom'): Promise<Report> {
+    try {
+      return {
+        id: Math.random().toString(36).substr(2, 9),
+        title: `${type.charAt(0).toUpperCase() + type.slice(1)} Report`,
+        description: `Generated ${type} report`,
+        type,
+        format: 'pdf',
+        date: new Date(),
+        size: 0,
+        downloads: 0
+      };
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        this.handleApiError(error);
+      }
+      throw new ApiError('Failed to generate report');
+    }
   }
 }
 

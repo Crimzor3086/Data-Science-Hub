@@ -48,20 +48,39 @@ let systemSettings = {
 
 // Get system settings
 router.get('/settings', (_req, res) => {
-  res.json(systemSettings);
+  try {
+    res.json(systemSettings);
+  } catch (error) {
+    console.error('Error fetching system settings:', error);
+    res.status(500).json({ 
+      error: 'Failed to fetch system settings',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
+  }
 });
 
 // Update system settings
-router.patch('/settings', (req, res) => {
+router.put('/settings', async (req, res) => {
   try {
-    const updates = systemSettingsSchema.parse(req.body);
-    systemSettings = { ...systemSettings, ...updates };
-    return res.json(systemSettings);
+    const validatedSettings = systemSettingsSchema.parse(req.body);
+    systemSettings = { ...systemSettings, ...validatedSettings };
+    res.json({ message: 'Settings updated successfully', settings: systemSettings });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: 'Invalid settings format', details: error.errors });
+      res.status(400).json({ 
+        error: 'Invalid settings data',
+        details: error.errors.map(err => ({
+          path: err.path.join('.'),
+          message: err.message
+        }))
+      });
+    } else {
+      console.error('Error updating system settings:', error);
+      res.status(500).json({ 
+        error: 'Failed to update system settings',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      });
     }
-    return res.status(500).json({ error: 'Error updating system settings' });
   }
 });
 
@@ -245,6 +264,31 @@ router.get('/logs', (req, res) => {
     res.json(filteredLogs.slice(0, Number(limit)));
   } catch (error) {
     res.status(500).json({ error: 'Error fetching system logs' });
+  }
+});
+
+// Get user statistics
+router.get('/users/stats', async (_req, res) => {
+  try {
+    const stats = await User.aggregate([
+      {
+        $group: {
+          _id: '$role',
+          count: { $sum: 1 },
+          activeUsers: {
+            $sum: { $cond: [{ $eq: ['$status', 'active'] }, 1, 0] }
+          }
+        }
+      }
+    ]);
+    
+    res.json(stats);
+  } catch (error) {
+    console.error('Error fetching user statistics:', error);
+    res.status(500).json({ 
+      error: 'Failed to fetch user statistics',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 

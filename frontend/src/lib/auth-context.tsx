@@ -68,12 +68,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const response = await api.post('/auth/login', { email, password });
       const userData = response.data;
       
+      if (!userData.token || !userData.user) {
+        throw new Error('Invalid response from server');
+      }
+      
       localStorage.setItem('auth_token', userData.token);
       localStorage.setItem('user_data', JSON.stringify(userData.user));
       setUser(userData.user);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
-      throw err;
+      const errorMessage = err instanceof Error 
+        ? err.message 
+        : err.response?.data?.error || 'Login failed. Please try again.';
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -84,15 +91,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true);
       setError(null);
       
+      // Validate required fields
+      if (!data.email || !data.password || !data.name) {
+        throw new Error('All fields are required');
+      }
+      
+      // Validate email format
+      if (!/\S+@\S+\.\S+/.test(data.email)) {
+        throw new Error('Invalid email format');
+      }
+      
+      // Validate password strength
+      if (data.password.length < 6) {
+        throw new Error('Password must be at least 6 characters');
+      }
+      
       const response = await api.post('/auth/register', data);
       const userData = response.data;
+      
+      if (!userData.token || !userData.user) {
+        throw new Error('Invalid response from server');
+      }
       
       localStorage.setItem('auth_token', userData.token);
       localStorage.setItem('user_data', JSON.stringify(userData.user));
       setUser(userData.user);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registration failed');
-      throw err;
+      const errorMessage = err instanceof Error 
+        ? err.message 
+        : err.response?.data?.error || 'Registration failed. Please try again.';
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
