@@ -64,18 +64,18 @@ interface AdminSettings {
   };
 }
 
-// Create an axios instance with default config
+// Create axios instance with base URL from environment variables
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Add a request interceptor to add the auth token to requests
+// Add request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem(import.meta.env.VITE_AUTH_TOKEN_KEY);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -86,48 +86,15 @@ api.interceptors.request.use(
   }
 );
 
-// Add a response interceptor to handle common errors
+// Add response interceptor for error handling
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Handle different types of errors
-    if (error.response) {
-      // Server responded with error
-      const status = error.response.status;
-      const errorMessage = error.response.data?.error || error.response.data?.message || 'An error occurred';
-      
-      switch (status) {
-        case 400:
-          console.error('Bad Request:', errorMessage);
-          break;
-        case 401:
-          console.error('Unauthorized:', errorMessage);
-          localStorage.removeItem('auth_token');
-          localStorage.removeItem('user_data');
-          window.location.href = '/login';
-          break;
-        case 403:
-          console.error('Forbidden:', errorMessage);
-          break;
-        case 404:
-          console.error('Not Found:', errorMessage);
-          break;
-        case 500:
-          console.error('Server Error:', errorMessage);
-          break;
-        default:
-          console.error(`Error ${status}:`, errorMessage);
-      }
-    } else if (error.request) {
-      // Request made but no response
-      console.error('Network Error:', 'No response received from server');
-    } else {
-      // Error setting up request
-      console.error('Request Error:', error.message);
+    if (error.response?.status === 401) {
+      localStorage.removeItem(import.meta.env.VITE_AUTH_TOKEN_KEY);
+      localStorage.removeItem(import.meta.env.VITE_USER_DATA_KEY);
+      window.location.href = '/login';
     }
-    
     return Promise.reject(error);
   }
 );

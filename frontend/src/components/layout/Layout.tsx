@@ -1,21 +1,23 @@
-import React from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Navbar } from './Navbar';
+import { Footer } from './Footer';
+import { MobileMenu } from './MobileMenu';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+export const Layout = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <Navbar />
+    <div className="min-h-screen flex flex-col">
+      <Navbar onMenuClick={() => setIsMobileMenuOpen(true)} />
+      <MobileMenu 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+      />
       <main className="flex-grow">
-        {children}
+        <Outlet />
       </main>
       <Footer />
     </div>
   );
 };
-
-export default Layout;

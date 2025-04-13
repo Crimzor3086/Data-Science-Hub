@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Background } from '@/components/ui/background';
@@ -22,8 +23,17 @@ import {
   Settings,
   Target,
   Lightbulb,
-  Heart
+  Heart,
+  Menu,
+  X,
+  Home,
+  Info,
+  Mail,
+  Facebook,
+  Twitter,
+  Linkedin
 } from 'lucide-react';
+import { HealthCheck } from '@/components/HealthCheck';
 
 const features = [
   {
@@ -82,122 +92,253 @@ At Data Science Hub, we are more than just a service provider—we are your part
 };
 
 const Index = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    // Prevent body scrolling when menu is open
+    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
+  };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isMenuOpen && !target.closest('.mobile-menu') && !target.closest('.menu-button')) {
+        toggleMenu();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.body.style.overflow = 'auto';
+    };
+  }, [isMenuOpen]);
+
   return (
-    <Background 
-      image="/images/image (14).jpg"
-      overlayOpacity={0.85}
-    >
-      <Navbar />
-      <div className="container mx-auto py-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Main Title */}
-          <div className="text-center mb-8">
-            <h1 className="text-6xl font-extrabold text-primary mb-2">
-              Data Science Hub
-            </h1>
-            <div className="h-1 w-32 bg-primary mx-auto rounded-full"></div>
-          </div>
-          
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-primary mb-6">
-              Master Data Science with Expert Guidance
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-              Join thousands of learners worldwide in mastering data science, machine learning, and AI through our comprehensive courses and hands-on projects.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Link to="/courses">
-                  Explore Courses <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-primary/20 hover:border-primary/40">
-                <Link to="/about">
-                  Learn More
-                </Link>
-              </Button>
+    <div>
+      <HealthCheck />
+      <Background 
+        image="/images/image (14).jpg"
+        overlayOpacity={0.85}
+      >
+        <Navbar />
+        <div className="container mx-auto py-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Main Title */}
+            <div className="text-center mb-8">
+              <h1 className="text-6xl font-extrabold text-primary mb-2">
+                Data Science Hub
+              </h1>
+              <div className="h-1 w-32 bg-primary mx-auto rounded-full"></div>
             </div>
-          </div>
-
-          {/* Features Section */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-primary text-center mb-8">Why Choose Data Science Hub</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, index) => (
-                <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
-                  <CardHeader>
-                    <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
-                      {feature.icon}
-                    </div>
-                    <CardTitle>{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* Testimonials Section */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-primary text-center mb-8">What Our Students Say</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial, index) => (
-                <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
-                  <CardHeader>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full overflow-hidden">
-                        <img 
-                          src={testimonial.image} 
-                          alt={testimonial.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                        <CardDescription>{testimonial.role}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA Section */}
-          <div className="text-center">
-            <Card className="bg-white/95 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
-              <CardHeader>
-                <div className="bg-primary/10 text-primary p-3 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <Zap className="h-8 w-8" />
-                </div>
-                <CardTitle className="text-2xl">Ready to Start Your Data Science Journey?</CardTitle>
-                <CardDescription className="text-lg">
-                  Join our community of learners and take the first step towards a rewarding career in data science.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+            
+            {/* Hero Section */}
+            <div className="text-center mb-16">
+              <h2 className="text-5xl font-bold text-primary mb-6">
+                Master Data Science with Expert Guidance
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+                Join thousands of learners worldwide in mastering data science, machine learning, and AI through our comprehensive courses and hands-on projects.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                  <Link to="/signup">
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                  <Link to="/courses">
+                    Explore Courses <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-              </CardContent>
-            </Card>
+                <Button asChild variant="outline" size="lg" className="border-primary/20 hover:border-primary/40">
+                  <Link to="/about">
+                    Learn More
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Features Section */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-primary text-center mb-8">Why Choose Data Science Hub</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {features.map((feature, index) => (
+                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
+                    <CardHeader>
+                      <div className="bg-primary/10 text-primary p-2 rounded-lg w-fit">
+                        {feature.icon}
+                      </div>
+                      <CardTitle>{feature.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{feature.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Testimonials Section */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-primary text-center mb-8">What Our Students Say</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {testimonials.map((testimonial, index) => (
+                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
+                    <CardHeader>
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full overflow-hidden">
+                          <img 
+                            src={testimonial.image} 
+                            alt={testimonial.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg">{testimonial.name}</CardTitle>
+                          <CardDescription>{testimonial.role}</CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Section */}
+            <div className="text-center">
+              <Card className="bg-white/95 backdrop-blur-sm border-primary/20 max-w-3xl mx-auto">
+                <CardHeader>
+                  <div className="bg-primary/10 text-primary p-3 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <Zap className="h-8 w-8" />
+                  </div>
+                  <CardTitle className="text-2xl">Ready to Start Your Data Science Journey?</CardTitle>
+                  <CardDescription className="text-lg">
+                    Join our community of learners and take the first step towards a rewarding career in data science.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                    <Link to="/signup">
+                      Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </Background>
+      
+      {/* Mobile Menu Button */}
+      <div className="md:hidden fixed top-4 right-4 z-50 menu-button">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={toggleMenu} 
+          className="text-gray-600 hover:text-blue-600 bg-white/80 backdrop-blur-sm rounded-full shadow-lg"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </Button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ease-in-out z-40 mobile-menu ${
+          isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div 
+          className={`fixed right-0 top-0 h-full w-72 bg-white transform transition-transform duration-300 ease-in-out mobile-menu ${
+            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="p-6 h-full flex flex-col">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-xl font-bold text-primary">Menu</h2>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={toggleMenu}
+                className="text-gray-600 hover:text-blue-600"
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
+            
+            <nav className="flex-1 space-y-6">
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Main</h3>
+                <Link 
+                  to="/" 
+                  className="flex items-center py-2 text-gray-700 hover:text-blue-600 transition-colors" 
+                  onClick={toggleMenu}
+                >
+                  <Home className="h-5 w-5 mr-3" />
+                  Home
+                </Link>
+                <Link 
+                  to="/courses" 
+                  className="flex items-center py-2 text-gray-700 hover:text-blue-600 transition-colors" 
+                  onClick={toggleMenu}
+                >
+                  <BookOpen className="h-5 w-5 mr-3" />
+                  Courses
+                </Link>
+              </div>
+              
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">About</h3>
+                <Link 
+                  to="/about" 
+                  className="flex items-center py-2 text-gray-700 hover:text-blue-600 transition-colors" 
+                  onClick={toggleMenu}
+                >
+                  <Info className="h-5 w-5 mr-3" />
+                  About Us
+                </Link>
+                <Link 
+                  to="/team" 
+                  className="flex items-center py-2 text-gray-700 hover:text-blue-600 transition-colors" 
+                  onClick={toggleMenu}
+                >
+                  <Users className="h-5 w-5 mr-3" />
+                  Our Team
+                </Link>
+              </div>
+              
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Contact</h3>
+                <Link 
+                  to="/contact" 
+                  className="flex items-center py-2 text-gray-700 hover:text-blue-600 transition-colors" 
+                  onClick={toggleMenu}
+                >
+                  <Mail className="h-5 w-5 mr-3" />
+                  Contact Us
+                </Link>
+              </div>
+            </nav>
+            
+            <div className="mt-auto pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-center space-x-4">
+                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-blue-600">
+                  <Facebook className="h-5 w-5" />
+                </Button>
+                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-blue-600">
+                  <Twitter className="h-5 w-5" />
+                </Button>
+                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-blue-600">
+                  <Linkedin className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div className={`fixed inset-0 bg-black/50 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className={`fixed right-0 top-0 h-full w-64 bg-white transform transition-transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          {/* Mobile menu content */}
-        </div>
-      </div>
-    </Background>
+    </div>
   );
 };
 
