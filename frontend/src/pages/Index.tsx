@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -124,24 +123,24 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               {
-                name: "Dr. Sarah Johnson",
-                role: "Lead Data Scientist",
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+                name: "Ogechi Daniel Koel",
+                role: "Biostatistician",
+                image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2376&auto=format&fit=crop"
               },
               {
-                name: "Michael Chen",
-                role: "AI Research Lead",
-                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+                name: "Nobert Wafula",
+                role: "Data Analyst",
+                image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2574&auto=format&fit=crop"
               },
               {
-                name: "Priya Sharma",
-                role: "Machine Learning Engineer",
-                image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+                name: "Enock Bereka",
+                role: "Data Scientist",
+                image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2574&auto=format&fit=crop"
               },
               {
-                name: "Alex Rodriguez",
-                role: "Data Engineer",
-                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+                name: "Timothy Achala",
+                role: "AI Enthusiast & Computer Scientist",
+                image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop"
               }
             ].map((member, index) => (
               <Card key={index} className="bg-gray-700 border-gray-600">

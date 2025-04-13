@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -17,7 +16,7 @@ const blogPosts = [
     excerpt: "Discover the most powerful and efficient Python libraries that every data scientist should be using this year.",
     image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2669&auto=format&fit=crop",
     date: "May 15, 2024",
-    author: "Dr. Sarah Johnson",
+    author: "Ogechi Daniel Koel",
     readTime: "8 min read",
     category: "tutorials",
     tags: ["Python", "Libraries", "Tools"]
@@ -28,7 +27,7 @@ const blogPosts = [
     excerpt: "An in-depth look at how transformer models work and why they've revolutionized natural language processing and beyond.",
     image: "https://images.unsplash.com/photo-1677442135133-3be402e1b166?q=80&w=2532&auto=format&fit=crop",
     date: "May 8, 2024",
-    author: "James Rodriguez",
+    author: "Nobert Wafula",
     readTime: "12 min read",
     category: "deep-learning",
     tags: ["NLP", "Transformers", "Deep Learning"]
@@ -39,7 +38,7 @@ const blogPosts = [
     excerpt: "Exploring the ethical challenges that arise when developing and deploying artificial intelligence systems.",
     image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2665&auto=format&fit=crop",
     date: "April 27, 2024",
-    author: "Dr. Aisha Patel",
+    author: "Enock Bereka",
     readTime: "10 min read",
     category: "ai-ethics",
     tags: ["Ethics", "AI", "Responsible AI"]
@@ -50,7 +49,7 @@ const blogPosts = [
     excerpt: "Learn how to design and implement data pipelines that can handle growing volumes of data without performance degradation.",
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2668&auto=format&fit=crop",
     date: "April 18, 2024",
-    author: "Michael Chen",
+    author: "Timothy Achala",
     readTime: "15 min read",
     category: "data-engineering",
     tags: ["Data Engineering", "Scalability", "Big Data"]
@@ -61,7 +60,7 @@ const blogPosts = [
     excerpt: "A step-by-step guide to creating dashboards that drive business decisions through clear data visualization.",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop",
     date: "April 10, 2024",
-    author: "Robert Kim",
+    author: "Ogechi Daniel Koel",
     readTime: "7 min read",
     category: "data-visualization",
     tags: ["Visualization", "Dashboards", "Business Intelligence"]
@@ -72,7 +71,7 @@ const blogPosts = [
     excerpt: "How automated machine learning tools are making advanced AI capabilities accessible to non-specialists.",
     image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2670&auto=format&fit=crop",
     date: "April 3, 2024",
-    author: "Dr. Elena Gonzalez",
+    author: "Nobert Wafula",
     readTime: "9 min read",
     category: "machine-learning",
     tags: ["AutoML", "Machine Learning", "Accessibility"]

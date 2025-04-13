@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Linkedin, Twitter, Mail, BookOpen } from "lucide-react";
+import { Linkedin, Mail, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const experts = [
@@ -111,9 +111,6 @@ const TeamPage = () => {
                 <div className="flex space-x-4">
                   <a href={expert.linkedin} className="text-gray-400 hover:text-amber-500 transition-colors">
                     <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a href={expert.twitter} className="text-gray-400 hover:text-amber-500 transition-colors">
-                    <Twitter className="h-5 w-5" />
                   </a>
                   <a href={`mailto:${expert.email}`} className="text-gray-400 hover:text-amber-500 transition-colors">
                     <Mail className="h-5 w-5" />
