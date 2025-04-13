@@ -19,7 +19,7 @@ import {
   LineChart,
   PieChart
 } from "lucide-react";
-import Background from "@/components/layout/Background";
+import { Background } from "@/components/ui/background";
 
 // Mock data for courses progress
 const coursesProgress = [

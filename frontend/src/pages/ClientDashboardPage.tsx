@@ -6,7 +6,7 @@ import { ChevronRight, Plus, Upload, Send, Filter, RefreshCw, MoreVertical, Cale
 import clientService from '@/services/clientService';
 import { Project, Dataset, Student, Course, Message, Announcement, SupportTicket, Report, BillingInfo, ActivityLog } from '@/types/client';
 import { Search, Book, Star, Archive, Trash } from 'lucide-react';
-import Background from '@/components/layout/Background';
+import { Background } from '@/components/ui/background';
 
 const ClientDashboardPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');

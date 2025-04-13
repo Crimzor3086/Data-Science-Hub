@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users, Search, Plus, MoreVertical, UserPlus, Filter, X } from "lucide-react";
+import { Users, Search, Plus, MoreVertical, UserPlus, Filter, X, User } from "lucide-react";
 import { useUsers } from "@/hooks/useApi";
 import { UserRole } from "@/lib/roles";
 import { Background } from "@/components/ui/background";
