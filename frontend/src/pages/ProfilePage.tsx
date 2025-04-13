@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../lib/auth-context';
 import { UserRole } from '../lib/roles';
-import { Card } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Input } from '../components/ui/input';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { Avatar, AvatarImage, AvatarFallback } from '../components/ui/avatar';
-import { Badge } from '../components/ui/badge';
-import { Loader2, Camera, Star, Award, BookOpen, Briefcase } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Loader2, Camera, Star, Award, BookOpen, Briefcase, Edit, Save } from 'lucide-react';
+import { Background } from '@/components/ui/background';
+import { Progress } from '@/components/ui/progress';
 
 interface ProfileData {
   id: string;
@@ -41,6 +43,7 @@ const ProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('profile');
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     // TODO: Fetch profile data from API
@@ -126,132 +129,211 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Profile Sidebar */}
-        <div className="md:col-span-1">
-          <Card className="p-6">
-            <div className="flex flex-col items-center">
-              <div className="relative">
-                <Avatar className="w-32 h-32">
-                  <AvatarImage src={profile.avatar} />
-                  <AvatarFallback>{profile.name[0]}</AvatarFallback>
-                </Avatar>
-                <label className="absolute bottom-0 right-0 p-2 bg-blue-500 rounded-full cursor-pointer">
-                  <Camera className="w-4 h-4 text-white" />
-                  <input
-                    type="file"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                  />
-                </label>
-              </div>
-              <h2 className="mt-4 text-2xl font-bold">{profile.name}</h2>
-              <p className="text-gray-500">{profile.email}</p>
-              <Badge className="mt-2" variant="secondary">
-                {profile.role}
-              </Badge>
-              <Textarea
-                className="mt-4"
-                placeholder="Write a short bio..."
-                value={profile.bio}
-                onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-              />
+    <Background 
+      image="/images/image (2).jpg"
+      overlayOpacity={0.8}
+    >
+      <div className="container mx-auto py-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Profile Sidebar */}
+            <div className="w-full md:w-1/3">
+              <Card className="bg-white/90 backdrop-blur-sm">
+                <CardHeader className="text-center">
+                  <div className="relative mx-auto w-32 h-32 mb-4">
+                    <Avatar className="w-full h-full">
+                      <AvatarImage src={profile.avatar} alt={profile.name} />
+                      <AvatarFallback>{profile.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                    </Avatar>
+                    {isEditing && (
+                      <Button 
+                        size="icon" 
+                        variant="outline" 
+                        className="absolute bottom-0 right-0 rounded-full bg-white"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                  <CardTitle className="text-2xl">{profile.name}</CardTitle>
+                  <CardDescription>{profile.role}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">{profile.email}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">{profile.phone}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">{profile.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Joined {profile.joinDate}</span>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-center">
+                  <Button 
+                    variant={isEditing ? "default" : "outline"}
+                    onClick={() => setIsEditing(!isEditing)}
+                  >
+                    {isEditing ? (
+                      <>
+                        <Save className="h-4 w-4 mr-2" />
+                        Save Changes
+                      </>
+                    ) : (
+                      <>
+                        <Edit className="h-4 w-4 mr-2" />
+                        Edit Profile
+                      </>
+                    )}
+                  </Button>
+                </CardFooter>
+              </Card>
             </div>
-          </Card>
 
-          <Card className="mt-6 p-6">
-            <h3 className="text-lg font-semibold mb-4">Skills</h3>
-            <div className="flex flex-wrap gap-2">
-              {profile.skills.map((skill) => (
-                <Badge
-                  key={skill}
-                  className="flex items-center gap-1 cursor-pointer"
-                  onClick={() => handleEndorseSkill(skill)}
-                >
-                  {skill}
-                  <Star className="w-3 h-3" />
-                  <span>{profile.endorsements[skill] || 0}</span>
-                </Badge>
-              ))}
+            {/* Profile Content */}
+            <div className="w-full md:w-2/3">
+              <Card className="bg-white/90 backdrop-blur-sm">
+                <CardHeader>
+                  <Tabs value={activeTab} onValueChange={setActiveTab}>
+                    <TabsList className="grid grid-cols-4">
+                      <TabsTrigger value="overview">Overview</TabsTrigger>
+                      <TabsTrigger value="education">Education</TabsTrigger>
+                      <TabsTrigger value="experience">Experience</TabsTrigger>
+                      <TabsTrigger value="projects">Projects</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </CardHeader>
+                <CardContent>
+                  <TabsContent value="overview">
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-medium mb-2">About</h3>
+                        <p className="text-sm text-muted-foreground">{profile.bio}</p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-2">Skills</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {profile.skills.map((skill) => (
+                            <Badge key={skill} variant="outline">
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-2">Certifications</h3>
+                        <div className="space-y-4">
+                          {profile.certifications.map((cert) => (
+                            <div key={cert.name} className="flex items-start gap-4">
+                              <Award className="h-5 w-5 text-primary mt-0.5" />
+                              <div>
+                                <p className="font-medium">{cert.name}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {cert.issuer} • {cert.year}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium mb-2">Current Courses</h3>
+                        <div className="space-y-4">
+                          {profile.courses.map((course) => (
+                            <div key={course.title}>
+                              <div className="flex justify-between text-sm mb-1">
+                                <span>{course.title}</span>
+                                <span className="text-muted-foreground">{course.progress}%</span>
+                              </div>
+                              <Progress value={course.progress} className="h-2" />
+                              <p className="text-xs text-muted-foreground mt-1">
+                                Last accessed {course.lastAccessed}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="education">
+                    <div className="space-y-6">
+                      {profile.education?.map((edu) => (
+                        <div key={edu.degree} className="flex items-start gap-4">
+                          <BookOpen className="h-5 w-5 text-primary mt-0.5" />
+                          <div>
+                            <p className="font-medium">{edu.degree}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {edu.institution} • {edu.year}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="experience">
+                    <div className="space-y-6">
+                      {profile.experience?.map((exp) => (
+                        <div key={exp.position} className="flex items-start gap-4">
+                          <Briefcase className="h-5 w-5 text-primary mt-0.5" />
+                          <div>
+                            <p className="font-medium">{exp.position}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {exp.company} • {exp.duration}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="projects">
+                    <div className="space-y-6">
+                      {profile.projects?.map((project) => (
+                        <div key={project.title} className="flex items-start gap-4">
+                          <Code className="h-5 w-5 text-primary mt-0.5" />
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium">{project.title}</p>
+                              <Badge variant="outline" className={
+                                project.status === 'Completed' ? 'bg-green-100 text-green-800 border-green-200' : 
+                                'bg-blue-100 text-blue-800 border-blue-200'
+                              }>
+                                {project.status}
+                              </Badge>
+                            </div>
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {project.technologies.map((tech) => (
+                                <Badge key={tech} variant="outline" className="bg-primary/5">
+                                  {tech}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </TabsContent>
+                </CardContent>
+              </Card>
             </div>
-          </Card>
-        </div>
-
-        {/* Main Content */}
-        <div className="md:col-span-2">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="profile">Profile</TabsTrigger>
-              <TabsTrigger value="education">Education</TabsTrigger>
-              <TabsTrigger value="experience">Experience</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="profile">
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4">Projects</h3>
-                <div className="space-y-4">
-                  {profile.projects?.map((project, index) => (
-                    <Card key={index} className="p-4">
-                      <h4 className="font-medium">{project.title}</h4>
-                      <p className="text-gray-600 mt-2">{project.description}</p>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {project.technologies.map((tech) => (
-                          <Badge key={tech} variant="outline">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="education">
-              <Card className="p-6">
-                <div className="space-y-4">
-                  {profile.education?.map((edu, index) => (
-                    <Card key={index} className="p-4">
-                      <div className="flex items-center gap-2">
-                        <BookOpen className="w-5 h-5 text-blue-500" />
-                        <h4 className="font-medium">{edu.institution}</h4>
-                      </div>
-                      <p className="text-gray-600 mt-2">{edu.degree}</p>
-                      <p className="text-sm text-gray-500">{edu.year}</p>
-                    </Card>
-                  ))}
-                </div>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="experience">
-              <Card className="p-6">
-                <div className="space-y-4">
-                  {profile.experience?.map((exp, index) => (
-                    <Card key={index} className="p-4">
-                      <div className="flex items-center gap-2">
-                        <Briefcase className="w-5 h-5 text-blue-500" />
-                        <h4 className="font-medium">{exp.company}</h4>
-                      </div>
-                      <p className="text-gray-600 mt-2">{exp.position}</p>
-                      <p className="text-sm text-gray-500">{exp.duration}</p>
-                    </Card>
-                  ))}
-                </div>
-              </Card>
-            </TabsContent>
-          </Tabs>
-
-          <div className="mt-6 flex justify-end">
-            <Button onClick={handleSaveProfile}>
-              Save Changes
-            </Button>
           </div>
         </div>
       </div>
-    </div>
+    </Background>
   );
 };
 

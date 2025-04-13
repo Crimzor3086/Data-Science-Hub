@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/components/ui/use-toast';
 import { Search, Loader2 } from 'lucide-react';
 import { searchService, type SearchResult } from '@/services/search';
+import { Background } from '@/components/ui/background';
 
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -68,81 +69,87 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">Search</h1>
-        
-        <div className="flex gap-2 mb-6">
-          <Input
-            type="text"
-            placeholder="Search courses, projects, blogs..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch(1)}
-            className="flex-1"
-          />
-          <Button onClick={() => handleSearch(1)} disabled={loading}>
-            {loading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Search className="h-4 w-4" />
-            )}
-            <span className="ml-2">Search</span>
-          </Button>
-        </div>
-
-        {results.length > 0 && (
-          <Tabs value={activeTab} onValueChange={handleTabChange}>
-            <TabsList className="mb-4">
-              <TabsTrigger value="all">All</TabsTrigger>
-              <TabsTrigger value="course">Courses</TabsTrigger>
-              <TabsTrigger value="project">Projects</TabsTrigger>
-              <TabsTrigger value="blog">Blog</TabsTrigger>
-              <TabsTrigger value="service">Services</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value={activeTab}>
-              <div className="space-y-4">
-                {results.map((result) => (
-                  <Card key={result.id}>
-                    <CardHeader>
-                      <CardTitle>{result.title}</CardTitle>
-                      <CardDescription>{result.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <Button variant="link" asChild>
-                        <a href={result.url}>View details</a>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              {total > results.length && (
-                <div className="mt-6 text-center">
-                  <Button
-                    variant="outline"
-                    onClick={handleLoadMore}
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    ) : null}
-                    Load More
-                  </Button>
-                </div>
+    <Background 
+      image="/images/image (11).jpg"
+      overlayOpacity={0.8}
+    >
+      <div className="container mx-auto py-8">
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-3xl font-bold mb-6 text-white">Search</h1>
+          
+          <div className="flex gap-2 mb-6">
+            <Input
+              type="text"
+              placeholder="Search courses, projects, blogs..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch(1)}
+              className="flex-1 bg-white/90 backdrop-blur-sm"
+            />
+            <Button onClick={() => handleSearch(1)} disabled={loading}>
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Search className="h-4 w-4" />
               )}
-            </TabsContent>
-          </Tabs>
-        )}
-
-        {!loading && query && results.length === 0 && (
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">No results found for "{query}"</p>
+              <span className="ml-2">Search</span>
+            </Button>
           </div>
-        )}
+
+          {results.length > 0 && (
+            <Tabs value={activeTab} onValueChange={handleTabChange}>
+              <TabsList className="mb-4 bg-white/90 backdrop-blur-sm">
+                <TabsTrigger value="all">All</TabsTrigger>
+                <TabsTrigger value="course">Courses</TabsTrigger>
+                <TabsTrigger value="project">Projects</TabsTrigger>
+                <TabsTrigger value="blog">Blog</TabsTrigger>
+                <TabsTrigger value="service">Services</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value={activeTab}>
+                <div className="space-y-4">
+                  {results.map((result) => (
+                    <Card key={result.id} className="bg-white/90 backdrop-blur-sm">
+                      <CardHeader>
+                        <CardTitle>{result.title}</CardTitle>
+                        <CardDescription>{result.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <Button variant="link" asChild>
+                          <a href={result.url}>View details</a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                {total > results.length && (
+                  <div className="mt-6 text-center">
+                    <Button
+                      variant="outline"
+                      onClick={handleLoadMore}
+                      disabled={loading}
+                      className="bg-white/90 backdrop-blur-sm"
+                    >
+                      {loading ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : null}
+                      Load More
+                    </Button>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
+          )}
+
+          {!loading && query && results.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-white/90">No results found for "{query}"</p>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </Background>
   );
 };
 
