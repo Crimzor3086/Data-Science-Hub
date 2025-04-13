@@ -10,7 +10,7 @@ interface TeamMember {
   role: string;
   bio: string;
   image: string;
-  social: {
+  social?: {
     github?: string;
     linkedin?: string;
     twitter?: string;
@@ -19,44 +19,28 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: "Sarah Chen",
-    role: "Founder & CEO",
-    bio: "Former Data Science Lead at Google, with 15+ years of experience in machine learning and AI.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2574&auto=format&fit=crop",
-    social: {
-      linkedin: "https://linkedin.com/in/sarahchen",
-      twitter: "https://twitter.com/sarahchen"
-    }
+    name: "Ogechi Daniel Koel",
+    role: "Biostatistician",
+    bio: "Expert in biostatistics with extensive experience in healthcare data analysis and research methodology.",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2376&auto=format&fit=crop"
   },
   {
-    name: "Michael Rodriguez",
-    role: "Head of Education",
-    bio: "PhD in Computer Science, specializing in educational technology and curriculum development.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2574&auto=format&fit=crop",
-    social: {
-      github: "https://github.com/michaelrodriguez",
-      linkedin: "https://linkedin.com/in/michaelrodriguez"
-    }
+    name: "Nobert Wafula",
+    role: "Data Analyst",
+    bio: "Specialized in data analysis and visualization, with a focus on transforming complex data into actionable insights.",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2574&auto=format&fit=crop"
   },
   {
-    name: "Priya Patel",
-    role: "Lead Data Scientist",
-    bio: "Expert in natural language processing and computer vision, with multiple research publications.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2574&auto=format&fit=crop",
-    social: {
-      github: "https://github.com/priyapatel",
-      linkedin: "https://linkedin.com/in/priyapatel"
-    }
+    name: "Enock Bereka",
+    role: "Data Scientist",
+    bio: "Experienced in machine learning and predictive modeling, with a track record of developing innovative data science solutions.",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=2574&auto=format&fit=crop"
   },
   {
-    name: "James Wilson",
-    role: "Technical Lead",
-    bio: "Full-stack developer with expertise in scalable architecture and cloud technologies.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2574&auto=format&fit=crop",
-    social: {
-      github: "https://github.com/jameswilson",
-      linkedin: "https://linkedin.com/in/jameswilson"
-    }
+    name: "Timothy Achala",
+    role: "AI Enthusiast & Computer Scientist",
+    bio: "Passionate about artificial intelligence and computer science, with expertise in deep learning and neural networks.",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop"
   }
 ];
 
@@ -71,10 +55,10 @@ const TeamsPage = () => {
       
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-bold text-primary mb-6">Leadership Team</h2>
+          <h2 className="text-3xl font-bold text-primary mb-6">Our Expert Team</h2>
           <p className="text-muted-foreground">
-            Our diverse team brings together expertise from academia, industry, and technology to create 
-            an exceptional learning experience for our students.
+            Our diverse team brings together expertise from various fields of data science, 
+            creating an exceptional learning experience for our students.
           </p>
         </div>
 
@@ -94,26 +78,28 @@ const TeamsPage = () => {
                     <h3 className="text-xl font-bold text-primary mb-1">{member.name}</h3>
                     <p className="text-sm text-muted-foreground mb-3">{member.role}</p>
                     <p className="text-muted-foreground mb-4">{member.bio}</p>
-                    <div className="flex gap-3">
-                      {member.social.github && (
-                        <a href={member.social.github} target="_blank" rel="noopener noreferrer" 
-                           className="text-muted-foreground hover:text-primary">
-                          <Github className="h-5 w-5" />
-                        </a>
-                      )}
-                      {member.social.linkedin && (
-                        <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer"
-                           className="text-muted-foreground hover:text-primary">
-                          <Linkedin className="h-5 w-5" />
-                        </a>
-                      )}
-                      {member.social.twitter && (
-                        <a href={member.social.twitter} target="_blank" rel="noopener noreferrer"
-                           className="text-muted-foreground hover:text-primary">
-                          <Twitter className="h-5 w-5" />
-                        </a>
-                      )}
-                    </div>
+                    {member.social && (
+                      <div className="flex gap-3">
+                        {member.social.github && (
+                          <a href={member.social.github} target="_blank" rel="noopener noreferrer" 
+                             className="text-muted-foreground hover:text-primary">
+                            <Github className="h-5 w-5" />
+                          </a>
+                        )}
+                        {member.social.linkedin && (
+                          <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer"
+                             className="text-muted-foreground hover:text-primary">
+                            <Linkedin className="h-5 w-5" />
+                          </a>
+                        )}
+                        {member.social.twitter && (
+                          <a href={member.social.twitter} target="_blank" rel="noopener noreferrer"
+                             className="text-muted-foreground hover:text-primary">
+                            <Twitter className="h-5 w-5" />
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
