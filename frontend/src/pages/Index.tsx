@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Background } from '@/components/ui/background';
 import { Link } from 'react-router-dom';
+import Navbar from '@/components/layout/Navbar';
 import { 
   ArrowRight, 
   BookOpen, 
@@ -86,6 +87,7 @@ const Index = () => {
       image="/images/image (14).jpg"
       overlayOpacity={0.85}
     >
+      <Navbar />
       <div className="container mx-auto py-8">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
