@@ -171,26 +171,38 @@ const AboutPage = () => {
               <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Team</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {teamMembers.map((member) => (
-                  <Card key={member.name} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
-                    <CardHeader>
-                      <div className="aspect-square relative overflow-hidden rounded-lg mb-4">
+                  <Card key={member.name} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors group">
+                    <CardHeader className="p-0">
+                      <div className="aspect-square relative overflow-hidden rounded-t-lg">
                         <img 
                           src={member.image} 
                           alt={member.name}
-                          className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                          className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                          <p className="text-white/90">{member.role}</p>
+                        </div>
                       </div>
-                      <CardTitle>{member.name}</CardTitle>
-                      <CardDescription>{member.role}</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pt-6">
                       <p className="text-muted-foreground mb-4">{member.bio}</p>
                       <div className="flex gap-4">
-                        <a href={`mailto:${member.email}`} className="text-primary hover:text-primary/80">
+                        <a 
+                          href={`mailto:${member.email}`} 
+                          className="text-primary hover:text-primary/80 transition-colors"
+                          aria-label={`Email ${member.name}`}
+                        >
                           <Mail className="h-5 w-5" />
                         </a>
-                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80">
+                        <a 
+                          href={member.linkedin} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-primary hover:text-primary/80 transition-colors"
+                          aria-label={`${member.name}'s LinkedIn profile`}
+                        >
                           <Linkedin className="h-5 w-5" />
                         </a>
                       </div>
