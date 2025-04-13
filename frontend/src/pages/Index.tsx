@@ -10,39 +10,40 @@ import {
   FileText, 
   LineChart, 
   Users, 
-  Zap
+  Zap,
+  Award,
+  Star,
+  BarChart2,
+  Brain,
+  Globe,
+  GraduationCap,
+  PieChart,
+  Settings,
+  Target,
+  Lightbulb,
+  Heart
 } from 'lucide-react';
 
 const features = [
   {
     icon: <BookOpen className="h-6 w-6" />,
-    title: 'Comprehensive Courses',
-    description: 'Learn from industry experts with our structured curriculum'
-  },
-  {
-    icon: <Code className="h-6 w-6" />,
-    title: 'Hands-on Projects',
-    description: 'Apply your knowledge with real-world data science projects'
-  },
-  {
-    icon: <Database className="h-6 w-6" />,
-    title: 'Data Resources',
-    description: 'Access to premium datasets and computing resources'
+    title: "Comprehensive Courses",
+    description: "Access a wide range of data science courses taught by industry experts."
   },
   {
     icon: <Users className="h-6 w-6" />,
-    title: 'Expert Community',
-    description: 'Connect with fellow data scientists and mentors'
+    title: "Expert Instructors",
+    description: "Learn from experienced professionals in the field of data science."
   },
   {
-    icon: <LineChart className="h-6 w-6" />,
-    title: 'Career Support',
-    description: 'Get guidance on job search and career advancement'
+    icon: <Award className="h-6 w-6" />,
+    title: "Certification",
+    description: "Earn recognized certifications to boost your career prospects."
   },
   {
-    icon: <FileText className="h-6 w-6" />,
-    title: 'Certification',
-    description: 'Earn recognized certifications in data science'
+    icon: <Star className="h-6 w-6" />,
+    title: "Quality Education",
+    description: "Get high-quality education with practical, hands-on experience."
   }
 ];
 
