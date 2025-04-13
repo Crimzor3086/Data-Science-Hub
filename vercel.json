@@ -1,18 +1,26 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend && npm install --no-audit --prefer-offline || (sleep 5 && npm install --no-audit --prefer-offline) || (sleep 10 && npm install --no-audit --prefer-offline) && npm run build",
-  "outputDirectory": "frontend/dist",
-  "routes": [
+  "builds": [
     {
-      "handle": "filesystem"
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
+      "src": "api/**/*.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/$1.py"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "frontend/dist/$1"
     }
   ]
 } 
