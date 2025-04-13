@@ -11,7 +11,7 @@ const SignUpPage = () => {
 
   return (
     <Background 
-      image="/images/image (8).jpg"
+      image="/images/image (6).jpg"
       overlayOpacity={0.85}
     >
       <div className="container relative h-screen flex items-center justify-center py-8">

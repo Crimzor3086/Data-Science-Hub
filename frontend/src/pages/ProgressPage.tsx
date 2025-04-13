@@ -19,6 +19,7 @@ import {
   LineChart,
   PieChart
 } from "lucide-react";
+import Background from "@/components/layout/Background";
 
 // Mock data for courses progress
 const coursesProgress = [
@@ -115,11 +116,15 @@ const ProgressPage = () => {
 
   return (
     <Layout>
-      <PageHeader 
-        title="Learning Progress" 
-        subtitle="Track your learning journey and achievements"
-        backgroundImage="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2670&auto=format&fit=crop"
-      />
+      <Background
+        image="/images/image (12).jpg"
+        overlayOpacity={0.85}
+      >
+        <PageHeader 
+          title="Learning Progress" 
+          subtitle="Track your learning journey and achievements"
+        />
+      </Background>
       
       <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">

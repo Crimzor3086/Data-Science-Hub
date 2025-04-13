@@ -101,7 +101,7 @@ const AnalyticsPage = () => {
 
   return (
     <Background 
-      image="/images/image (19).jpg"
+      image="/images/image (8).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

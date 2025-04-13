@@ -84,7 +84,7 @@ const AdminPage = () => {
 
   return (
     <Background 
-      image="/images/image (40).jpg"
+      image="/images/image (3).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

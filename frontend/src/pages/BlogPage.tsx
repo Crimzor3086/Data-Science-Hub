@@ -108,7 +108,7 @@ const BlogPage = () => {
   
   return (
     <Background 
-      image="/images/image (5).jpg"
+      image="/images/image (10).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

@@ -139,7 +139,7 @@ const TeamsPage = () => {
 
   return (
     <Background 
-      image="/images/image (16).jpg"
+      image="/images/image (4).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">

@@ -65,7 +65,7 @@ const UsersPage = () => {
 
   return (
     <Background 
-      image="/images/image (32).jpg"
+      image="/images/image (5).jpg"
       overlayOpacity={0.85}
     >
       <div className="container mx-auto py-8">
