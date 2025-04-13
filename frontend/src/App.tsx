@@ -23,6 +23,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import ReportsPage from "./pages/ReportsPage";
 import AssignmentsPage from "./pages/AssignmentsPage";
 import ProgressPage from "./pages/ProgressPage";
+import SignUpPage from './pages/SignUpPage';
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,7 @@ const App = () => (
             <Route path="/reports" element={<ReportsPage />} />
             <Route path="/assignments" element={<AssignmentsPage />} />
             <Route path="/progress" element={<ProgressPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
             {/* Admin Routes */}
             <Route 
               path="/admin" 

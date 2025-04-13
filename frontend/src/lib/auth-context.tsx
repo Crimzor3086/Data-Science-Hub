@@ -11,10 +11,21 @@ export interface User {
   avatar?: string;
 }
 
+interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
+  role: 'student' | 'client';
+  company?: string;
+  position?: string;
+  phone?: string;
+}
+
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
+  register: (data: RegisterData) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
   error: string | null;
@@ -54,43 +65,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true);
       setError(null);
       
-      // In a real app, this would be an API call
-      // For demo, we'll simulate a login with mock data
-      const mockUsers = {
-        'admin@example.com': {
-          id: '1',
-          name: 'Admin User',
-          email: 'admin@example.com',
-          role: UserRole.ADMIN,
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin'
-        },
-        'client@example.com': {
-          id: '2',
-          name: 'Client User',
-          email: 'client@example.com',
-          role: UserRole.CLIENT,
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=client'
-        },
-        'student@example.com': {
-          id: '3',
-          name: 'Student User',
-          email: 'student@example.com',
-          role: UserRole.STUDENT,
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=student'
-        }
-      };
-
-      const userData = mockUsers[email as keyof typeof mockUsers];
+      const response = await api.post('/auth/login', { email, password });
+      const userData = response.data;
       
-      if (userData && password === 'password') {
-        localStorage.setItem('auth_token', 'mock_token');
-        localStorage.setItem('user_data', JSON.stringify(userData));
-        setUser(userData);
-      } else {
-        throw new Error('Invalid credentials');
-      }
+      localStorage.setItem('auth_token', userData.token);
+      localStorage.setItem('user_data', JSON.stringify(userData.user));
+      setUser(userData.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const register = async (data: RegisterData) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const response = await api.post('/auth/register', data);
+      const userData = response.data;
+      
+      localStorage.setItem('auth_token', userData.token);
+      localStorage.setItem('user_data', JSON.stringify(userData.user));
+      setUser(userData.user);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Registration failed');
       throw err;
     } finally {
       setIsLoading(false);
@@ -104,7 +105,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout, isLoading, error }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, register, logout, isLoading, error }}>
       {children}
     </AuthContext.Provider>
   );

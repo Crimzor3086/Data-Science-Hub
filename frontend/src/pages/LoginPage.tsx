@@ -67,25 +67,12 @@ const LoginPage = () => {
                 className="border-blue-200 focus:border-blue-500"
               />
             </div>
-            <div className="text-sm text-gray-500">
-              <p>Demo accounts:</p>
-              <ul className="list-disc list-inside mt-1">
-                <li>Admin: admin@example.com</li>
-                <li>Client: client@example.com</li>
-                <li>Student: student@example.com</li>
-              </ul>
-              <p className="mt-1">Password for all accounts: password</p>
-            </div>
           </CardContent>
-          <CardFooter>
-            <Button 
-              type="submit" 
-              className="w-full bg-sky-500 hover:bg-sky-600 text-white"
-              disabled={isLoading}
-            >
+          <div className="mt-6">
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? 'Signing in...' : 'Sign in'}
             </Button>
-          </CardFooter>
+          </div>
         </form>
       </Card>
     </div>
