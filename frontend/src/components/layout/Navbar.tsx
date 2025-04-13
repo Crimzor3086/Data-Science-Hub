@@ -4,9 +4,11 @@ import { Search, Menu, X, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { UserRole } from "@/lib/roles";
+import { Input } from "@/components/ui/input";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { isAuthenticated, user, logout } = useAuth();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -14,6 +16,12 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
     setIsMenuOpen(false);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement search functionality
+    console.log("Searching for:", searchQuery);
   };
 
   const getRoleSpecificLinks = () => {
@@ -72,9 +80,18 @@ const Navbar = () => {
           <Link to="/team" className="hover:text-blue-600 transition-colors">
             Our Team
           </Link>
-          <Button variant="ghost" size="icon" className="text-gray-600 hover:text-blue-600">
-            <Search className="h-5 w-5" />
-          </Button>
+          <form onSubmit={handleSearch} className="flex items-center">
+            <Input
+              type="search"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-64"
+            />
+            <Button type="submit" variant="ghost" size="icon" className="ml-2">
+              <Search className="h-5 w-5" />
+            </Button>
+          </form>
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
               <Link to="/profile">
@@ -93,11 +110,18 @@ const Navbar = () => {
               </Button>
             </div>
           ) : (
-            <Link to="/login">
-              <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
-                Login
-              </Button>
-            </Link>
+            <div className="flex items-center space-x-4">
+              <Link to="/login">
+                <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button className="bg-blue-600 text-white hover:bg-blue-700">
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
           )}
         </nav>
 
@@ -113,6 +137,20 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="container mx-auto px-4 py-2">
+            <form onSubmit={handleSearch} className="mb-4">
+              <div className="flex items-center">
+                <Input
+                  type="search"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full"
+                />
+                <Button type="submit" variant="ghost" size="icon" className="ml-2">
+                  <Search className="h-5 w-5" />
+                </Button>
+              </div>
+            </form>
             <div className="flex flex-col space-y-3 py-3">
               <Link to="/" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
                 Home
@@ -146,9 +184,14 @@ const Navbar = () => {
                   </button>
                 </>
               ) : (
-                <Link to="/login" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
-                  Login
-                </Link>
+                <>
+                  <Link to="/login" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
+                    Login
+                  </Link>
+                  <Link to="/signup" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
+                    Sign Up
+                  </Link>
+                </>
               )}
             </div>
           </div>
