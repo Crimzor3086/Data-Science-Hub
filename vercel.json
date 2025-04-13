@@ -5,22 +5,22 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "buildCommand": "npm run build"
       }
     },
     {
-      "src": "api/*.py",
-      "use": "@vercel/python"
+      "src": "backend/src/routes/*.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
+      }
     }
   ],
   "routes": [
     {
-      "src": "/api/auth/(.*)",
-      "dest": "/api/auth.py"
-    },
-    {
       "src": "/api/(.*)",
-      "dest": "/api/$1.py"
+      "dest": "backend/src/routes/$1.py"
     },
     {
       "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|webp|woff|woff2|ttf|eot))",
@@ -32,6 +32,8 @@
     }
   ],
   "env": {
-    "JWT_SECRET": "@jwt_secret"
+    "JWT_SECRET": "@jwt_secret",
+    "DATABASE_URL": "@database_url",
+    "NODE_ENV": "production"
   }
 } 
