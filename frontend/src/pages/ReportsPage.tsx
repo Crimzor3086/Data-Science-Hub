@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Layout from "@/components/layout/Layout";
+import { Layout } from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -80,7 +80,7 @@ const reports = [
   }
 ];
 
-const ReportsPage = () => {
+export const ReportsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("All");
 

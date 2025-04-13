@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { MobileMenu } from './MobileMenu';
 
-export const Layout = () => {
+interface LayoutProps {
+  children?: ReactNode;
+}
+
+export const Layout = ({ children }: LayoutProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleMenuClick = () => {
@@ -23,7 +27,7 @@ export const Layout = () => {
         onClose={handleMenuClose} 
       />
       <main className="flex-grow">
-        <Outlet />
+        {children || <Outlet />}
       </main>
       <Footer />
     </div>

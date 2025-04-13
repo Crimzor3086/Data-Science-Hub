@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Background } from '@/components/ui/background';
-import Layout from "@/components/layout/Layout";
+import { Layout } from "@/components/layout/Layout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Mail, Linkedin } from 'lucide-react';
 
@@ -39,20 +39,20 @@ const teamMembers = [
   }
 ];
 
-const TeamPage = () => {
+export const TeamPage = () => {
   return (
-    <Background 
-      image="/images/image (13).jpg"
-      overlayOpacity={0.85}
-    >
-      <Layout>
-        <PageHeader 
-          title="Our Team" 
-          subtitle="Meet the experts behind our data science solutions"
-          backgroundImage="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2670&auto=format&fit=crop"
-        />
-        
-        <div className="container mx-auto py-8">
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <Background 
+          image="/images/image (13).jpg"
+          overlayOpacity={0.85}
+        >
+          <PageHeader 
+            title="Our Team" 
+            subtitle="Meet the experts behind our data science solutions"
+            backgroundImage="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2670&auto=format&fit=crop"
+          />
+          
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
               <h1 className="text-4xl font-bold text-primary mb-4">Our Team</h1>
@@ -101,9 +101,9 @@ const TeamPage = () => {
               ))}
             </div>
           </div>
-        </div>
-      </Layout>
-    </Background>
+        </Background>
+      </div>
+    </Layout>
   );
 };
 
