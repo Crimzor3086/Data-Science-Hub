@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { UserRole } from '../lib/roles';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
@@ -13,7 +14,7 @@ interface ProfileData {
   id: string;
   name: string;
   email: string;
-  role: 'ADMIN' | 'CLIENT' | 'STUDENT';
+  role: UserRole;
   avatar?: string;
   bio?: string;
   skills: string[];
@@ -47,7 +48,7 @@ const ProfilePage: React.FC = () => {
       id: '1',
       name: 'John Doe',
       email: 'john@example.com',
-      role: 'STUDENT',
+      role: UserRole.STUDENT,
       bio: 'Passionate about data science and machine learning',
       skills: ['Python', 'Machine Learning', 'Data Analysis', 'SQL'],
       endorsements: {
