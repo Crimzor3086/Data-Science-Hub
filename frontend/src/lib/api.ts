@@ -66,7 +66,7 @@ interface AdminSettings {
 
 // Create axios instance with base URL from environment variables
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -75,7 +75,7 @@ const api = axios.create({
 // Add request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem(import.meta.env.VITE_AUTH_TOKEN_KEY);
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -91,7 +91,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem(import.meta.env.VITE_AUTH_TOKEN_KEY);
+      localStorage.removeItem('token');
       localStorage.removeItem(import.meta.env.VITE_USER_DATA_KEY);
       window.location.href = '/login';
     }
@@ -111,8 +111,8 @@ export const authAPI = {
     api.get('/auth/me'),
   
   logout: () => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_data');
+    localStorage.removeItem('token');
+    localStorage.removeItem(import.meta.env.VITE_USER_DATA_KEY);
     return Promise.resolve();
   }
 };
@@ -184,6 +184,21 @@ export const adminAPI = {
 export const searchAPI = {
   search: (query: string) => 
     api.get(`/search?q=${encodeURIComponent(query)}`),
+};
+
+export const healthCheck = async () => {
+  try {
+    const response = await api.get('/health');
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to connect to server');
+  }
+};
+
+export const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem(import.meta.env.VITE_USER_DATA_KEY);
+  window.location.href = '/login';
 };
 
 export { api }; 
