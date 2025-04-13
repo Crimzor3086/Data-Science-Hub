@@ -67,6 +67,18 @@ const testimonials = [
   }
 ];
 
+const aboutUs = {
+  description: `At Data Science Hub, we are dedicated to empowering businesses, organizations and individuals with the tools and knowledge needed to thrive in today's fast-paced, data-driven world. Our team of experts provides a diverse range of services designed to drive informed decision-making, foster growth, and accelerate innovation. From data collection and analysis to advanced AI development and professional training, we deliver tailored solutions that meet the unique needs of our clients.
+
+We pride ourselves on offering high-quality, actionable insights and strategic support across various industries. Whether you're looking to optimize operational efficiency, enhance your digital presence, or develop cutting-edge artificial intelligence solutions, we've got you covered.
+
+In addition to our service offerings, we are proud to provide a wide range of industry-leading courses. These courses are designed to equip individuals and teams with in-depth knowledge of data analysis, machine learning, AI, and more. Whether you're looking to master tools like SPSS, R, Python, or Power BI, or expand your expertise in specialized fields like spatial analysis or infectious disease modeling, our training programs offer the skills you need to stay ahead of the curve.
+
+At Data Science Hub, we are more than just a service provider—we are your partner in success. Our commitment to excellence, innovation, and customer satisfaction drives everything we do. Let us help you unlock the potential of data, technology, and knowledge to propel your business or career forward.`,
+  mission: 'Our mission is to empower businesses, organizations, and individuals by providing innovative tools, expert knowledge, and tailored solutions that foster growth, enhance decision-making, and drive success in a data-driven world. Through high-quality services, cutting-edge AI development, and comprehensive training programs, we enable our clients to optimize performance and stay ahead of industry trends.',
+  vision: 'Our vision is to be a trusted partner in transforming the way businesses and individuals leverage data, technology, and knowledge. We strive to lead the way in innovation, providing strategic insights and expertise that fuel progress, drive operational excellence, and unlock new opportunities for success in an ever-evolving digital landscape.'
+};
+
 const Index = () => {
   return (
     <Background 

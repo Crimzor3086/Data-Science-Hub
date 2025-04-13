@@ -11,61 +11,135 @@ import {
   PieChart,
   FileText,
   Users,
-  Settings
+  Settings,
+  BarChart3,
+  Palette,
+  Globe,
+  ClipboardList,
+  GraduationCap,
+  FileBarChart
 } from 'lucide-react';
 
 const services = [
   {
-    id: 1,
-    title: 'Data Analysis & Visualization',
-    description: 'Transform your raw data into actionable insights with our comprehensive data analysis and visualization services.',
-    icon: <BarChart2 className="h-6 w-6" />,
-    features: [
-      'Exploratory Data Analysis',
-      'Statistical Analysis',
-      'Interactive Dashboards',
-      'Custom Visualizations'
-    ],
-    image: '/images/image (3).jpg'
-  },
-  {
-    id: 2,
-    title: 'Machine Learning Solutions',
-    description: 'Leverage the power of machine learning to automate processes and predict future trends.',
-    icon: <Brain className="h-6 w-6" />,
-    features: [
-      'Predictive Modeling',
-      'Natural Language Processing',
-      'Computer Vision',
-      'Recommendation Systems'
-    ],
-    image: '/images/image (4).jpg'
-  },
-  {
-    id: 3,
-    title: 'Data Engineering',
-    description: 'Build robust and scalable data pipelines to handle your growing data needs.',
+    title: 'Data Collection',
+    description: 'Accurate, reliable data is the foundation of informed decision-making. Our data collection services provide businesses with high-quality, actionable data that can drive strategy and improve performance.',
     icon: <Database className="h-6 w-6" />,
     features: [
-      'ETL Pipeline Development',
-      'Data Warehouse Design',
-      'Big Data Processing',
-      'Data Quality Assurance'
+      'Qualitative and quantitative data gathering',
+      'Industry-leading methods and tools',
+      'Timely and relevant data collection',
+      'Customized data collection strategies'
     ],
-    image: '/images/image (5).jpg'
+    image: '/images/services/data-collection.jpg'
   },
   {
-    id: 4,
-    title: 'Custom Software Development',
-    description: 'Develop tailored software solutions to meet your specific business requirements.',
-    icon: <Code className="h-6 w-6" />,
+    title: 'Data Analysis',
+    description: 'Transform your data into valuable insights with our expert data analysis services. We use advanced analytical techniques to interpret complex data sets, uncover trends, and provide actionable recommendations.',
+    icon: <BarChart3 className="h-6 w-6" />,
     features: [
-      'Web Applications',
-      'API Development',
-      'Cloud Solutions',
-      'Integration Services'
+      'Advanced analytical techniques',
+      'Trend identification and forecasting',
+      'Operational efficiency analysis',
+      'Customer behavior insights'
     ],
-    image: '/images/image (6).jpg'
+    image: '/images/services/data-analysis.jpg'
+  },
+  {
+    title: 'Research Writing',
+    description: 'We offer in-depth research writing services designed to support your business\'s strategic initiatives. From industry analysis to academic research, our experienced writers deliver meticulously sourced and structured content.',
+    icon: <FileText className="h-6 w-6" />,
+    features: [
+      'Industry analysis reports',
+      'Academic research papers',
+      'Evidence-based documentation',
+      'Strategic research support'
+    ],
+    image: '/images/services/research-writing.jpg'
+  },
+  {
+    title: 'Graphic Design',
+    description: 'Our graphic design services combine creativity and strategy to produce visually captivating content that aligns with your brand\'s identity. Whether it\'s logos, brochures, or social media graphics, we craft designs that are both aesthetically pleasing and functional.',
+    icon: <Palette className="h-6 w-6" />,
+    features: [
+      'Logo design',
+      'Brochure creation',
+      'Social media graphics',
+      'Brand identity development'
+    ],
+    image: '/images/services/graphic-design.jpg'
+  },
+  {
+    title: 'Web Design',
+    description: 'Stand out in the digital world with our custom web design services. We create responsive, user-friendly websites that not only look great but also offer seamless user experiences.',
+    icon: <Globe className="h-6 w-6" />,
+    features: [
+      'Responsive design',
+      'E-commerce solutions',
+      'Corporate websites',
+      'User experience optimization'
+    ],
+    image: '/images/services/web-design.jpg'
+  },
+  {
+    title: 'Project Management',
+    description: 'Effective project management is key to delivering results on time and within budget. Our certified project managers ensure that your projects are executed with precision and efficiency.',
+    icon: <ClipboardList className="h-6 w-6" />,
+    features: [
+      'Project planning and coordination',
+      'Budget management',
+      'Timeline tracking',
+      'Progress reporting'
+    ],
+    image: '/images/services/project-management.jpg'
+  },
+  {
+    title: 'AI Development',
+    description: 'Embrace the future with our advanced AI development services. Our team specializes in building intelligent systems that optimize processes, enhance decision-making, and provide valuable insights.',
+    icon: <Brain className="h-6 w-6" />,
+    features: [
+      'Machine learning solutions',
+      'Natural language processing',
+      'Custom AI development',
+      'Process optimization'
+    ],
+    image: '/images/services/ai-development.jpg'
+  },
+  {
+    title: 'Training',
+    description: 'Empower your team with our comprehensive training programs designed to enhance skills and foster professional growth. From technical training to leadership development, our programs are tailored to address specific needs.',
+    icon: <GraduationCap className="h-6 w-6" />,
+    features: [
+      'Technical skills training',
+      'Leadership development',
+      'Custom training programs',
+      'Performance improvement'
+    ],
+    image: '/images/services/training.jpg'
+  },
+  {
+    title: 'Consultation',
+    description: 'Our consultation services provide you with expert advice and strategic insights to help you navigate complex business challenges. We offer personalized guidance across various industries.',
+    icon: <Users className="h-6 w-6" />,
+    features: [
+      'Business strategy consulting',
+      'Technology solutions guidance',
+      'Process improvement advice',
+      'Industry-specific expertise'
+    ],
+    image: '/images/services/consultation.jpg'
+  },
+  {
+    title: 'Writing Reports',
+    description: 'Our expert team crafts comprehensive and insightful reports tailored to your specific needs. Whether it\'s for internal purposes, clients, or stakeholders, we ensure clear, concise, and well-researched content.',
+    icon: <FileBarChart className="h-6 w-6" />,
+    features: [
+      'Internal reports',
+      'Client reports',
+      'Stakeholder communications',
+      'Performance analysis'
+    ],
+    image: '/images/services/writing-reports.jpg'
   }
 ];
 
@@ -86,7 +160,7 @@ const ServicesPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {services.map((service) => (
-              <Card key={service.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+              <Card key={service.title} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
                 <CardHeader>
                   <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
                     <img 

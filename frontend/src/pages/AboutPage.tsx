@@ -14,32 +14,36 @@ import {
 
 const teamMembers = [
   {
-    id: 1,
-    name: 'Dr. Sarah Johnson',
-    role: 'Founder & CEO',
-    bio: 'PhD in Data Science with 15+ years of experience in machine learning and AI.',
-    image: '/images/image (10).jpg'
+    name: 'Ogechi Daniel Koel',
+    role: 'Biostatistician',
+    bio: 'I am an apt Biostatistician determined in applying various statistical methods to inform decisions in medicine, public health and science.',
+    image: '/images/team/ogechi.jpg',
+    email: 'ogechikoel@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/ogechi-koel-4b90b92ab'
   },
   {
-    id: 2,
-    name: 'Michael Chen',
-    role: 'Head of Research',
-    bio: 'Former research lead at Google AI, specializing in deep learning and NLP.',
-    image: '/images/image (11).jpg'
+    name: 'Nobert Wafula',
+    role: 'Data Analyst',
+    bio: 'I\'m a data analyst passionate about turning data into actionable insights and building predictive models that drive smart, impactful decisions.',
+    image: '/images/team/nobert.jpg',
+    email: 'wakasalanobert5746@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/nobert-wafula-b7b1782a2'
   },
   {
-    id: 3,
-    name: 'Emily Rodriguez',
-    role: 'Lead Data Scientist',
-    bio: 'Expert in computer vision and data visualization with multiple publications.',
-    image: '/images/image (12).jpg'
+    name: 'Enock Bereka',
+    role: 'Data Scientist',
+    bio: 'I\'m a passionate data scientist driven by curiosity and a commitment to lifelong learning. I thrive on exploring new tools and techniques to uncover insights and solve real-world problems.',
+    image: '/images/team/enock.jpg',
+    email: 'enochosenwafulah@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/enock-bereka'
   },
   {
-    id: 4,
-    name: 'David Kim',
-    role: 'Technical Director',
-    bio: 'Full-stack developer with expertise in scalable data systems.',
-    image: '/images/image (13).jpg'
+    name: 'Timothy Achala',
+    role: 'AI Enthusiast & Computer Scientist',
+    bio: 'I am an AI Enthusiast and computer scientist with a deep passion for data. My work lies at the intersection of theory and real-world application—leveraging mathematical rigor and computational power to extract meaningful insights from complex datasets.',
+    image: '/images/team/timothy.jpg',
+    email: 'timothyachala695@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/timothy-a-1bb74127b'
   }
 ];
 
@@ -164,7 +168,7 @@ const AboutPage = () => {
             <h2 className="text-3xl font-bold text-primary text-center mb-8">Our Team</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {teamMembers.map((member) => (
-                <Card key={member.id} className="bg-white/95 backdrop-blur-sm border-primary/20">
+                <Card key={member.name} className="bg-white/95 backdrop-blur-sm border-primary/20">
                   <CardHeader>
                     <div className="aspect-square relative overflow-hidden rounded-lg mb-4">
                       <img 
