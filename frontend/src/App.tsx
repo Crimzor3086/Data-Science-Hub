@@ -15,6 +15,9 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
+import UsersPage from "./pages/UsersPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +41,31 @@ const App = () => (
               element={
                 <RoleGuard allowedRoles={[UserRole.ADMIN, UserRole.CLIENT, UserRole.STUDENT]}>
                   <ProfilePage />
+                </RoleGuard>
+              } 
+            />
+            {/* Admin Routes */}
+            <Route 
+              path="/admin" 
+              element={
+                <RoleGuard allowedRoles={[UserRole.ADMIN]}>
+                  <AdminPage />
+                </RoleGuard>
+              } 
+            />
+            <Route 
+              path="/admin/users" 
+              element={
+                <RoleGuard allowedRoles={[UserRole.ADMIN]}>
+                  <UsersPage />
+                </RoleGuard>
+              } 
+            />
+            <Route 
+              path="/admin/analytics" 
+              element={
+                <RoleGuard allowedRoles={[UserRole.ADMIN]}>
+                  <AnalyticsPage />
                 </RoleGuard>
               } 
             />
