@@ -192,6 +192,11 @@ const Index = () => {
           </div>
         </div>
       </div>
+      <div className={`fixed inset-0 bg-black/50 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`fixed right-0 top-0 h-full w-64 bg-white transform transition-transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          {/* Mobile menu content */}
+        </div>
+      </div>
     </Background>
   );
 };
