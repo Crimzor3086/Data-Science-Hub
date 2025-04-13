@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Layout } from '@/components/layout/Layout';
-import { PageHeader } from '@/components/layout/PageHeader';
+import Layout from '@/components/layout/Layout';
+import PageHeader from '@/components/layout/PageHeader';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -103,7 +103,7 @@ const ServicesPage = () => {
     <Layout>
       <PageHeader
         title="Our Services"
-        description="Comprehensive data science and technology solutions for your business"
+        subtitle="Explore our comprehensive data science services and solutions"
       />
       
       <div className="space-y-6">
