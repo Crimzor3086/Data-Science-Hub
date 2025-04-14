@@ -77,7 +77,7 @@ const values = [
 const AboutPage = () => {
   return (
     <Background 
-      image="/images/image (13).jpg"
+      image="/images/image (2).jpg"
       overlayOpacity={0.85}
     >
       <Layout>

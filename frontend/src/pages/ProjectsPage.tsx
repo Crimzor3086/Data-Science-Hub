@@ -105,7 +105,8 @@ export const ProjectsPage = () => {
         <PageHeader 
           title="Our Projects" 
           subtitle="Explore our portfolio of data science and analytics projects"
-          backgroundImage="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop"
+          backgroundImage="/images/image (3).jpg"
+          overlayOpacity={0.85}
         />
         
         <div className="max-w-7xl mx-auto">

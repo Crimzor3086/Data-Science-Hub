@@ -151,7 +151,7 @@ const Index = () => {
   return (
     <div>
       <Background 
-        image="/images/image (14).jpg"
+        image="/images/image (1).jpg"
         overlayOpacity={0.85}
       >
         <Navbar />

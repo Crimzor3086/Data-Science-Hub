@@ -44,7 +44,7 @@ export const TeamPage = () => {
     <Layout>
       <div className="container mx-auto px-4 py-8">
         <Background 
-          image="/images/image (13).jpg"
+          image="/images/image (4).jpg"
           overlayOpacity={0.85}
         >
           <PageHeader 

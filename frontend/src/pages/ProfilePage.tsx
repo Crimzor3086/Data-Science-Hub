@@ -66,7 +66,7 @@ const ProfilePage: React.FC = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('profile');
+  const [activeTab, setActiveTab] = useState('overview');
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState<ProfileData | null>(null);
 
