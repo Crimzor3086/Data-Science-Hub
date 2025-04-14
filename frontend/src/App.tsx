@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CoursesPage from "./pages/CoursesPage";
-import TeamsPage from "./pages/TeamsPage";
+import { TeamsPage } from "./pages/TeamsPage";
 import TeamPage from "./pages/TeamPage";
 import ServicesPage from "./pages/ServicesPage";
 import BlogPage from "./pages/BlogPage";
@@ -18,14 +18,9 @@ import ContactPage from "./pages/ContactPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
-import UsersPage from "./pages/UsersPage";
-import AnalyticsPage from "./pages/AnalyticsPage";
-import ClientDashboardPage from "./pages/ClientDashboardPage";
 import ProjectsPage from "./pages/ProjectsPage";
-import ReportsPage from "./pages/ReportsPage";
-import AssignmentsPage from "./pages/AssignmentsPage";
-import ProgressPage from "./pages/ProgressPage";
-import SignUpPage from './pages/SignUpPage';
+import { ReportsPage } from "./pages/ReportsPage";
+import { AssignmentsPage } from "./pages/AssignmentsPage";
 import SearchPage from './pages/SearchPage';
 
 const queryClient = new QueryClient();
@@ -57,58 +52,15 @@ const App = () => (
                     </RoleGuard>
                   } 
                 />
-                <Route 
-                  path="/client-dashboard" 
-                  element={
-                    <RoleGuard allowedRoles={[UserRole.CLIENT]}>
-                      <ClientDashboardPage />
-                    </RoleGuard>
-                  } 
-                />
                 <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/reports" element={<ReportsPage />} />
                 <Route path="/assignments" element={<AssignmentsPage />} />
-                <Route path="/progress" element={<ProgressPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
                 {/* Admin Routes */}
                 <Route 
                   path="/admin" 
                   element={
                     <RoleGuard allowedRoles={[UserRole.ADMIN]}>
                       <AdminPage />
-                    </RoleGuard>
-                  } 
-                />
-                <Route 
-                  path="/admin/users" 
-                  element={
-                    <RoleGuard allowedRoles={[UserRole.ADMIN]}>
-                      <UsersPage />
-                    </RoleGuard>
-                  } 
-                />
-                <Route 
-                  path="/admin/analytics" 
-                  element={
-                    <RoleGuard allowedRoles={[UserRole.ADMIN]}>
-                      <AnalyticsPage />
-                    </RoleGuard>
-                  } 
-                />
-                {/* Redirects for convenience */}
-                <Route 
-                  path="/users" 
-                  element={
-                    <RoleGuard allowedRoles={[UserRole.ADMIN]} redirectTo="/login">
-                      <Navigate to="/admin/users" replace />
-                    </RoleGuard>
-                  } 
-                />
-                <Route 
-                  path="/analytics" 
-                  element={
-                    <RoleGuard allowedRoles={[UserRole.ADMIN]} redirectTo="/login">
-                      <Navigate to="/admin/analytics" replace />
                     </RoleGuard>
                   } 
                 />

@@ -3,6 +3,43 @@ import { api } from './api';
 import { toast } from '@/hooks/use-toast';
 import { UserRole, getRolePermissions } from './roles';
 
+// Demo accounts for development
+const DEMO_ACCOUNTS = {
+  admin: {
+    email: 'admin@demo.com',
+    password: 'admin123',
+    user: {
+      id: '1',
+      name: 'Admin User',
+      email: 'admin@demo.com',
+      role: 'admin' as UserRole,
+      avatar: '/images/avatars/admin.jpg'
+    }
+  },
+  student: {
+    email: 'student@demo.com',
+    password: 'student123',
+    user: {
+      id: '2',
+      name: 'Demo Student',
+      email: 'student@demo.com',
+      role: 'student' as UserRole,
+      avatar: '/images/avatars/student.jpg'
+    }
+  },
+  client: {
+    email: 'client@demo.com',
+    password: 'client123',
+    user: {
+      id: '3',
+      name: 'Demo Client',
+      email: 'client@demo.com',
+      role: 'client' as UserRole,
+      avatar: '/images/avatars/client.jpg'
+    }
+  }
+};
+
 export interface User {
   id: string;
   name: string;
@@ -65,6 +102,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true);
       setError(null);
       
+      // Check for demo accounts first
+      const demoAccount = Object.values(DEMO_ACCOUNTS).find(
+        account => account.email === email && account.password === password
+      );
+
+      if (demoAccount) {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        localStorage.setItem('auth_token', 'demo_token');
+        localStorage.setItem('user_data', JSON.stringify(demoAccount.user));
+        setUser(demoAccount.user);
+        return;
+      }
+      
+      // Proceed with normal API login
       const response = await api.post('/auth/login', { email, password });
       const userData = response.data;
       

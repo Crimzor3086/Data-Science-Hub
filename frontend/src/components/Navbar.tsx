@@ -44,7 +44,6 @@ const Navbar = () => {
     { to: user.role === "admin" ? "/admin" : "/client-dashboard", label: "Dashboard" },
   ] : [
     { to: "/login", label: "Login" },
-    { to: "/signup", label: "Sign Up" },
   ];
 
   // Close search when clicking outside

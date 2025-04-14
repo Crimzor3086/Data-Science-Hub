@@ -33,7 +33,6 @@ import {
   Twitter,
   Linkedin
 } from 'lucide-react';
-import { HealthCheck } from '@/components/HealthCheck';
 
 const features = [
   {
@@ -151,7 +150,6 @@ const Index = () => {
 
   return (
     <div>
-      <HealthCheck />
       <Background 
         image="/images/image (14).jpg"
         overlayOpacity={0.85}
