@@ -76,7 +76,7 @@ const SearchPage = () => {
       {isLoading ? (
         <div className="flex justify-center items-center py-12">
           <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
-        </div>
+          </div>
       ) : error ? (
         <div className="text-red-500 text-center py-8">{error}</div>
       ) : query ? (
@@ -86,7 +86,7 @@ const SearchPage = () => {
               ? `No results found for "${query}"`
               : `Search results for "${query}" (${results.length} results)`}
           </h2>
-          
+
           <div className="space-y-6">
             {results.map((result) => (
               <div key={result.id} className="border-b border-gray-200 pb-6">
@@ -104,15 +104,15 @@ const SearchPage = () => {
                   {result.date && <span>Date: {result.date}</span>}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+                  ))}
+                </div>
+              </div>
       ) : (
         <div className="text-center py-12 text-gray-500">
           Enter a search term to find content
         </div>
       )}
-    </div>
+      </div>
   );
 };
 

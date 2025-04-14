@@ -81,32 +81,32 @@ const testimonials = [
 
 const teamMembers = [
   {
-    name: 'John Smith',
-    role: 'Lead Data Scientist',
-    image: '/images/team/john-smith.jpg',
-    expertise: ['Machine Learning', 'Python', 'Deep Learning'],
-    bio: 'With over 10 years of experience in data science, John leads our team in developing innovative solutions.'
+    name: 'Ogechi Daniel Koel',
+    role: 'Biostatistician',
+    image: '/images/team/ogechi-daniel.jpg',
+    expertise: ['Biostatistics', 'Statistical Analysis', 'Public Health'],
+    bio: 'I am an apt Biostatistician determined in applying various statistical methods to inform decisions in medicine, public health and science.'
   },
   {
-    name: 'Sarah Johnson',
-    role: 'Data Engineer',
-    image: '/images/team/sarah-johnson.jpg',
-    expertise: ['Big Data', 'AWS', 'ETL'],
-    bio: 'Sarah specializes in building robust data pipelines and infrastructure for large-scale data processing.'
-  },
-  {
-    name: 'Michael Chen',
-    role: 'ML Engineer',
-    image: '/images/team/michael-chen.jpg',
-    expertise: ['TensorFlow', 'Computer Vision', 'NLP'],
-    bio: 'Michael focuses on implementing cutting-edge machine learning models for real-world applications.'
-  },
-  {
-    name: 'Emily Rodriguez',
+    name: 'Nobert Wafula',
     role: 'Data Analyst',
-    image: '/images/team/emily-rodriguez.jpg',
-    expertise: ['Data Visualization', 'SQL', 'Business Intelligence'],
-    bio: 'Emily excels in transforming complex data into clear, actionable insights for business stakeholders.'
+    image: '/images/team/nobert-wafula.jpg',
+    expertise: ['Data Analysis', 'Predictive Modeling', 'Business Intelligence'],
+    bio: 'I\'m a data analyst passionate about turning data into actionable insights and building predictive models that drive smart, impactful decisions.'
+  },
+  {
+    name: 'Enock Bereka',
+    role: 'Data Scientist',
+    image: '/images/team/enock-bereka.jpg',
+    expertise: ['Machine Learning', 'Data Analysis', 'Statistical Modeling'],
+    bio: 'I\'m a passionate data scientist driven by curiosity and a commitment to lifelong learning. I thrive on exploring new tools and techniques to uncover insights and solve real-world problems. My goal is to turn data into impactful solutions that drive informed decision-making and meaningful change.'
+  },
+  {
+    name: 'Timothy Achala',
+    role: 'AI Enthusiast & Computer Scientist',
+    image: '/images/team/timothy-achala.jpg',
+    expertise: ['Artificial Intelligence', 'Machine Learning', 'Computer Science'],
+    bio: 'I am an AI Enthusiast and computer scientist with a deep passion for data. My work lies at the intersection of theory and real-world application—leveraging mathematical rigor and computational power to extract meaningful insights from complex datasets. With a strong foundation in algorithms, statistics, and machine learning, I specialize in transforming raw data into actionable intelligence.'
   }
 ];
 
