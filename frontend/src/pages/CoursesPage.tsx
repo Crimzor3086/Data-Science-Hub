@@ -388,14 +388,329 @@ const CoursesPage = () => {
             <Tabs defaultValue="all" value={selectedCategory} onValueChange={setSelectedCategory}>
               <TabsList className="mb-6 bg-white/90 backdrop-blur-sm">
                 <TabsTrigger value="all">All Courses</TabsTrigger>
-                <TabsTrigger value="Data Science">Data Science</TabsTrigger>
+                <TabsTrigger value="Data Analysis">Data Analysis</TabsTrigger>
                 <TabsTrigger value="Machine Learning">Machine Learning</TabsTrigger>
                 <TabsTrigger value="Statistics">Statistics</TabsTrigger>
+                <TabsTrigger value="Data Collection">Data Collection</TabsTrigger>
+                <TabsTrigger value="Data Visualization">Data Visualization</TabsTrigger>
+                <TabsTrigger value="AI">AI</TabsTrigger>
               </TabsList>
 
-              <TabsContent value={selectedCategory}>
+              <TabsContent value="all">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredCourses.map((course) => (
+                    <Card key={course.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                      <CardHeader>
+                        <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                          <img 
+                            src={course.image} 
+                            alt={course.title}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground px-2 py-1 rounded-lg text-sm">
+                            {course.level}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl">{course.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">{course.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span>{course.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{course.students} students</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="h-4 w-4 text-yellow-500" />
+                            <span className="text-sm font-medium">{course.rating}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {course.tags.map((tag, index) => (
+                              <Badge key={index} variant="secondary">{tag}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                          Enroll Now <ChevronRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Data Analysis">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredCourses.filter(course => course.category === "Data Analysis").map((course) => (
+                    <Card key={course.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                      <CardHeader>
+                        <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                          <img 
+                            src={course.image} 
+                            alt={course.title}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground px-2 py-1 rounded-lg text-sm">
+                            {course.level}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl">{course.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">{course.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span>{course.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{course.students} students</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="h-4 w-4 text-yellow-500" />
+                            <span className="text-sm font-medium">{course.rating}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {course.tags.map((tag, index) => (
+                              <Badge key={index} variant="secondary">{tag}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                          Enroll Now <ChevronRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Machine Learning">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredCourses.filter(course => course.category === "Machine Learning").map((course) => (
+                    <Card key={course.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                      <CardHeader>
+                        <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                          <img 
+                            src={course.image} 
+                            alt={course.title}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground px-2 py-1 rounded-lg text-sm">
+                            {course.level}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl">{course.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">{course.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span>{course.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{course.students} students</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="h-4 w-4 text-yellow-500" />
+                            <span className="text-sm font-medium">{course.rating}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {course.tags.map((tag, index) => (
+                              <Badge key={index} variant="secondary">{tag}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                          Enroll Now <ChevronRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Statistics">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredCourses.filter(course => course.category === "Statistics").map((course) => (
+                    <Card key={course.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                      <CardHeader>
+                        <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                          <img 
+                            src={course.image} 
+                            alt={course.title}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground px-2 py-1 rounded-lg text-sm">
+                            {course.level}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl">{course.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">{course.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span>{course.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{course.students} students</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="h-4 w-4 text-yellow-500" />
+                            <span className="text-sm font-medium">{course.rating}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {course.tags.map((tag, index) => (
+                              <Badge key={index} variant="secondary">{tag}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                          Enroll Now <ChevronRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Data Collection">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredCourses.filter(course => course.category === "Data Collection").map((course) => (
+                    <Card key={course.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                      <CardHeader>
+                        <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                          <img 
+                            src={course.image} 
+                            alt={course.title}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground px-2 py-1 rounded-lg text-sm">
+                            {course.level}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl">{course.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">{course.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span>{course.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{course.students} students</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="h-4 w-4 text-yellow-500" />
+                            <span className="text-sm font-medium">{course.rating}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {course.tags.map((tag, index) => (
+                              <Badge key={index} variant="secondary">{tag}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                          Enroll Now <ChevronRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="Data Visualization">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredCourses.filter(course => course.category === "Data Visualization").map((course) => (
+                    <Card key={course.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
+                      <CardHeader>
+                        <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
+                          <img 
+                            src={course.image} 
+                            alt={course.title}
+                            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute top-4 right-4 bg-primary/90 text-primary-foreground px-2 py-1 rounded-lg text-sm">
+                            {course.level}
+                          </div>
+                        </div>
+                        <CardTitle className="text-xl">{course.title}</CardTitle>
+                        <CardDescription className="line-clamp-2">{course.description}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span>{course.duration}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{course.students} students</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="h-4 w-4 text-yellow-500" />
+                            <span className="text-sm font-medium">{course.rating}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {course.tags.map((tag, index) => (
+                              <Badge key={index} variant="secondary">{tag}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                          Enroll Now <ChevronRight className="ml-2 h-4 w-4" />
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="AI">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredCourses.filter(course => course.category === "AI").map((course) => (
                     <Card key={course.id} className="bg-white/95 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
                       <CardHeader>
                         <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
