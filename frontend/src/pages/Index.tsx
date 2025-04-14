@@ -60,22 +60,53 @@ const features = [
 
 const testimonials = [
   {
-    name: 'Research Scientist',
-    role: 'Healthcare Industry',
-    image: '/images/testimonials/testimonial1.jpg',
-    quote: 'The courses at Data Science Hub transformed my research capabilities. The practical approach and industry-relevant projects gave me the skills I needed.'
+    name: 'Dan Barasa',
+    role: 'Data Science Consultant',
+    image: '/images/testimonials/dan-barasa.jpg',
+    quote: 'Data Science Hub has been instrumental in transforming our data analytics capabilities. Their expertise and guidance have helped us make data-driven decisions that have significantly improved our business outcomes.'
   },
   {
-    name: 'Data Analyst',
-    role: 'Financial Services',
-    image: '/images/testimonials/testimonial2.jpg',
-    quote: 'The structured learning path and supportive community helped me transition into data science from a different field.'
+    name: 'Martha Kioko',
+    role: 'Business Intelligence Manager',
+    image: '/images/testimonials/martha-kioko.jpg',
+    quote: 'Working with Data Science Hub has been a game-changer for our organization. Their comprehensive approach to data analysis and visualization has enabled us to uncover valuable insights and drive strategic initiatives.'
   },
   {
-    name: 'Project Manager',
-    role: 'Technology Sector',
-    image: '/images/testimonials/testimonial3.jpg',
-    quote: 'The hands-on projects and real-world datasets made learning engaging and practical. Perfect for professionals looking to upskill.'
+    name: 'Joy Consolate',
+    role: 'Data Strategy Director',
+    image: '/images/testimonials/joy-consolate.jpg',
+    quote: 'The team at Data Science Hub brings exceptional expertise and professionalism to every project. Their ability to translate complex data into actionable insights has been crucial to our success.'
+  }
+];
+
+const teamMembers = [
+  {
+    name: 'John Smith',
+    role: 'Lead Data Scientist',
+    image: '/images/team/john-smith.jpg',
+    expertise: ['Machine Learning', 'Python', 'Deep Learning'],
+    bio: 'With over 10 years of experience in data science, John leads our team in developing innovative solutions.'
+  },
+  {
+    name: 'Sarah Johnson',
+    role: 'Data Engineer',
+    image: '/images/team/sarah-johnson.jpg',
+    expertise: ['Big Data', 'AWS', 'ETL'],
+    bio: 'Sarah specializes in building robust data pipelines and infrastructure for large-scale data processing.'
+  },
+  {
+    name: 'Michael Chen',
+    role: 'ML Engineer',
+    image: '/images/team/michael-chen.jpg',
+    expertise: ['TensorFlow', 'Computer Vision', 'NLP'],
+    bio: 'Michael focuses on implementing cutting-edge machine learning models for real-world applications.'
+  },
+  {
+    name: 'Emily Rodriguez',
+    role: 'Data Analyst',
+    image: '/images/team/emily-rodriguez.jpg',
+    expertise: ['Data Visualization', 'SQL', 'Business Intelligence'],
+    bio: 'Emily excels in transforming complex data into clear, actionable insights for business stakeholders.'
   }
 ];
 
@@ -178,7 +209,7 @@ const Index = () => {
 
             {/* Testimonials Section */}
             <div className="mb-16">
-              <h2 className="text-3xl font-bold text-primary text-center mb-8">What Our Students Say</h2>
+              <h2 className="text-3xl font-bold text-primary text-center mb-8">What Our Clients Say</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {testimonials.map((testimonial, index) => (
                   <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
@@ -199,6 +230,41 @@ const Index = () => {
                     </CardHeader>
                     <CardContent>
                       <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Team Section */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-primary text-center mb-8">Meet Our Team</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {teamMembers.map((member, index) => (
+                  <Card key={index} className="bg-white/95 backdrop-blur-sm border-primary/20">
+                    <CardHeader>
+                      <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4">
+                        <img 
+                          src={member.image} 
+                          alt={member.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <CardTitle className="text-center">{member.name}</CardTitle>
+                      <CardDescription className="text-center">{member.role}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2 justify-center mb-4">
+                        {member.expertise.map((skill, skillIndex) => (
+                          <span 
+                            key={skillIndex}
+                            className="px-2 py-1 bg-primary/10 text-primary rounded-full text-sm"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground text-center text-sm">{member.bio}</p>
                     </CardContent>
                   </Card>
                 ))}
