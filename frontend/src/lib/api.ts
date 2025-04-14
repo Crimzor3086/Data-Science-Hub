@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 // Types and Interfaces
 interface UserData {
@@ -64,17 +64,16 @@ interface AdminSettings {
   };
 }
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-// Create axios instance with base URL from environment variables
+// Create axios instance with default config
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
-// Add request interceptor to add auth token
+// Request interceptor
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -83,20 +82,63 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
+  (error: AxiosError) => {
+    console.error('Request error:', error);
     return Promise.reject(error);
   }
 );
 
-// Add response interceptor for error handling
+// Response interceptor
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem(import.meta.env.VITE_USER_DATA_KEY);
-      window.location.href = '/login';
+  (response: AxiosResponse) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      const { status, data } = error.response;
+      
+      // Log error details
+      console.error('API Error:', {
+        status,
+        data,
+        url: error.config?.url,
+        method: error.config?.method,
+      });
+
+      // Handle specific error cases
+      switch (status) {
+        case 401:
+          // Unauthorized - clear token and redirect to login
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+          break;
+        case 403:
+          // Forbidden - show access denied message
+          console.error('Access denied');
+          break;
+        case 404:
+          // Not found - log resource not found
+          console.error('Resource not found:', error.config?.url);
+          break;
+        case 500:
+          // Server error - log internal server error
+          console.error('Internal server error');
+          break;
+        default:
+          // Handle other errors
+          console.error('API error:', status, data);
+      }
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('No response received:', error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error setting up request:', error.message);
     }
+
     return Promise.reject(error);
   }
 );
@@ -203,4 +245,4 @@ export const logout = () => {
   window.location.href = '/login';
 };
 
-export { api }; 
+export default api; 
