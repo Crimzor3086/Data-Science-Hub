@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Background } from '@/components/ui/background';
@@ -125,11 +125,13 @@ At Data Science Hub, we are more than just a service provider—we are your part
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    // Prevent body scrolling when menu is open
-    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
-  };
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen(prevState => {
+      const newState = !prevState;
+      document.body.style.overflow = newState ? 'hidden' : 'auto';
+      return newState;
+    });
+  }, []); // No dependencies needed since we're using functional updates
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -145,7 +147,7 @@ const Index = () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = 'auto';
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, toggleMenu]);
 
   return (
     <div>
