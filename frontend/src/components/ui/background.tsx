@@ -21,7 +21,7 @@ export function Background({
         className
       )}
       style={{
-        backgroundImage: `url(${image})`,
+        backgroundImage: `url("${image}")`,
       }}
       {...props}
     >
