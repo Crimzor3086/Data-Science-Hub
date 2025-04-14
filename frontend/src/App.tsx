@@ -22,6 +22,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import { ReportsPage } from "./pages/ReportsPage";
 import { AssignmentsPage } from "./pages/AssignmentsPage";
 import SearchPage from './pages/SearchPage';
+import { AnalyticsPage } from './pages/AnalyticsPage';
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,14 @@ const App = () => (
                   element={
                     <RoleGuard allowedRoles={[UserRole.ADMIN]}>
                       <AdminPage />
+                    </RoleGuard>
+                  } 
+                />
+                <Route 
+                  path="/analytics" 
+                  element={
+                    <RoleGuard allowedRoles={[UserRole.ADMIN]}>
+                      <AnalyticsPage />
                     </RoleGuard>
                   } 
                 />

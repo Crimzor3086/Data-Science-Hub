@@ -1,6 +1,7 @@
 import express from 'express';
 import { User } from '../models/User';
 import { adminMiddleware } from '../middleware/authMiddleware';
+import { auth } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -212,4 +213,48 @@ router.get('/errors', adminMiddleware, async (_req, res) => {
   }
 });
 
-export const analyticsRoutes = router; 
+// Get analytics data
+router.get('/', auth, async (req, res) => {
+  try {
+    // TODO: Replace with actual database queries and system metrics
+    const analytics = {
+      totalUsers: 150,
+      activeSessions: 45,
+      storageUsed: 256, // in GB
+      apiRequests: 15000,
+      performance: {
+        averageResponseTime: 120, // in ms
+        cpuUsage: 45, // percentage
+        memoryUsage: 60, // percentage
+        networkTraffic: 75 // MB/s
+      },
+      errors: [
+        {
+          id: "1",
+          level: "error",
+          message: "Database connection timeout",
+          timestamp: new Date(Date.now() - 3600000).toISOString()
+        },
+        {
+          id: "2",
+          level: "warning",
+          message: "High memory usage detected",
+          timestamp: new Date(Date.now() - 7200000).toISOString()
+        },
+        {
+          id: "3",
+          level: "error",
+          message: "API rate limit exceeded",
+          timestamp: new Date(Date.now() - 10800000).toISOString()
+        }
+      ]
+    };
+
+    res.json(analytics);
+  } catch (error) {
+    console.error('Error fetching analytics:', error);
+    res.status(500).json({ message: 'Error fetching analytics data' });
+  }
+});
+
+export default router; 

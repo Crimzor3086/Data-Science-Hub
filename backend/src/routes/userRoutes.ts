@@ -1,6 +1,7 @@
 import express from 'express';
 import { User, UserRole } from '../models/User';
 import { adminMiddleware } from '../middleware/authMiddleware';
+import { auth } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -84,4 +85,128 @@ router.delete('/:id', adminMiddleware, async (req, res) => {
   }
 });
 
-export const userRoutes = router; 
+// Get all users
+router.get('/all', auth, async (req, res) => {
+  try {
+    // TODO: Replace with actual database queries
+    const users = [
+      {
+        id: "1",
+        name: "John Doe",
+        email: "john.doe@example.com",
+        role: "admin",
+        status: "Active",
+        lastLogin: new Date().toISOString(),
+        createdAt: new Date(Date.now() - 180000000).toISOString()
+      },
+      {
+        id: "2",
+        name: "Jane Smith",
+        email: "jane.smith@example.com",
+        role: "client",
+        status: "Active",
+        lastLogin: new Date(Date.now() - 86400000).toISOString(),
+        createdAt: new Date(Date.now() - 360000000).toISOString()
+      },
+      {
+        id: "3",
+        name: "Michael Johnson",
+        email: "michael.johnson@example.com",
+        role: "student",
+        status: "Active",
+        lastLogin: new Date(Date.now() - 172800000).toISOString(),
+        createdAt: new Date(Date.now() - 720000000).toISOString()
+      },
+      {
+        id: "4",
+        name: "Emily Davis",
+        email: "emily.davis@example.com",
+        role: "student",
+        status: "Inactive",
+        lastLogin: new Date(Date.now() - 259200000).toISOString(),
+        createdAt: new Date(Date.now() - 1080000000).toISOString()
+      },
+      {
+        id: "5",
+        name: "David Brown",
+        email: "david.brown@example.com",
+        role: "client",
+        status: "Active",
+        lastLogin: new Date(Date.now() - 345600000).toISOString(),
+        createdAt: new Date(Date.now() - 1440000000).toISOString()
+      }
+    ];
+
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Error fetching users' });
+  }
+});
+
+// Create a new user
+router.post('/', auth, async (req, res) => {
+  try {
+    const { name, email, role, status } = req.body;
+    
+    // TODO: Add validation
+    // TODO: Replace with actual database operation
+    
+    const newUser = {
+      id: Date.now().toString(),
+      name,
+      email,
+      role,
+      status,
+      lastLogin: new Date().toISOString(),
+      createdAt: new Date().toISOString()
+    };
+
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ message: 'Error creating user' });
+  }
+});
+
+// Update a user
+router.put('/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, role, status } = req.body;
+    
+    // TODO: Add validation
+    // TODO: Replace with actual database operation
+    
+    const updatedUser = {
+      id,
+      name,
+      email,
+      role,
+      status,
+      lastLogin: new Date().toISOString(),
+      createdAt: new Date(Date.now() - 180000000).toISOString()
+    };
+
+    res.json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ message: 'Error updating user' });
+  }
+});
+
+// Delete a user
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // TODO: Replace with actual database operation
+    
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ message: 'Error deleting user' });
+  }
+});
+
+export default router; 
