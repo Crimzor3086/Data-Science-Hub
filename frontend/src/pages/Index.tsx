@@ -173,16 +173,12 @@ const Index = () => {
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
                 Join thousands of learners worldwide in mastering data science, machine learning, and AI through our comprehensive courses and hands-on projects.
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                  <Link to="/courses">
-                    Explore Courses <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Link to="/courses">Get Started</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-primary/20 hover:border-primary/40">
-                  <Link to="/about">
-                    Learn More
-                  </Link>
+                <Button size="lg" variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
+                  <Link to="/contact">Contact Us</Link>
                 </Button>
               </div>
             </div>

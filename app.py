@@ -263,7 +263,7 @@ def admin_login():
         return jsonify({'error': 'Username and password are required'}), 400
     
     # Verify admin credentials (you should use proper password hashing)
-    if username == 'admin' and password == 'admin123':  # Change these credentials
+    if username == 'enochosoenwafulah@gmail.com' and password == 'admin123':  # Change these credentials
         token = jwt.encode({
             'username': username,
             'role': 'admin',

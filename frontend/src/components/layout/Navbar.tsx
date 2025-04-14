@@ -119,17 +119,13 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
               </Button>
             </div>
           ) : (
-            <div className="flex items-center space-x-4">
-              <Link to="/login">
-                <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
-                  Login
-                </Button>
+            <div className="hidden md:flex items-center space-x-4">
+              <Link to="/login" className="text-gray-600 hover:text-blue-600 transition-colors">
+                Login
               </Link>
-              <Link to="/signup">
-                <Button className="bg-blue-600 text-white hover:bg-blue-700">
-                  Sign Up
-                </Button>
-              </Link>
+              <Button variant="outline" asChild>
+                <Link to="/contact">Contact Us</Link>
+              </Button>
             </div>
           )}
         </nav>
@@ -194,12 +190,14 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
                 </>
               ) : (
                 <>
-                  <Link to="/login" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
-                    Login
-                  </Link>
-                  <Link to="/signup" className="py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
-                    Sign Up
-                  </Link>
+                  <div className="py-2">
+                    <Link to="/login" className="block py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
+                      Login
+                    </Link>
+                    <Link to="/contact" className="block py-2 hover:text-blue-600 transition-colors" onClick={toggleMenu}>
+                      Contact Us
+                    </Link>
+                  </div>
                 </>
               )}
             </div>
