@@ -295,134 +295,124 @@ const ProfilePage: React.FC = () => {
                         <TabsTrigger value="experience">Experience</TabsTrigger>
                         <TabsTrigger value="projects">Projects</TabsTrigger>
                       </TabsList>
-                    </Tabs>
-                  </div>
-                  </CardHeader>
-                <CardContent>
-                  <TabsContent value="overview">
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-lg font-medium mb-2">About</h3>
-                        {isEditing ? (
-                          <Input
-                            value={editedData?.bio || ''}
-                            onChange={(e) => setEditedData(prev => prev ? {...prev, bio: e.target.value} : null)}
-                            className="mb-4"
-                          />
-                        ) : (
-                          <p className="text-sm text-muted-foreground">{editedData?.bio}</p>
-                        )}
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-lg font-medium mb-2">Skills</h3>
-                        <div className="flex flex-wrap gap-2">
-                          {editedData?.skills.map((skill) => (
-                            <Badge key={skill} variant="outline">
-                              {skill}
-                            </Badge>
-                          ))}
+
+                      <TabsContent value="overview">
+                        <div className="space-y-6">
+                          <div>
+                            <h3 className="text-lg font-medium mb-2">About</h3>
+                            {isEditing ? (
+                              <Input
+                                value={editedData?.bio || ''}
+                                onChange={(e) => setEditedData(prev => prev ? {...prev, bio: e.target.value} : null)}
+                                className="mb-4"
+                              />
+                            ) : (
+                              <p className="text-sm text-muted-foreground">{editedData?.bio}</p>
+                            )}
+                          </div>
+                          
+                          <div>
+                            <h3 className="text-lg font-medium mb-2">Skills</h3>
+                            <div className="flex flex-wrap gap-2">
+                              {editedData?.skills.map((skill) => (
+                                <Badge key={skill} variant="outline">
+                                  {skill}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <h3 className="text-lg font-medium mb-2">Certifications</h3>
+                            <div className="space-y-4">
+                              {editedData?.certifications.map((cert) => (
+                                <div key={cert.name} className="flex items-start gap-4">
+                                  <Award className="h-5 w-5 text-primary mt-0.5" />
+                                  <div>
+                                    <p className="font-medium">{cert.name}</p>
+                                    <p className="text-sm text-muted-foreground">
+                                      {cert.issuer} • {cert.year}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <h3 className="text-lg font-medium mb-2">Current Courses</h3>
+                            <div className="space-y-4">
+                              {editedData?.courses.map((course) => (
+                                <div key={course.title}>
+                                  <div className="flex justify-between text-sm mb-1">
+                                    <span>{course.title}</span>
+                                    <span className="text-muted-foreground">{course.progress}%</span>
+                                  </div>
+                                  <Progress value={course.progress} className="h-2" />
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    Last accessed {course.lastAccessed}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-lg font-medium mb-2">Certifications</h3>
-                        <div className="space-y-4">
-                          {editedData?.certifications.map((cert) => (
-                            <div key={cert.name} className="flex items-start gap-4">
-                              <Award className="h-5 w-5 text-primary mt-0.5" />
+                      </TabsContent>
+
+                      <TabsContent value="education">
+                        <div className="space-y-6">
+                          {editedData?.education?.map((edu) => (
+                            <div key={edu.degree} className="flex items-start gap-4">
+                              <BookOpen className="h-5 w-5 text-primary mt-0.5" />
                               <div>
-                                <p className="font-medium">{cert.name}</p>
+                                <p className="font-medium">{edu.degree}</p>
                                 <p className="text-sm text-muted-foreground">
-                                  {cert.issuer} • {cert.year}
+                                  {edu.institution} • {edu.year}
                                 </p>
                               </div>
                             </div>
                           ))}
                         </div>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-lg font-medium mb-2">Current Courses</h3>
-                        <div className="space-y-4">
-                          {editedData?.courses.map((course) => (
-                            <div key={course.title}>
-                              <div className="flex justify-between text-sm mb-1">
-                                <span>{course.title}</span>
-                                <span className="text-muted-foreground">{course.progress}%</span>
+                      </TabsContent>
+
+                      <TabsContent value="experience">
+                        <div className="space-y-6">
+                          {editedData?.experience?.map((exp) => (
+                            <div key={exp.position} className="flex items-start gap-4">
+                              <Briefcase className="h-5 w-5 text-primary mt-0.5" />
+                              <div>
+                                <p className="font-medium">{exp.position}</p>
+                                <p className="text-sm text-muted-foreground">
+                                  {exp.company} • {exp.duration}
+                                </p>
                               </div>
-                              <Progress value={course.progress} className="h-2" />
-                              <p className="text-xs text-muted-foreground mt-1">
-                                Last accessed {course.lastAccessed}
-                              </p>
-                      </div>
-                    ))}
+                            </div>
+                          ))}
                         </div>
-                      </div>
-                    </div>
-              </TabsContent>
+                      </TabsContent>
 
-                  <TabsContent value="education">
-                    <div className="space-y-6">
-                      {editedData?.education?.map((edu) => (
-                        <div key={edu.degree} className="flex items-start gap-4">
-                          <BookOpen className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <p className="font-medium">{edu.degree}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {edu.institution} • {edu.year}
-                            </p>
-                          </div>
+                      <TabsContent value="projects">
+                        <div className="space-y-6">
+                          {editedData?.projects?.map((project) => (
+                            <div key={project.title} className="flex items-start gap-4">
+                              <Code className="h-5 w-5 text-primary mt-0.5" />
+                              <div>
+                                <p className="font-medium">{project.title}</p>
+                                <p className="text-sm text-muted-foreground mb-2">{project.description}</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {project.technologies.map((tech) => (
+                                    <Badge key={tech} variant="secondary">{tech}</Badge>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                      </div>
-              </TabsContent>
-
-                  <TabsContent value="experience">
-                    <div className="space-y-6">
-                      {editedData?.experience?.map((exp) => (
-                        <div key={exp.position} className="flex items-start gap-4">
-                          <Briefcase className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <p className="font-medium">{exp.position}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {exp.company} • {exp.duration}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                      </div>
-              </TabsContent>
-
-                  <TabsContent value="projects">
-                    <div className="space-y-6">
-                      {editedData?.projects?.map((project) => (
-                        <div key={project.title} className="flex items-start gap-4">
-                          <Code className="h-5 w-5 text-primary mt-0.5" />
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <p className="font-medium">{project.title}</p>
-                              <Badge variant="outline" className={
-                                project.status === 'Completed' ? 'bg-green-100 text-green-800 border-green-200' : 
-                                'bg-blue-100 text-blue-800 border-blue-200'
-                              }>
-                                {project.status}
-                              </Badge>
-                      </div>
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {project.technologies.map((tech) => (
-                                <Badge key={tech} variant="outline" className="bg-primary/5">
-                                  {tech}
-                                </Badge>
-                              ))}
-                      </div>
-                    </div>
-                        </div>
-                      ))}
-                    </div>
-                  </TabsContent>
-                  </CardContent>
-                </Card>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </CardHeader>
+              </Card>
             </div>
           </div>
         </div>
