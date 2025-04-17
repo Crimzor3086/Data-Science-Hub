@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { api } from './api';
+import api from './api';
 import { toast } from '@/hooks/use-toast';
 import { UserRole, getRolePermissions } from './roles';
 
