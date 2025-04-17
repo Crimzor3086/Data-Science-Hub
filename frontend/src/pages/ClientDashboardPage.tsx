@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Background } from "@/components/ui/background";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { api } from "@/lib/api";
+import api from "@/lib/api";
 import { 
   BarChart3, 
   Users, 

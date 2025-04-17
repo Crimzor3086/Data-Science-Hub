@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Background } from "@/components/ui/background";
 import { Layout } from "@/components/layout/Layout";
-import { api } from "@/lib/api";
+import api from "@/lib/api";
 import { 
   Users, 
   Activity, 
